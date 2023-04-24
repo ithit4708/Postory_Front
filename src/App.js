@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
 
 const HomeDiv = styled.div`
 border: 1px solid black;
@@ -13,11 +15,18 @@ margin: Auto;
 
 function App() {
   return (
-    <HomeDiv>
-      <HomeIntro>
-        포스타입 홈페이지
-      </HomeIntro>
-    </HomeDiv>
+    <>
+      <Routes>
+        <Route path='/' element={
+          <HomeDiv>
+            <HomeIntro>
+              포스타입 홈페이지
+            </HomeIntro>
+          </HomeDiv>
+        } />
+        <Route path='/login' element={<Login />} />
+      </Routes>
+    </>
   );
 }
 

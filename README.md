@@ -1,3 +1,9 @@
+# 정석코딩 2기 1팀 프로젝트 포스토리
+## 팀원
+- 황인태 (팀장)
+- 김정호
+- 강세민
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

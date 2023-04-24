@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+
+const HomeDiv = styled.div`
+border: 1px solid black;
+margin: Auto;
+height: 500px;
+display: flex;
+`
+const HomeIntro = styled.div`
+border: 1px solid blue;
+margin: Auto;
+`
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HomeDiv>
+      <HomeIntro>
+        포스타입 홈페이지
+      </HomeIntro>
+    </HomeDiv>
   );
 }
 

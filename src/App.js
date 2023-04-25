@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
+import GlobalStyle from './GlobalStyle';
 
 const HomeDiv = styled.div`
 border: 1px solid black;
@@ -16,6 +17,7 @@ margin: Auto;
 function App() {
   return (
     <>
+      <GlobalStyle />
       <Routes>
         <Route path='/' element={
           <HomeDiv>

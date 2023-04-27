@@ -9,76 +9,50 @@ const SelectList = ({ handleClickMethod }) => {
     const onClick = () => {
         handleClickMethod();
     }
+
+    let loginSignupEng = "login"
+    let loginSignupKor = "로그인";
+
+    if (location.pathname === '/signup') {
+        loginSignupEng = "signup"
+        loginSignupKor = "회원가입"
+    }
+
+
     return (
         <SelectListBox>
-            {location.pathname === '/login' ? (
-                <>
-                    <Link to="google.com" className="btn-block" id="btn-login-google" >
-                        <IconSpan>
-                            <i className="fa-brands fa-google"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">구글로 로그인</TextSpan>
-                    </Link>
-                    <Link to="facebook.com" className="btn-block" id="btn-login-facebook" >
-                        <IconSpan>
-                            <i className="fa-brands fa-facebook"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">페이스북으로 로그인</TextSpan>
-                    </Link>
-                    <Link to="twitter.com" className="btn-block" id="btn-login-twitter" >
-                        <IconSpan>
-                            <i className="fa-brands fa-twitter"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">트위터로 로그인</TextSpan>
-                    </Link>
-                    <Link to="naver.com" className="btn-block" id="btn-login-naver" >
-                        <IconSpan>
-                            <i className="fa-brands fa-neos"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">네이버로 로그인</TextSpan>
-                    </Link>
-                    <Link to="#" className="btn-block" id="btn-login-email" onClick={onClick}>
-                        <IconSpan>
-                            <i className="fas fa-envelope"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">이메일로 로그인</TextSpan>
-                    </Link>
-                </>
-            ) : location.pathname === '/signup' ? (
-                <>
-                    <Link to="google.com" className="btn-block" id="btn-signup-email" >
-                        <IconSpan>
-                            <i className="fa-brands fa-google"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">구글로 회원가입</TextSpan>
-                    </Link>
-                    <Link to="facebook.com" className="btn-block" id="btn-signup-email" >
-                        <IconSpan>
-                            <i className="fa-brands fa-facebook"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">페이스북으로 회원가입</TextSpan>
-                    </Link>
-                    <Link to="twitter.com" className="btn-block" id="btn-signup-email" >
-                        <IconSpan>
-                            <i className="fa-brands fa-twitter"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">트위터로 회원가입</TextSpan>
-                    </Link>
-                    <Link to="naver.com" className="btn-block" id="btn-signup-email" >
-                        <IconSpan>
-                            <i className="fa-brands fa-neos"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">네이버로 회원가입</TextSpan>
-                    </Link>
-                    <Link to="#" className="btn-block" id="btn-signup-email" onClick={onClick}>
-                        <IconSpan>
-                            <i className="fas fa-envelope"></i>
-                        </IconSpan>
-                        <TextSpan data-auth="email" className="btn-text">이메일로 회원가입</TextSpan>
-                    </Link>
-                </>
-            ) : ''
-            }
+            <>
+                <Link to="google.com" className="btn-block" id={"btn-" + loginSignupEng + "-google"}>
+                    <IconSpan>
+                        <i className="fa-brands fa-google"></i>
+                    </IconSpan>
+                    <TextSpan data-auth="email" className="btn-text">구글로 {loginSignupKor}</TextSpan>
+                </Link>
+                <Link to="facebook.com" className="btn-block" id={"btn-" + loginSignupEng + "-facebook"} >
+                    <IconSpan>
+                        <i className="fa-brands fa-facebook"></i>
+                    </IconSpan>
+                    <TextSpan data-auth="email" className="btn-text">페이스북으로 {loginSignupKor}</TextSpan>
+                </Link>
+                <Link to="twitter.com" className="btn-block" id={"btn-" + loginSignupEng + "-twitter"} >
+                    <IconSpan>
+                        <i className="fa-brands fa-twitter"></i>
+                    </IconSpan>
+                    <TextSpan data-auth="email" className="btn-text">트위터로 {loginSignupKor}</TextSpan>
+                </Link>
+                <Link to="naver.com" className="btn-block" id={"btn-" + loginSignupEng + "-naver"} >
+                    <IconSpan>
+                        <i className="fa-brands fa-neos"></i>
+                    </IconSpan>
+                    <TextSpan data-auth="email" className="btn-text">네이버로 {loginSignupKor}</TextSpan>
+                </Link>
+                <Link to="#" className="btn-block" id={"btn-" + loginSignupEng + "-email"} onClick={onClick}>
+                    <IconSpan>
+                        <i className="fas fa-envelope"></i>
+                    </IconSpan>
+                    <TextSpan data-auth="email" className="btn-text">이메일로 {loginSignupKor}</TextSpan>
+                </Link>
+            </>
         </SelectListBox>
     );
 };

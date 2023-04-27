@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
-import Login from './pages/Login';
+import LoginSignupPage from './pages/LoginSignupPage';
 import GlobalStyle from './GlobalStyle';
 
 const HomeDiv = styled.div`
@@ -26,7 +26,8 @@ function App() {
             </HomeIntro>
           </HomeDiv>
         } />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<LoginSignupPage />} />
+        <Route path='/signup' element={<LoginSignupPage />} />
       </Routes>
     </>
   );

@@ -1,12 +1,12 @@
 import React from 'react';
-import LoginTemplate from '../containers/LoginContainer';
+import LoginSignupBox from '../containers/LoginSignupBox';
 import SelectList from '../components/SelectList';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const Login = () => {
+const LoginSignupPage = () => {
     const location = useLocation();
     const [emailClick, setEmailClick] = useState(false);
 
@@ -16,9 +16,9 @@ const Login = () => {
 
     return (
         emailClick === false ? (
-            <LoginTemplate>
+            <LoginSignupBox>
                 <SelectList handleClickMethod={handleClickMethod} />
-            </LoginTemplate>
+            </LoginSignupBox>
         ) : emailClick === true && location.pathname === "/login" ? (
             <LoginForm />
         ) : emailClick === true && location.pathname === "/signup" ? (
@@ -27,4 +27,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LoginSignupPage;

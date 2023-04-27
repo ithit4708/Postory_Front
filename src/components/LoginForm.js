@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import userData from '../UserData';
+// import userData from '../UserData';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
@@ -19,9 +19,9 @@ const LoginForm = () => {
         setPassword(e.target.value);
     }
 
-    const getUser = () => {
-        return userData;
-    }
+    // const getUser = () => {
+    //     return userData;
+    // }
     // //비밀번호 정규식 체크, test() 메서드 사용
     // const test = () => {
     //     return email.includes('@') && pwdReg.test(password);
@@ -37,20 +37,35 @@ const LoginForm = () => {
             return false;
         }
 
-        let user = getUser().find((user) => user.EId === email && user.PWD === password)
+        //localStorage.getItem()을 이용하여 해당 데이터를 가져오기
+        e.preventDefault();
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        for (let i = 0; i < userData.length; i++) {
+            if (userData && userData[i].email === email && userData[i].password === password) {
+                alert(`Welcome, 로그인 성공 ${email}!`);
+                return navigate("/")
+            }
+        }
+        //로컬스토리지에 저장되지않은. 즉, 유효하지 않은 이메일, 비밀번호를 입력했을 때.
+        alert('Invalid email or password.');
+        setEmail('');
+        setPassword('');
+        setMessage('')
+        //( select 자리 )
+        // let user = getUser().find((user) => user.EId === email && user.PWD === password)
 
-        if (user) {
-            alert("로그인 성공");
-            e.preventDefault();
-            navigate("/");
-        }
-        else {
-            alert("로그인 실패");
-            setEmail('');
-            setPassword('');
-            setMessage('')
-            e.preventDefault();
-        }
+        // if (user) {
+        //     alert("로그인 성공");
+        //     e.preventDefault();
+        //     navigate("/");
+        // }
+        // else {
+        //     alert("로그인 실패");
+        //     setEmail('');
+        //     setPassword('');
+        //     setMessage('')
+        //     e.preventDefault();
+        // }
     }
 
     return (
@@ -59,7 +74,7 @@ const LoginForm = () => {
                 <LoginHead>로그인</LoginHead>
                 <SubmitForm onSubmit={onSubmit} className='submit-form'>
                     <InputBox>
-                        <Lable for='email'>이메일</Lable>
+                        <Lable htmlFor='email'>이메일</Lable>
                         <ValueInput
                             type="email"
                             id='email'
@@ -71,7 +86,7 @@ const LoginForm = () => {
                         />
                     </InputBox>
                     <InputBox>
-                        <Lable for='password'>비밀번호</Lable>
+                        <Lable htmlFor='password'>비밀번호</Lable>
                         <ValueInput
                             type="password"
                             id="password"

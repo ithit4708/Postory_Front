@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import userData from '../UserData';
+import userData from '../UserData';
 import { useNavigate } from 'react-router-dom';
 
 const SignupForm = () => {
@@ -23,10 +23,10 @@ const SignupForm = () => {
         setNickname(e.target.value);
     }
 
-    // const getUser = () => {
-    //     return userData;
-    //     //JSON을 받아오는 함수
-    // }
+    const getUser = () => {
+        return userData;
+        //JSON을 받아오는 함수
+    }
 
     const onSubmit = (e) => {
         if (email.length === 0) {
@@ -49,6 +49,7 @@ const SignupForm = () => {
             email,
             password,
             nickname,
+            userId: getUser()[0].USER_ID,
         };
         //브라우저
         const existingData = JSON.parse(localStorage.getItem('userData')) || []; // 로컬 스토리지에 저장되어있는 데이터를 배열로 가져옴. 만약 저장된 데이터가 없다면 빈 배열을 사용.

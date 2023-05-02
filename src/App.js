@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import LoginSignupPage from './pages/LoginSignupPage';
 import GlobalStyle from './GlobalStyle';
+import ProfilePage from './pages/ProfilePage';
 
 const HomeDiv = styled.div`
 border: 1px solid black;
@@ -28,6 +29,9 @@ function App() {
         } />
         <Route path='/login' element={<LoginSignupPage />} />
         <Route path='/signup' element={<LoginSignupPage />} />
+        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/profile/:userinfo' element={<ProfilePage />} />
+        <Route path='/profile/:userinfo/:creation' element={<ProfilePage />} />
       </Routes>
     </>
   );

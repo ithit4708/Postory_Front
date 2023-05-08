@@ -1,0 +1,134 @@
+import {useState} from "react";
+import ContainerModule from "../../utils/form/ContainerModule";
+import {useNavigate} from "react-router-dom";
+import styled from "styled-components";
+
+const SetlButton = styled.button`
+  background-color:  #3478FF;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  cursor: pointer;
+  padding: 10px 24px;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+  &:hover {
+    background-color:  #3478FF;
+  }
+`;
+
+
+
+const Container = styled.div`
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 800px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const ModuleWrapper = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+`;
+const SettlementPage = () =>{
+
+    const navigator = useNavigate();
+    const clickHandler = () =>{
+        navigator('/order/pay/ready');
+    }
+
+    const template = {
+        labelFontStyle: 'BOLD',
+        textFontStyle: 'normal',
+        labelTextAlign: 'left',
+        textTextAlign: 'left',
+        layout: 'column', // or 'row'
+        width: '100%',
+    };
+
+    const [orderInfo, setorderInfo] = useState({tagType: 'VIEW', title:'주문상품'})
+    const [orderData, setOrderData] = useState([
+        { id: 1, text: "00000000000000000001", label: '주문번호', title:'주문 상품' },
+        { id: 2, text: "주문이 접수 되었어요.", label: '', title:'주문 상품'},
+        { id: 3, text: "결제를 이어서 진행해주세요. 2023.04.26 12:33까지 [My 메뉴]> [주문내역]에서도 결제를 진행할 수 있습니다.", label: '', title:'주문 상품'},
+    ])
+
+    const [setlInfo, setSetlInfo] = useState({tagType: 'VIEW', title:'주문상품'})
+    const [setlData, setSetlData] = useState([
+        { id: 1, text: "김정호", label: '이름', title:'주문 상품' },
+        { id: 2, text: "rightlightfg@gmail.com", label: '이메일 ', title:'주문 상품'},
+        { id: 3, text: "01031755959", label: '연락처', title:'주문 상품'},
+    ])
+
+    const [setlMtdInfo, setSetlMtdInfo] = useState({tagType: 'CHECKBOX', title:'주문상품'})
+    const [setlMtdData, setSetlMtdData] = useState([
+        { id: 1, text: "카드 간편 결제", label: '카드 간편 결제', title:'주문 상품' },
+        { id: 2, text: "신용카드", label: '신용카드', title:'주문 상품'},
+    ])
+
+    const [smplCardInfo, setSmplCardInfo] = useState({tagType: 'OPTION', title:'주문상품'})
+    const [smplCardData, setSmplCardData] = useState([
+        { id: 1, text: "신한카드(5594)", label: '', title:'주문 상품' },
+    ])
+
+
+    const [setlAmtInfo, setSetlAmtInfo] = useState({tagType: 'VIEW', title:'주문상품'})
+    const [setlAmtData, setSetlAmtData] = useState([
+        { id: 1, text: "9999000", label: '상품 금액', title:'주문 상품' },
+        { id: 2, text: "3000", label: '', title:'주문 상품'},
+        { id: 3, text: "37,8000원", label: '최종 결제 금액', title:'주문 상품'},
+    ])
+
+
+    const [concernInfo, setConcernInfo] = useState({tagType: 'VIEW', title:'주문상품'})
+    const [concernData, setConcernData] = useState([
+        { id: 1, text: "결제 시 개인정보 제공에 동의합니다.", label: '', title:'주문 상품' },
+        { id: 2, text: "내용보기URL", label: '', title:'주문 상품'},
+        { id: 3, text: "주식회사 포스타입은 회원 상호 간 콘텐츠 거래를 위한 통신판매중개 시스템을 제공할 뿐, 통신판매자를 대리하지 않습니다. 구매한 상품에 대한 취소, 환불 등 회원 간 성립된 거래에 대한 모든 책임은 회원이 직접 부담합니다. 자세한 내용은 서비스 이용 전 동의하신 이용약관을 참고해주세요.", label: '', title:'주문 상품'},
+        { id: 4, text: "이용약관URL", label: '', title:'주문 상품'},
+    ])
+
+    const [agreInfo, setAgreInfo] = useState({tagType: 'CHECKBOX', title:'주문상품'})
+    const [agreData, setAgreData] = useState([
+        { id: 1, text: "결제 내용을 확인했으며, 정보 제공 등에 동의합니다.", label: '', title:'주문 상품' },
+    ])
+
+    return (
+        <Container>
+            <ModuleWrapper>
+                <ContainerModule info = {orderInfo} data={ orderData}  template={template}/>
+            </ModuleWrapper>
+            <ModuleWrapper>
+                <h1 style={{ marginRight: '20px' }}>결제 정보</h1>
+                <ContainerModule info = {setlInfo} data={ setlData} template={template}/>
+            </ModuleWrapper>
+            <ModuleWrapper>
+                <h1 style={{ marginRight: '20px' }}>결제 방법</h1>
+                <ContainerModule info = {setlMtdInfo} data={ setlMtdData} template={template}/>
+            </ModuleWrapper>
+            <ModuleWrapper>
+                <h1 style={{ marginRight: '20px' }}>결제 방법</h1>
+                <ContainerModule info = {smplCardInfo} data={smplCardData}  template={template}/>
+            </ModuleWrapper>
+            <ModuleWrapper>
+                <h1 style={{ marginRight: '20px' }}>결제 금액</h1>
+                <ContainerModule info = {setlAmtInfo} data={setlAmtData}  template={template}/>
+            </ModuleWrapper>
+            <ModuleWrapper>
+                <h1 style={{ marginRight: '20px' }}>유의 사항</h1>
+                <ContainerModule info = {concernInfo} data={concernData}  template={template}/>
+            </ModuleWrapper>
+            <SetlButton value={'결제 하기'} onClick={clickHandler}>결제 하기</SetlButton>
+        </Container>
+    )
+}
+
+export default SettlementPage;

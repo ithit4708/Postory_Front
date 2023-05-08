@@ -1,0 +1,31 @@
+const defaultTemplateStyles = {
+    pageLayout: "ORDER_PAGE",
+    shape: "ROUND",
+    labelFontStyle: "BOLD",
+    textFontStyle: "NORMAL",
+    labelTextAlign: "left",
+    textTextAlign: "left",
+    alignItems: "stretch",
+    layout: "row",
+    itemLayout: "column",
+    listLayout: "column",
+    fontSize: "LARGE",
+    borderColor: "LIGHT",
+    backgroundColor: "WHITE",
+    borderSize: "MEDIUM",
+    padding: "20px",
+    margin: "20px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    textAlign: "left",
+    fontFamily: "Arial, sans-serif",
+    color: "#333",
+    lineHeight: "1.5",
+    letterSpacing: "1px",
+    width:'100%',
+    height:'100%',
+    maxHeight:null,
+    maxWidth:null,
+
+};
+
+export default defaultTemplateStyles;

@@ -21,6 +21,44 @@ const SetlButton = styled.button`
   }
 `;
 
+const SetlHeader = styled.div`
+
+`
+
+const OrderNumber = styled.div`
+`
+
+const SetlHeaderTitle = styled.div`
+`
+
+const SetlTitle = styled.div`
+  widith:100%;
+  font-weight: 600;
+  font-size: 18px;
+  lignt-height: 1;
+  color: #000;
+  margin: 0 0 20px; // Increase the bottom margin
+  padding: 4px 0;
+  white-space: nowrap;
+
+
+`
+
+const SetlHeaderDescription = styled.div`
+
+`
+const FlexContainer = styled.div`
+  display: flex;
+  align-items: center; // Optional, to align items vertically centered
+  margin-bottom: 20px; // Optional, to add some space between sections
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+`;
+
 
 
 const Container = styled.div`
@@ -34,14 +72,33 @@ const Container = styled.div`
   margin-right: auto;
 `;
 
+const SetlInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 0 60px;
+  margin: 60px 0 0;
+`
+
+const Spacer = styled.div`
+  height: 20px; // Adjust the height as needed
+  padding: 60px;
+`;
+
+
 const ModuleWrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 const SettlementPage = () =>{
 
     const navigator = useNavigate();
-    const clickHandler = () =>{
+    const clickHandler = () => {
         navigator('/order/pay/ready');
     }
 
@@ -103,28 +160,46 @@ const SettlementPage = () =>{
 
     return (
         <Container>
+            <SetlHeader>
+                <OrderNumber>{orderData[0].text}</OrderNumber>
+                <SetlHeaderTitle>{orderData[1].text}</SetlHeaderTitle>
+                <SetlHeaderDescription>{orderData[2].text}</SetlHeaderDescription>
+            </SetlHeader>
+            <SetlInfoWrapper>
+                <TitleWrapper>
+                    <SetlTitle>결제 정보</SetlTitle>
+                    <Spacer/>
+                    <ContainerModule info = {setlInfo} data={ setlData} template={template}/>
+                </TitleWrapper>
+            </SetlInfoWrapper>
             <ModuleWrapper>
-                <ContainerModule info = {orderInfo} data={ orderData}  template={template}/>
+                <TitleWrapper>
+                    <SetlTitle>결제 방법</SetlTitle>
+                    <Spacer/>
+                    <ContainerModule info = {setlMtdInfo} data={setlMtdData} template={template}/>
+                </TitleWrapper>
             </ModuleWrapper>
             <ModuleWrapper>
-                <h1 style={{ marginRight: '20px' }}>결제 정보</h1>
-                <ContainerModule info = {setlInfo} data={ setlData} template={template}/>
+                <TitleWrapper>
+                    <SetlTitle>결제 방법</SetlTitle>
+                    <Spacer/>
+                    <ContainerModule info = {smplCardInfo} data={smplCardData}  template={template}/>
+                </TitleWrapper>
             </ModuleWrapper>
             <ModuleWrapper>
-                <h1 style={{ marginRight: '20px' }}>결제 방법</h1>
-                <ContainerModule info = {setlMtdInfo} data={ setlMtdData} template={template}/>
+                <TitleWrapper>
+                    <SetlTitle>결제 금액</SetlTitle>
+                    <Spacer/>
+                    <ContainerModule info = {setlAmtInfo} data={setlAmtData}  template={template}/>
+                </TitleWrapper>
             </ModuleWrapper>
             <ModuleWrapper>
-                <h1 style={{ marginRight: '20px' }}>결제 방법</h1>
-                <ContainerModule info = {smplCardInfo} data={smplCardData}  template={template}/>
-            </ModuleWrapper>
-            <ModuleWrapper>
-                <h1 style={{ marginRight: '20px' }}>결제 금액</h1>
-                <ContainerModule info = {setlAmtInfo} data={setlAmtData}  template={template}/>
-            </ModuleWrapper>
-            <ModuleWrapper>
-                <h1 style={{ marginRight: '20px' }}>유의 사항</h1>
-                <ContainerModule info = {concernInfo} data={concernData}  template={template}/>
+                <TitleWrapper>
+                    <SetlTitle>유의 사항</SetlTitle>
+                    <Spacer/>
+                    <ContainerModule info = {concernInfo} data={concernData}  template={template}/>
+                </TitleWrapper>
+
             </ModuleWrapper>
             <SetlButton value={'결제 하기'} onClick={clickHandler}>결제 하기</SetlButton>
         </Container>

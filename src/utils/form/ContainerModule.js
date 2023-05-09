@@ -10,8 +10,8 @@ const Container = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  padding: ${({ template }) => template.padding};
-  margin: ${({ template }) => template.margin};
+  padding: ${({ template }) => template.containerPadding};
+  margin: ${({ template }) => template.containerMargin};
 `;
 
 const ContainerModule = (props) => {

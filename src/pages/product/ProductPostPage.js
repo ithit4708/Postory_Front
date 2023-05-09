@@ -5,7 +5,42 @@ import OrderPage from "./OrderPage";
 import ContainerModule from "../../utils/form/ContainerModule";
 import defaultTemplateStyles from "../../utils/form/defaultTemplate";
 import {useProductStore} from "../../store/ProductData";
-import {useSelectedStore} from "../../store/SelectedOptData";
+
+
+const ModalBackdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContainer = styled.div`
+
+  z-index: 1000;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #FFFFFF;
+
+  max-width: 60%;
+  max-height: 80%; // Limit the height of the modal
+  overflow-y: auto; // Make the content scrollable if it's too long
+  top: 50%;
+  left: 50%;
+`;
+
 
 const ProdPostContainer = styled.div`
   font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
@@ -135,7 +170,15 @@ const ProductPostPage = () => {
     return (
 
         <ProdPostContainer className={'productPostContainer'}>
-            {modalOpen && <OrderPage/>}
+            {modalOpen &&
+                <ModalBackdrop>
+
+                    <ModalContainer>
+                        <OrderPage/>
+                    </ModalContainer>
+                </ModalBackdrop>
+
+            }
             <ProductInfo>
                 <HeaderResponsive showModal={showModal}></HeaderResponsive>
             </ProductInfo>

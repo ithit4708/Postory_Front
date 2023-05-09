@@ -187,7 +187,7 @@ const HeaderResponsive = (props) => {
                         판매중
                     </Badge>
                     <HeaderTitle>
-                        <h1>{product.prodNm}</h1>
+                        <h2>{product.prodNm}</h2>
                     </HeaderTitle>
                 </TitleWrapper>
                 <PostHeaderSummary>포스타입 오리지널</PostHeaderSummary>

@@ -1,26 +1,26 @@
-import React, { useReducer, useEffect } from 'react';
-import styled, {css} from "styled-components";
-
+import React, { useState, useEffect } from "react";
+import styled, { css } from "styled-components";
 
 const getTemplateStyle = (template) => {
     const labelStyles = css`
-      font-weight: ${template.labelFontStyle === 'BOLD' ? 'bold' : 'normal'};
+      font-weight: ${template.labelFontStyle === "BOLD" ? "bold" : "normal"} !important;
       text-align: ${template.labelTextAlign};
     `;
 
     const textStyles = css`
-      font-weight: ${template.textFontStyle === 'BOLD' ? 'bold' : 'normal'};
+      font-weight: ${template.textFontStyle === "BOLD" ? "bold" : "normal"};
       text-align: ${template.textTextAlign};
     `;
 
-    const layout = template.itemLayout === 'column' ? 'column' : 'row';
+    const layout = template.itemLayout === "column" ? "column" : "row";
 
     return css`
       display: flex;
       flex-direction: ${layout};
       justify-content: space-between;
       align-items: ${template.alignItems};
-      margin-bottom: 10px;
+      margin: ${template.listItemMargin};
+      padding: ${template.listItemPadding};
 
       & > div:first-child {
         ${labelStyles}
@@ -35,106 +35,64 @@ const getTemplateStyle = (template) => {
 const ListItem = styled.div`
   ${({ template }) => getTemplateStyle(template)}
 `;
-const initialState = ([datum, info])=>{
-    switch (info.tagType) {
-        case 'TEXTAREA':
-            return ({
-                tagHtml: '',
-                label: datum.label,
-                tagType: info.tagType,
-            })
-        default :
-            return ({
-                tagHtml: '',
-                label: datum.label,
-                tagType: info.tagType,
-            })
-    }
-};
-const changeHandler = (event, dispatch, info, datum) => {
-    const { value } = event.target;
-    dispatch({ type: 'UPDATE_VALUE', payload: { value, info, datum } });
-};
 
-const renderTagReducer = (state, action) => {
-    const { datum, info, dispatch } = action.payload;
+const ListItemModule = (props) => {
+    const { datum, info, template } = props;
+    const [value, setValue] = useState(datum.text);
+    const [label, setLabel] = useState("");
+    const [tagHtml, setTagHtml] = useState(null);
+    const [tagType, setTagType] = useState(null);
 
-    switch (info.tagType) {
-        case 'TEXTAREA':
-            return {
-                ...state,
-                tagHtml: (
+    const changeHandler = (event) => {
+        const { value } = event.target;
+        setValue(value);
+    };
+
+    useEffect(() => {
+        if (info.tagType === "TEXTAREA" || info.tagType === "CHECKBOX") {
+            setLabel(<div style={{ fontWeight: "bold" }}>{datum.label}</div>);
+        } else {
+            setLabel(datum.label);
+        }
+        setTagType(info.tagType);
+
+        switch (info.tagType) {
+            case "TEXTAREA":
+                setTagHtml(
                     <textarea
-                        value={state.value}
-                        onChange={(event) => changeHandler(event, dispatch, info, datum)}
+                        value={value}
+                        onChange={(event) => changeHandler(event)}
                     />
-                ),
-                label: <div>{datum.label}</div>,
-                tagType: info.tagType,
-            };
-        case 'CHECKBOX':
-            return {
-                ...state,
-                tagType: 'CHECKBOX',
-                tagHtml: (
+                );
+                break;
+            case "CHECKBOX":
+                setTagHtml(
                     <label>
                         <input type="checkbox" value={datum.text} />
                         <span>{datum.text}</span>
                     </label>
-                ),
-                label: <div>{datum.label}</div>,
-            };
-        case 'OPTION':
-            return {
-                ...state,
-                tagType: 'OPTION',
-                tagHtml: <option value={datum.text} label={datum.text} />,
-                label: '',
-            };
-        case 'VIEW':
-            return{
-                ...state,
-                tagType: 'VIEW',
-                tagHtml:<div>{datum.text}</div>,
-                label:<div>{datum.label}</div>
-            }
-        default:
-            return state;
-    }
-};
+                );
+                break;
+            case "OPTION":
+                setTagHtml(<option value={datum.text} label={datum.text} />);
+                setLabel("");
+                break;
+            case "VIEW":
+                setTagHtml(<div>{datum.text}</div>);
+                setLabel(<div>{datum.label}</div>);
+                break;
+            default:
+                break;
+        }
+    }, [datum, info, setValue, datum.text]);
 
-const valueChangeReducer = (state, action) => {
-    switch (action.type) {
-        case 'UPDATE_VALUE':
-            return { ...state, value: action.payload };
-        default:
-            return state;
-    }
-};
-
-const combinedReducer = (state, action) => {
-    switch (action.type) {
-        case'INIT':
-            return renderTagReducer(state, action);
-        case 'UPDATE_VALUE':
-            return valueChangeReducer(state, action);
-        default:
-            return state;
-    }
-};
-
-const ListItemModule = (props) => {
-    const { datum, info,template } = props;
-    const [state, dispatch] = useReducer(combinedReducer ,[datum,info],initialState);
-
-
-    useEffect(() => {
-        dispatch({ type: 'INIT', payload: { datum, info, dispatch } });
-    }, [datum,info]);
-
-    const { tagHtml, label, tagType } = state;
-
-    return tagType === 'OPTION' ? tagHtml : <ListItem template={template}> {label} {tagHtml} </ListItem>;
+    return tagType === "OPTION" ? (
+        tagHtml
+    ) : (
+        <ListItem template={template}>
+            {label} {tagHtml}
+        </ListItem>
+    );
 };
 
 export default React.memo(ListItemModule);

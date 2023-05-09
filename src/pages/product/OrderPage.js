@@ -7,44 +7,34 @@ import containerModule from "../../utils/form/ContainerModule";
 import {useSelectedStore} from "../../store/SelectedOptData";
 import {useProductStore} from "../../store/ProductData";
 
-const ProductCard = styled.div` display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; border: 1px solid #ccc; padding: 1rem; cursor: pointer;`;
+const ProductCard = styled.div` display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; padding: 1rem;`;
 
-const Thumbnail = styled.div` img { width: 100px; height: 100px; object-fit: cover; }`;
+const Thumbnail = styled.div` img { display: flex; width: 200px; height: 200px; object-fit: cover; align-items: center; justify-content: center }`;
 
 const ProductInfo = styled.div` display: flex; flex-direction: column; justify-content: space-between;`;
 
-const ProductName = styled.div` font-size: 1.2rem; font-weight: bold;`;
-
-const ProductDetails = styled.div` font-size: 0.9rem;`;
-
 const OrdPageContainer = styled.div`
-  
-  z-index: 999;
-  position: absolute;
-  //top: 50%;
-  ////left: 50%;
-  //transform: translate(-50%,-50%);
-  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  //width: 500px;
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #FFFFFF;
+  padding: 0 24px 0 24px;
 `;
 
 const OrdPageModuleWarpper = styled.div`
   width: 100%;
   box-sizing: border-box;
+  border-bottom: 1px solid #000;
+  padding: 24px 0 44px 0;
+ 
 `;
 
-const Title = styled.h1`
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+const OrderDetailHeader = styled.div`
+  padding: 18px 24px;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 20px;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  flex-direction: row-reverse;
 `;
+
+
 const OrderButton = styled.button`
   background-color: #3478FF;
   border: none;
@@ -62,6 +52,17 @@ const OrderButton = styled.button`
     background-color: #3478FF;
   }
 `;
+
+const InfoTitle = styled.div`
+  box-sizing: border-box;
+  padding-top: 18px;
+  padding-right: 24px;
+  padding-left: 24px;
+  margin-bottom: 24px;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 20px;
+`
 
 const OrderPage = () => {
 
@@ -103,7 +104,7 @@ const OrderPage = () => {
 
     const [info2, setInfo2] = useState({tagType: 'CHECKBOX', title: '배송방법'})
     const [data2, setData2] = useState([
-        { id: 1, text: `${dlvryMethods.dlvryMtdNm}`, label: `${info2.title}`, title:'배송 정보' },
+        { id: 1, text: `${dlvryMethods.dlvryMtdNm}`, label: '배송방법', title:'배송 정보' },
     ])
 
     const [info3, setInfo3] = useState({tagType: 'TEXTAREA', title: ''})
@@ -130,6 +131,12 @@ const OrderPage = () => {
         { id: 1, text: totalAmountData+dlvryMethods.dlvryExp, label: '총 금액', title:'결제예정 금액' },
     ])
 
+    const [info7] = useState({tagType:'VIEW', title:'유의사항'})
+    const [data7] = useState([
+        {id: 1, text:
+            "주식회사 포스타입은 회원 상호 간 콘텐츠 거래를 위한 통신판매중개 시스템을 제공할 뿐, 통신판매자를 대리하지 않습니다. 구매한 상품에 대한 취소, 환불 등 회원 간 성립된 거래에 대한 모든 책임은 회원이 직접 부담합니다. 자세한 내용은 서비스 이용 전 동의하신 이용약관을 참고해 주세요.",   label: ''}
+    ])
+
     // useEffect(() => {
     //     const newData1List = selectedOptData.map((selectedOptDatum) => {
     //         return [
@@ -145,10 +152,11 @@ const OrderPage = () => {
 
     return (
         <OrdPageContainer className={'OrderPageContainer'}>
+            <OrderDetailHeader>
+                <InfoTitle>주문하기</InfoTitle>
+            </OrderDetailHeader>
             <OrdPageModuleWarpper>
-                <div>
-                    <h1>주문 상품</h1>
-                </div>
+                    <InfoTitle>주문 상품</InfoTitle>
                 <div>
                     {selectedOptData.map((selectedOptDatum, index) => (
                         <ProductCard key={index}>
@@ -161,8 +169,7 @@ const OrderPage = () => {
                                     data={[
                                         { id: 1, text: `${product.prodNm}`, label: "", title: "주문 상품" },
                                         { id: 2, text: `${selectedOptDatum.prodOptNm}`, label: "", title: "주문 상품" },
-                                        { id: 3, text: selectedOptDatum.prodOptPrc, label: "", title: "주문 상품" },
-                                        { id: 4, text: "| " + selectedOptDatum.count + "개", label: "", title: "주문 상품" },
+                                        { id: 3, text: selectedOptDatum.prodOptPrc + "| "+selectedOptDatum.count + "개", label: "", title: "주문 상품" },
                                     ]}
                                     template={template}
                                 />
@@ -175,7 +182,7 @@ const OrderPage = () => {
 
             <OrdPageModuleWarpper>
                 <div>
-                    <h1>배송정보</h1>
+                    <InfoTitle>배송정보</InfoTitle>
                 </div>
                 <ContainerModule info={info2} data={data2} template={template} />
                 <ContainerModule info={info3} data={data3} template={template} />
@@ -183,28 +190,35 @@ const OrderPage = () => {
 
             <OrdPageModuleWarpper>
                 <div>
-                    <h1>추가 질문</h1>
+                    <InfoTitle>추가 질문</InfoTitle>
                 </div>
                 <ContainerModule info={info4} data={data4} template={template} />
             </OrdPageModuleWarpper>
 
             <OrdPageModuleWarpper>
                 <div>
-                    <h1>주문 금액</h1>
+                    <InfoTitle>주문 금액</InfoTitle>
                 </div>
                 <ContainerModule info={info5} data={data5} template={template} />
             </OrdPageModuleWarpper>
 
             <OrdPageModuleWarpper>
-                    <h1>결제 예정 금액</h1>
+                    <InfoTitle>결제 예정 금액</InfoTitle>
                 <ContainerModule info={info6} data={data6} template={template} />
             </OrdPageModuleWarpper>
+            <OrdPageModuleWarpper>
+                <div>
+                    주식회사 포스타입은 회원 상호 간 콘텐츠 거래를 위한 통신판매중개 시스템을 제공할 뿐, 통신판매자를 대리하지 않습니다. 구매한 상품에 대한 취소, 환불 등 회원 간 성립된 거래에 대한 모든 책임은 회원이 직접 부담합니다. 자세한 내용은 서비스 이용 전 동의하신
+                        <a href={"https://www.postype.com/tos"} target={"_blank"}>이용약관</a>
+                    을 참고해 주세요.
+                </div>
+            </OrdPageModuleWarpper>
 
-            <div>
-                <OrderButton value={"주문 하기"} onClick={clickHandler}>
+
+            <OrderButton value={"주문 하기"} onClick={clickHandler}>
                     주문 하기
                 </OrderButton>
-            </div>
+
         </OrdPageContainer>
     );
 };

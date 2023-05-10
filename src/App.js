@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import LoginSignupPage from './pages/LoginSignupPage';
 import GlobalStyle from './GlobalStyle';
 import ProfilePage from './pages/ProfilePage';
+import AccountSettingsPages from './pages/AccountSettingsPages';
+import SettingHeadNav from './components/SettingHeadNav';
 
 const HomeDiv = styled.div`
 border: 1px solid black;
@@ -32,6 +34,10 @@ function App() {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/profile/:userinfo' element={<ProfilePage />} />
         <Route path='/profile/:userinfo/:creation' element={<ProfilePage />} />
+        <Route element={<SettingHeadNav />}>
+          <Route path='/account/settings' element={<AccountSettingsPages />} />
+          <Route path='/account/settings/:type' element={<AccountSettingsPages />} />
+        </Route>
       </Routes>
     </>
   );

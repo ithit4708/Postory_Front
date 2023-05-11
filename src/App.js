@@ -5,6 +5,8 @@ import GlobalStyle from './GlobalStyle';
 import ProfilePage from './pages/ProfilePage';
 import AccountSettingsPages from './pages/AccountSettingsPages';
 import SettingHeadNav from './components/SettingHeadNav';
+import PointBenefitHeadNav from './components/PointBenefitHeadNav';
+import PointBenefitPage from './pages/PointBenefitPage';
 
 const HomeDiv = styled.div`
 border: 1px solid black;
@@ -37,6 +39,10 @@ function App() {
         <Route element={<SettingHeadNav />}>
           <Route path='/account/settings' element={<AccountSettingsPages />} />
           <Route path='/account/settings/:type' element={<AccountSettingsPages />} />
+        </Route>
+        <Route element={<PointBenefitHeadNav />}>
+          <Route path='/point' element={<PointBenefitPage />} />
+          <Route path='/point/:type' element={<PointBenefitPage />} />
         </Route>
       </Routes>
     </>

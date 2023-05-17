@@ -7,6 +7,9 @@ import AccountSettingsPages from './pages/AccountSettingsPages';
 import SettingHeadNav from './components/SettingHeadNav';
 import PointBenefitHeadNav from './components/PointBenefitHeadNav';
 import PointBenefitPage from './pages/PointBenefitPage';
+import SubscriptionHeadNav from './components/SubscriptionHeadNav';
+import SubscriptionPage from './pages/SubscriptionPage';
+import DropDownRender from './components/DropDownRender';
 
 const HomeDiv = styled.div`
 border: 1px solid black;
@@ -44,6 +47,11 @@ function App() {
           <Route path='/point' element={<PointBenefitPage />} />
           <Route path='/point/:type' element={<PointBenefitPage />} />
         </Route>
+        <Route element={<SubscriptionHeadNav />}>
+          <Route path='/subscriptions' element={<SubscriptionPage />} />
+          <Route path='/subscriptions/:type' element={<SubscriptionPage />} />
+        </Route>
+        <Route path="/dropdown" element={<DropDownRender />} />
       </Routes>
     </>
   );

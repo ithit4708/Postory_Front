@@ -42,7 +42,14 @@ const LoginForm = () => {
         const userData = JSON.parse(localStorage.getItem('userData'));
         for (let i = 0; i < userData.length; i++) {
             if (userData && userData[i].email === email && userData[i].password === password) {
+                const loginUserData = {
+                    [userData[i].userId]: {                       //계산된 속성 (computed property names)
+                        'email': email,
+                        'nick': userData[i].nickname
+                    }
+                }
                 alert(`Welcome, 로그인 성공 ${email}!`);
+                sessionStorage.setItem(`userinfo`, JSON.stringify(loginUserData));
                 return navigate("/")
             }
         }

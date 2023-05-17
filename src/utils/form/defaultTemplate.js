@@ -1,0 +1,36 @@
+const defaultTemplateStyles = {
+    pageLayout: "ORDER_PAGE",
+    shape: "RECTANGULAR",
+    labelFontStyle: "BOLD",
+    textFontStyle: "NORMAL",
+    labelTextAlign: "left",
+    textTextAlign: "left",
+    alignItems: "stretch",
+    layout: "row",
+    itemLayout: "column",
+    listLayout: "column",
+    fontSize: "MIDIUM",
+    borderColor: "LIGHT",
+    backgroundColor: "WHITE",
+    borderSize: "MEDIUM",
+    padding: "0",
+    containerMargin:"0",
+    containerPadding:"0 32px 0 32px",
+    listMargin: "0",
+    listPadding: "0",
+    listItemPadding:"0",
+    listItemMargin:"0",
+    boxShadow: "", /*"0 4px 6px rgba(0, 0, 0, 0.1)",*/
+    textAlign: "left",
+    fontFamily:"'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'sans-serif'",
+    color: "#333",
+    lineHeight: "1.5",
+    letterSpacing: "1px",
+    width:'100%',
+    height:'100%',
+    maxHeight:null,
+    maxWidth:null,
+
+};
+
+export default defaultTemplateStyles;

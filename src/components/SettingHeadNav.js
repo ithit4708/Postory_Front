@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Link, Outlet } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 
 const SettingHeadNav = () => {
     const { type } = useParams();
@@ -36,7 +35,7 @@ const SettingHeadNav = () => {
 
 export default SettingHeadNav;
 
-const HeadNavLayout = styled.nav`
+export const HeadNavLayout = styled.nav`
     top : 56px ;
     box-shadow: inset 0 1px 0 0 rgba(0,0,0,.05);
     display: flex;
@@ -67,25 +66,25 @@ const HeadNavLayout = styled.nav`
         font-size: 18px;
         @media screen and (min-width: 768px) 
         {
-            right: 220px;
-            left: 220px;
+            right: 120px;
+            left: 120px;
             font-size: 20px;                
         }
-        @media screen and (min-width: 992) 
+        @media screen and (min-width: 992px) 
         {
             position: absolute;
-            top: 60px;
-            left: 26px;
+            /* left: auto; */
+            left : 240px;
+            right: auto;
             z-index: 1;
             height: 56px;
             padding: 0;
             line-height: 56px;
-            right: auto;
         }
     }
 `
 
-const HeadNavBox = styled.div`
+export const HeadNavBox = styled.div`
     margin-right: auto;
     margin-left: auto;
     display: flex;
@@ -94,7 +93,7 @@ const HeadNavBox = styled.div`
     align-items: center;
 `
 
-const HeadNavList = styled.ul`
+export const HeadNavList = styled.ul`
     display: flex;
     justify-content: center;
     margin: 0 auto;
@@ -107,7 +106,7 @@ const HeadNavList = styled.ul`
     height: 56px;
 `
 
-const HeadNavItem = styled.li`
+export const HeadNavItem = styled.li`
     height: 56px;
     margin-left: 20px;
     a{
@@ -128,6 +127,5 @@ const HeadNavItem = styled.li`
     ${props =>
         props.active && css`
         border-bottom: 2px solid;
-    
     `}
 `

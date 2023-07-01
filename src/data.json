@@ -1,0 +1,78 @@
+{
+  "profiles": [
+    {
+      "userId": "1613968465c8489a94e47152ecd1aeaa",
+      "eid": "leading.advertisement@gmail.com",
+      "pwd": "abcd1234!",
+      "nic": "ksm",
+      "userIntro": "KSM 소개",
+      "userImgPath": null
+    },
+    {
+      "userId": "772d132622ba4b53953e251b2546791f",
+      "eid": "rightlightfg@gmail.com",
+      "pwd": "abcd1234!",
+      "nic": "kjh",
+      "userIntro": "KJH 소개",
+      "userImgPath": null
+    },
+    {
+      "userId": "cea3e368d10042fe81134c6b8bf83b3d",
+      "eid": "intae4708@naver.com",
+      "pwd": "abcd1234!",
+      "nic": "hit",
+      "userIntro": "HIT 소개",
+      "userImgPath": null
+    }
+  ],
+  "channels": [
+    {
+      "chnlId": 1,
+      "chnlUri": "ithit4708",
+      "chnlTtl": "HIT!다 HIT 프로그래밍",
+      "chnlSbTtl": "프로그래밍의 모든 것!! HIT!다 HIT와 함께 배워보아요",
+      "chnlIntro": "웹 프로그래밍 관련된 모든 것을 소개하는 채널입니다.\n프로그래밍 언어, 컴퓨터 과학, 관련 기술 및 다양한 프로그래밍 및 컴퓨터 관련 포스팅을 진행하고 있습니다.",
+      "chnlImgPath": null,
+      "suberCnt": 4,
+      "chnlPostCnt": 10,
+      "chnlLikCnt": 5,
+      "chnlOpenDtm": "2023-05-30T15:30:00",
+      "crtId": "cea3e368d10042fe81134c6b8bf83b3d",
+      "hmpgUrl": null,
+      "instaUrl": null,
+      "githUrl": null,
+      "ytbUrl": null,
+      "twchUrl": null,
+      "chnlStusCd": null,
+      "chnlStusChgrId": "cea3e368d10042fe81134c6b8bf83b3d",
+      "chnlStusChgDtm": "2023-05-30T15:55:00",
+      "nic": "hit",
+      "userIntro": "HIT 소개",
+      "userImgPath": null
+    },
+    {
+      "chnlId": 2,
+      "chnlUri": "ithit9085",
+      "chnlTtl": "HIT! 채널2",
+      "chnlSbTtl": "채널2의 부제목",
+      "chnlIntro": "채널2 소개란",
+      "chnlImgPath": null,
+      "suberCnt": 2,
+      "chnlPostCnt": 5,
+      "chnlLikCnt": 10,
+      "chnlOpenDtm": "2023-06-01T15:30:00",
+      "crtId": "cea3e368d10042fe81134c6b8bf83b3d",
+      "hmpgUrl": null,
+      "instaUrl": null,
+      "githUrl": null,
+      "ytbUrl": null,
+      "twchUrl": null,
+      "chnlStusCd": null,
+      "chnlStusChgrId": "cea3e368d10042fe81134c6b8bf83b3d",
+      "chnlStusChgDtm": "2023-06-02T15:55:00",
+      "nic": "hit",
+      "userIntro": "HIT 소개",
+      "userImgPath": null
+    }
+  ]
+}

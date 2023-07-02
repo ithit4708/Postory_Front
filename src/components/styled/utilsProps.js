@@ -22,6 +22,12 @@ export const linkChar = css`
   font-size: ${(p) => p.theme.fontSize.link}px;
 `;
 
+export const bodyChar = css`
+  color: ${(p) => p.theme.color.link};
+  font-weight: ${(p) => p.theme.fontWeight.semiBold};
+  font-size: ${(p) => p.theme.fontSize.bodyfont}px;
+`;
+
 export const btnStyle = css`
   padding: 7px 15px;
   font-size: 15px;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { contentBox, stickyBox } from '../../styled/utilsProps';
 
-const NavSC = styled.nav`
+export const NavSC = styled.nav`
   ${stickyBox}
   top: ${(p) => p.theme.globalPx.gHeaderHeight}px;
   z-index: 20;

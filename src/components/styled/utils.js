@@ -4,6 +4,7 @@ export const btnStyle = `
   padding: 7px 15px;
   font-size: 15px;
   border-radius: 4px;
+  font-weight: normal;
 `;
 
 export const naviLinkActive = `

@@ -37,6 +37,7 @@ theme.color.line = theme.color.blackA05;
 theme.color.placeholder = theme.color.blackA30;
 theme.color.blueBtnShadow = theme.color.blue2;
 theme.color.link = theme.color.blackA50;
+theme.color.bodyfont = theme.color.blackA50;
 theme.color.overlay = theme.color.blackA50;
 theme.color.ddItemHoverbg = theme.color.gray3;
 theme.color.ddItemHover = theme.color.blackA80;

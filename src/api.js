@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 export const api = axios.create({
   baseURL: 'http://localhost:8080',
@@ -15,6 +14,20 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 403) {
+      console.log('403응답');
+      window.location.href = '/logout';
+      return;
+    }
     return Promise.reject(error);
   }
 );

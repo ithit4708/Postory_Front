@@ -7,12 +7,12 @@ export const NavMenuSC = styled.ul`
   width: 100%;
 
   display: flex;
-  justify-content: center;
+  justify-content: ${(p) => (p.isStart ? 'flex-start' : 'center')};
 `;
 
-export default function NavMenu({ navLinks }) {
+export default function NavMenu({ isStart = false, navLinks }) {
   return (
-    <NavMenuSC>
+    <NavMenuSC isStart={isStart}>
       {navLinks.map((link, idx) => (
         <li key={idx}>
           {link.isTitle ? (

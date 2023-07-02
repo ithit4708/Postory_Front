@@ -1,43 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { api } from '../api';
+import { useEffect } from 'react';
 
-export function useApiGet(url, initialtype) {
+export function useApiGet(url) {
   //dataFormat은 {} or []가 되어야함
-  const [data, setData] = useState(initialtype);
+  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true;
-    // const abortController = new AbortController();
-    // const signal = abortController.signal;
-    // api.get(url)의 두번째 파라미터로 {signal} 추가
-
     (async () => {
       try {
         const res = await api.get(url);
-        if (isMounted) {
-          console.log('get 성공');
-          setData(res);
-        }
+        console.log('get 성공', res);
+        setData(res.data);
       } catch (err) {
-        if (isMounted) {
-          console.log('get 실패');
-          console.log(err);
-          setError(err);
-        }
+        console.log('get 실패', err);
+        setError(err);
       } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }
     })();
-
-    return () => {
-      isMounted = false;
-      // abortController.abort();
-    };
-  }, [url]);
+  }, []); // 의존성 배열이 비어있음
 
   return { data, isLoading, error };
 }

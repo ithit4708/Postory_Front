@@ -138,13 +138,13 @@ export const pageRoutes = [
 
   //search
   { id: 20, path: urls.search, element: <SearchPost /> },
-  { id: 21, path: urls.searchSeries, element: <SearchSeries /> },
+  // { id: 21, path: urls.searchSeries, element: <SearchSeries /> },
   { id: 22, path: urls.searchChannel, element: <SearchChannel /> },
 
   //profile
   { id: 23, path: urls.profile, element: <ProfileChannel /> },
   { id: 24, path: urls.profilePost, element: <ProfilePost /> },
-  { id: 25, path: urls.profileSeries, element: <ProfileSeries /> },
+  // { id: 25, path: urls.profileSeries, element: <ProfileSeries /> },
 
   //channel
   { id: 26, path: urls.channelCreate, element: <ChannelCreate /> },

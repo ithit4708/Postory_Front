@@ -5,6 +5,7 @@ export default function Logout() {
   const { onLogout } = useAuth();
 
   useEffect(() => {
+    console.log('로그아웃 실행');
     onLogout();
   }, []);
 

@@ -20,6 +20,10 @@ import AccountSettings from './pages/general/accSettings/AccountSetting';
 import ProfileSettings from './pages/general/accSettings/ProfileSetting';
 import BlackedChannel from './pages/general/accSettings/BlackedChannel';
 import ChannelCreate from './pages/general/ChannelCreate';
+import ChannelHome from './pages/general/channel/ChannelHome';
+import ChannelPosts from './pages/general/channel/ChannelPosts';
+import ChannelSeries from './pages/general/channel/ChannelSeries';
+import ChannelAbout from './pages/general/channel/ChannelAbout';
 
 const urls = {
   login: '/login',
@@ -52,7 +56,17 @@ const urls = {
   setProfile: '/account/settings/profile',
   setBlacklist: '/account/settings/blacklist',
 
+  //channel
   channelCreate: '/channel/create',
+  // TODO: chnlUri 변수 수정
+  // channel: '/channel/:chnlUri',
+  // channelPosts: '/channel/:chnlUri/posts',
+  // channelSeries: '/channel/:chnlUri/series',
+  // channelAbout: '/channel/:chnlUri/about',
+  channel: '/channel/buksan',
+  channelPosts: '/channel/buksan/posts',
+  channelSeries: '/channel/buksan/series',
+  channelAbout: '/channel/buksan/about',
 
   search: '/search',
   searchSeries: '/search/series',
@@ -104,6 +118,13 @@ export const accSetLinks = [
   { to: urls.setBlacklist, children: '차단' },
 ];
 
+export const channelLinks = [
+  { to: urls.channel, children: '홈' },
+  { to: urls.channelPosts, children: '포스트' },
+  { to: urls.channelSeries, children: '시리즈' },
+  { to: urls.channelAbout, children: '소개' },
+];
+
 // app.js routing
 export const pageRoutes = [
   { id: 1, path: urls.signup, element: <Signup /> },
@@ -138,14 +159,18 @@ export const pageRoutes = [
 
   //search
   { id: 20, path: urls.search, element: <SearchPost /> },
-  // { id: 21, path: urls.searchSeries, element: <SearchSeries /> },
+  { id: 21, path: urls.searchSeries, element: <SearchSeries /> },
   { id: 22, path: urls.searchChannel, element: <SearchChannel /> },
 
   //profile
   { id: 23, path: urls.profile, element: <ProfileChannel /> },
   { id: 24, path: urls.profilePost, element: <ProfilePost /> },
-  // { id: 25, path: urls.profileSeries, element: <ProfileSeries /> },
+  { id: 25, path: urls.profileSeries, element: <ProfileSeries /> },
 
   //channel
   { id: 26, path: urls.channelCreate, element: <ChannelCreate /> },
+  { id: 27, path: urls.channel, element: <ChannelHome /> },
+  { id: 28, path: urls.channelPosts, element: <ChannelPosts /> },
+  { id: 29, path: urls.channelSeries, element: <ChannelSeries /> },
+  { id: 30, path: urls.channelAbout, element: <ChannelAbout /> },
 ];

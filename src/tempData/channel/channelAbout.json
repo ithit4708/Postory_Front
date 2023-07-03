@@ -1,0 +1,33 @@
+{
+    "data": {
+        "channel": {
+            "chnlId": 7,
+            "chnlTtl": "산왕잡기",
+            "chnlIntro": "포기 ㄴㄴ해.",
+            "chnlUri": "buksan",
+            "chnlSbTtl": null,
+            "chnlImgPath": "https://blog.kakaocdn.net/dn/d8FDB8/btquA1JkNEk/3rimTHGPZXiuhMe93Uw751/img.png",
+            "suberCnt": null,
+            "chnlPostCnt": null,
+            "chnlLikCnt": null,
+            "chnlOpenDtm": "2023-06-17 16:03:15",
+            "crtId": null,
+            "hmpgUrl": null,
+            "instaUrl": null,
+            "githUrl": null,
+            "ytbUrl": null,
+            "twchUrl": null,
+            "chnlStusCd": null,
+            "chnlStusChgrId": null,
+            "chnlStusChgDtm": "2023-06-17 16:03:15",
+            "crtNic": "genius"
+        },
+        "user": {
+            "eid": "iamloved5959@gmail.com",
+            "nic": "genius",
+            "userIntro": "genius한 아이디입니다.",
+            "userImgPath": null,
+            "msgAlowYn": true
+        }
+    }
+}

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import useUserStore from '../stores/useUserStore';
 import { useNavigate } from 'react-router-dom';
-import useChannelStore from '../stores/useChannelStore';
+import useUserChannelStore from '../stores/useUserChannelStore';
 
 export default function useAuth() {
   const { user, setUser } = useUserStore();
-  const { channels, setChannels } = useChannelStore();
+  const { channels, setChannels } = useUserChannelStore();
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const useChannelStore = create((set) => ({
+const useChannelList = create((set) => ({
   channels: [],
 
   // 로그인 유저의 모든 채널 세팅
@@ -31,4 +31,4 @@ const useChannelStore = create((set) => ({
   },
 }));
 
-export default useChannelStore;
+export default useChannelList;

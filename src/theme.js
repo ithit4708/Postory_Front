@@ -11,9 +11,15 @@ export const theme = {
     blackA05: 'rgba(0, 0, 0, 0.05)',
   },
   fontSize: {
+    postMetaData: 12,
+    userBannerNic: 13,
+    postSerTitle: 14,
     bodyfont: 15,
+    postSubTitle: 16,
     link: 16,
     title: 26,
+    channelTitle: 18,
+    postTitle: 21,
   },
   fontWeight: {
     thin: 100,
@@ -37,6 +43,7 @@ theme.color.line = theme.color.blackA05;
 theme.color.placeholder = theme.color.blackA30;
 theme.color.blueBtnShadow = theme.color.blue2;
 theme.color.link = theme.color.blackA50;
+theme.color.itemInfo = theme.color.blackA50;
 theme.color.bodyfont = theme.color.blackA50;
 theme.color.overlay = theme.color.blackA50;
 theme.color.ddItemHoverbg = theme.color.gray3;

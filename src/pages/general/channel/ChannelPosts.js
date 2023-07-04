@@ -5,6 +5,9 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import useUserStore from '../../../stores/useUserStore';
+import { useLocation, useParams } from 'react-router-dom';
+import { useApiGet } from '../../../hooks/useApi';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -135,11 +138,31 @@ const PaginationButton = styled.div`
 `;
 
 export default function ChannelPosts() {
-  const [currentPage, setCurrentPage] = useState(0);
+  const { user } = useUserStore();
+  const { chnlUri } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const pageString = queryParams.get('page');  // This will be a string
+  const page = pageString !== null ? Number(pageString) - 1 : 0;
+  const [currentPage, setCurrentPage] = useState(page);
+  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}/posts?page=${currentPage+1}`,
+  );
   const [pageCount, setPageCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(null);
+  const { data, isLoading, error } = useApiGet(
+    url,
+    [url]
+  );
 
-  const totalCount = channelPostsData.data.channel.chnlPostCnt;
   const size = 12;
+
+  console.dir(data);
+  useEffect(() => {
+    // ...if data has loaded, then compute the totalCount
+    if (data) {
+      setTotalCount(data.data.channel.chnlPostCnt || 0);
+    }
+  }, [data]);
 
   useEffect(() => {
     const calculatePageCount = () => {
@@ -148,6 +171,11 @@ export default function ChannelPosts() {
 
     calculatePageCount();
   }, [totalCount, size]);
+
+  useEffect(() => {
+    setUrl(`/channel/${encodeURIComponent(chnlUri)}/posts?page=${currentPage+1}`);
+  }, [currentPage, chnlUri]);
+
 
   const handlePrevPage = () => {
     if (currentPage > 0) {
@@ -161,14 +189,24 @@ export default function ChannelPosts() {
     }
   };
 
+  if (isLoading) return<div>Loading...</div>;
+  if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
+
+  if (!data) {
+    return null;
+  }
+
+
+
+
   return (
     <ChannelTemplate>
       <SectionHeader>
-        <span>{channelPostsData.data.channel.chnlPostCnt}개의 포스트</span>
+        <span>{data.data.channel.chnlPostCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
       </SectionHeader>
       <WebtoonListContainer style={{ padding: '50px', margin: '20px 0' }}>
-        {channelPostsData.data.channelPosts.map((post, index) => (
+        {data.data.channelPosts.map((post, index) => (
           <WebtoonListItem key={index}>
             <WebtoonThumbnail imageUrl={post.postThumnPath} />
             <div>
@@ -176,7 +214,7 @@ export default function ChannelPosts() {
               <WebtoonTitle>{post.postTtl}</WebtoonTitle>
             </div>
             <WebtoonSubInfo>
-              <WebtoonWriter>{channelPostsData.data.channelUser.nic}</WebtoonWriter>
+              <WebtoonWriter>{data.data.channelUser.nic}</WebtoonWriter>
               <WebtoonCount>
                 <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/>
                 {post.postInqrCnt}
@@ -197,7 +235,7 @@ export default function ChannelPosts() {
       </WebtoonListContainer>
       // 임시로 currentPage를 보여주기 위한 코드  {currentPage} 현재페이지
       {/* <PostListContainer style={{ padding: '50px', margin: '20px 0' }}>
-        {channelPostsData.data.channelPosts.map((post, index) => (
+        {data.data.channelPosts.map((post, index) => (
           <PostListItem key={index}>
             <div>
               <h3>{post.postTtl}</h3>

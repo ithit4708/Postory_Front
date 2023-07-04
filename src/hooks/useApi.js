@@ -7,6 +7,7 @@ export function useApiGet(url) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  console.dir(url);
 
   useEffect(() => {
     (async () => {

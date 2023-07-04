@@ -1,6 +1,9 @@
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
 import channelData from '../../../tempData/channel/channel.json';
 import styled from 'styled-components';
+import useUserStore from '../../../stores/useUserStore';
+import { useParams } from 'react-router-dom';
+import { useApiGet } from '../../../hooks/useApi';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -100,6 +103,21 @@ const WebtoonViewCountIcon = styled.img`
 `
 
 export default function ChannelHome() {
+  const { user } = useUserStore();
+  const { chnlUri } = useParams();
+  const { data, isLoading, error } = useApiGet(
+    `/channel/${encodeURIComponent(chnlUri)}`,
+    [chnlUri]
+  );
+
+  if (isLoading) return;
+  if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
+
+  if (!data) {
+    return null;
+  }
+
+
   return (
     <ChannelTemplate>
       <SectionHeader>
@@ -107,7 +125,7 @@ export default function ChannelHome() {
         <span>{">"}</span>
       </SectionHeader>
       {/* <PostListContainer style={{ padding: '50px', margin: '20px 0' }}>
-        {channelData.data.channelPosts.map((post, index) => (
+        {data.data.channelPosts.map((post, index) => (
           <PostListItem key={index}>
             <div>
               <h3>{post.postTtl}</h3>
@@ -118,7 +136,7 @@ export default function ChannelHome() {
         ))}
       </PostListContainer> */}
       <WebtoonListContainer style={{ padding: '50px', margin: '20px 0' }}>
-        {channelData.data.channelPosts.map((post, index) => (
+        {data.data.channelPosts.map((post, index) => (
           <WebtoonListItem key={index}>
             <WebtoonThumbnail imageUrl={post.postThumnPath} />
             <div>
@@ -126,7 +144,7 @@ export default function ChannelHome() {
               <WebtoonTitle>{post.postTtl}</WebtoonTitle>
             </div>
             <WebtoonSubInfo>
-              <WebtoonWriter>{channelData.data.channelUser.nic}</WebtoonWriter>
+              <WebtoonWriter>{data.data.channelUser.nic}</WebtoonWriter>
               <WebtoonCount>
                 <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/>
                 {post.postInqrCnt}
@@ -153,7 +171,7 @@ export default function ChannelHome() {
       </SectionHeader>
       시리즈 준비중..
       {/* <ul style={{ padding: '50px', margin: '20px 0' }}>
-        {channelData.data.channelSerieses.map((series, index) => (
+        {data.data.channelSerieses.map((series, index) => (
           <li key={index}>
             <h3>{series.serTtl}</h3>
             <img src={series.serThumnPath} width={50} height={50} />

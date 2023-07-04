@@ -23,6 +23,7 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log('응답에러');
     if (error.response && error.response.status === 403) {
       console.log('403응답');
       window.location.href = '/logout';

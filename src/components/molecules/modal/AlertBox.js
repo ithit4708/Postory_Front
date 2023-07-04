@@ -1,6 +1,6 @@
 import { IoIosClose } from 'react-icons/io';
 import WrapBtnSC from '../../atoms/Button/WrapBtnSC';
-import BlueBtnSC from '../../atoms/Button/ConfirmBtnSC';
+import ConfirmBtnSC from '../../atoms/Button/ConfirmBtnSC';
 import ModalBoxSC from './ModalBoxSC';
 import OverlaySC from '../../atoms/Dropdown/OverlaySC';
 import ReactDOM from 'react-dom';
@@ -18,7 +18,7 @@ export default function AlertBox(p) {
         </div>
         <p>{p.message}</p>
         <div className="footer">
-          <BlueBtnSC onClick={p.close}>Confirm</BlueBtnSC>
+          <ConfirmBtnSC onClick={p.close}>{p.btnName}</ConfirmBtnSC>
         </div>
       </ModalBoxSC>
     </>,

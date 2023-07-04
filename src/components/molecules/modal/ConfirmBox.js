@@ -20,7 +20,7 @@ export default function ConfirmBox(p) {
         <p>{p.message}</p>
         <div className="footer">
           <CancelBtnSC onClick={p.onCancel}>아니오</CancelBtnSC>
-          <ConfirmBtnSC onClick={p.onConfirm}>예</ConfirmBtnSC>
+          <ConfirmBtnSC onClick={p.onConfirm}>{p.confirmName}</ConfirmBtnSC>
         </div>
       </ModalBoxSC>
     </>,

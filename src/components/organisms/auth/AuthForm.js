@@ -175,11 +175,17 @@ export default function AuthForm() {
         {isPosting ? '인증번호 확인 중...' : '인증번호 확인'}
       </ConfirmBtnSC>
       {invalidMsg && (
-        <AlertBox title={'알림'} close={handleClose} message={invalidMsg} />
+        <AlertBox
+          title={'알림'}
+          btnName="확인"
+          close={handleClose}
+          message={invalidMsg}
+        />
       )}
       {error && (
         <AlertBox
           title={'알림'}
+          btnName="확인"
           close={handleClose}
           message={error && error.errMsg}
         />

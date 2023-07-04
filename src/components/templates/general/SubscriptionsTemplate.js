@@ -11,7 +11,7 @@ export default function SubscriptionsTemplate(p) {
       <Nav>
         <NavMenu navLinks={subsLinks} />
       </Nav>
-      <Main>{p.children}</Main>
+      <Main narrow={true}>{p.children}</Main>
     </>
   );
 }

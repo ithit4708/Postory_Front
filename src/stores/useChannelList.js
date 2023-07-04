@@ -26,7 +26,9 @@ const useChannelList = create((set) => ({
   removeChannel: (channelId) => {
     set((state) => ({
       ...state,
-      channels: state.channels.filter((channel) => channel.id !== channelId),
+      channels: state.channels.filter(
+        (channel) => channel.chnlId !== channelId
+      ),
     }));
   },
 }));

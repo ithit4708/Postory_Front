@@ -59,14 +59,14 @@ const urls = {
   //channel
   channelCreate: '/channel/create',
   // TODO: chnlUri 변수 수정
-  // channel: '/channel/:chnlUri',
-  // channelPosts: '/channel/:chnlUri/posts',
-  // channelSeries: '/channel/:chnlUri/series',
-  // channelAbout: '/channel/:chnlUri/about',
-  channel: '/channel/buksan',
-  channelPosts: '/channel/buksan/posts',
-  channelSeries: '/channel/buksan/series',
-  channelAbout: '/channel/buksan/about',
+  channel: '/channel/:chnlUri',
+  channelPosts: '/channel/:chnlUri/posts',
+  channelSeries: '/channel/:chnlUri/series',
+  channelAbout: '/channel/:chnlUri/about',
+  // channel: '/channel/buksan',
+  // channelPosts: '/channel/buksan/posts',
+  // channelSeries: '/channel/buksan/series',
+  // channelAbout: '/channel/buksan/about',
 
   search: '/search',
   searchSeries: '/search/series',

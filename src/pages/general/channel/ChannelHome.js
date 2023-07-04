@@ -1,9 +1,13 @@
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
-import channelData from '../../../tempData/channel/channel.json';
+import data from '../../../tempData/channel/channel.json';
+// import data from '../../../tempData/channel/channelPosts.json';
 import styled from 'styled-components';
 import useUserStore from '../../../stores/useUserStore';
 import { useParams } from 'react-router-dom';
 import { useApiGet } from '../../../hooks/useApi';
+import PostItem from '../../../components/organisms/general/PostItem';
+import NoContent from '../../../components/molecules/error/NoContent';
+import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -14,31 +18,6 @@ const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
-// const PostListContainer = styled.div`
-
-// `;
-
-// const PostListItem = styled.div`
-//   display: flex;
-//   margin: 10px;
-//   background-color: #ffffff;
-//   padding: 10px;
-//   justify-content: space-between;
-//   border-bottom: 1px solid rgba(0,0,0,.05);
-//   font-weightL 500;
-// `;
-
-// const Thumbnail = styled.div`
-//   width: 144px;
-//   height: 108px;
-//   background-color: #ffffff;
-//   border-radius: 8px;
-//   margin-right: 10px;
-//   display: inline-block;
-//   background-image: url(${props => props.imageUrl});
-//   background-size: cover;
-// `;
 
 const WebtoonListContainer = styled.div`
   display: flex;
@@ -119,23 +98,12 @@ export default function ChannelHome() {
 
 
   return (
-    <ChannelTemplate>
+    <ChannelTemplate chnlUri={data.data.channel.chnlUri} >
       <SectionHeader>
-        <span>포스트</span>
+        <span>웹툰</span>
         <span>{">"}</span>
       </SectionHeader>
-      {/* <PostListContainer style={{ padding: '50px', margin: '20px 0' }}>
-        {data.data.channelPosts.map((post, index) => (
-          <PostListItem key={index}>
-            <div>
-              <h3>{post.postTtl}</h3>
-              <p>포스트 내용이 들어갈 예정입니다.포스트 내용이 들어갈 예정입니다.포스트 내용이 들어갈 예정입니다.</p>
-            </div>
-            <Thumbnail imageUrl={post.postThumnPath} />
-          </PostListItem>
-        ))}
-      </PostListContainer> */}
-      <WebtoonListContainer style={{ padding: '50px', margin: '20px 0' }}>
+      <WebtoonListContainer>
         {data.data.channelPosts.map((post, index) => (
           <WebtoonListItem key={index}>
             <WebtoonThumbnail imageUrl={post.postThumnPath} />
@@ -155,7 +123,7 @@ export default function ChannelHome() {
                 {post.postLikCnt}
               </WebtoonCount>
                <WebtoonCount>
-                21시간 전 
+                21시간 전
               </WebtoonCount>
 
 
@@ -169,15 +137,21 @@ export default function ChannelHome() {
         <span>시리즈</span>
         <span>{">"}</span>
       </SectionHeader>
-      시리즈 준비중..
-      {/* <ul style={{ padding: '50px', margin: '20px 0' }}>
-        {data.data.channelSerieses.map((series, index) => (
-          <li key={index}>
-            <h3>{series.serTtl}</h3>
-            <img src={series.serThumnPath} width={50} height={50} />
-          </li>
-        ))}
-      </ul> */}
+
+      {data.data.channelPosts.length !== 0 ? (
+        data.data.channelPosts.map((post) => <PostItem key={post.postId} post={post} />)
+      ) : (
+        <>
+          <NoContent>
+            아직 발행한 포스트가 없습니다.
+            {data.data.channelUser.eid === user.eid && (
+              <BtnLinkSC to="/post/create">포스트 발행하기</BtnLinkSC>
+            )}
+          </NoContent>
+        </>
+      )}
+
+
     </ChannelTemplate>
 
   );

@@ -2,8 +2,11 @@ import NavMenu from '../../molecules/general/NavMenu';
 import Nav from '../../organisms/general/Nav';
 import Header from '../../organisms/general/Header';
 import Main from '../../organisms/general/Main';
-import channelData from '../../../tempData/channel/channel.json';
 import styled from 'styled-components';
+import { useApiGet } from '../../../hooks/useApi';
+import { useParams } from 'react-router-dom';
+import useUserStore from '../../../stores/useUserStore';
+import { useEffect, useState } from 'react';
 
 const Thumbnail = styled.div`
   width: 80px;
@@ -29,28 +32,41 @@ const ChannelTitle = styled.h2`
 `;
 
 export default function ChannelTemplate(p) {
-  console.log(channelData);
-  // TODO: channlUri 변수 처리
+  const { chnlUri } = useParams();
+
+  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}`);
+  const { data, isLoading, error } = useApiGet(
+    url,
+    [url]
+  );
+  useEffect(() => {
+    setUrl(`/channel/${encodeURIComponent(chnlUri)}`);
+  }, [chnlUri]);
+
+  const { user } = useUserStore();
+  if (isLoading) return;
+  if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
+
+  if (!data) {
+    return null;
+  }
+
   const mainNavLinks = [
     {
-      // to: `/channel/${encodeURIComponent(p.nic)}`,
-      to: `/channel/buksan`,
+      to: `/channel/${encodeURIComponent(p.chnlUri)}`,
       children: '홈',
       end: true,
     },
     {
-      // to: `/channel/${encodeURIComponent(p.nic)}/posts`,
-      to: `/channel/buksan/posts`,
-      children: '포스트',
+      to: `/channel/${encodeURIComponent(p.chnlUri)}/webtoon`,
+      children: '웹툰',
     },
     {
-      // to: `/channel/${encodeURIComponent(p.nic)}/series`,
-      to: `/channel/buksan/series`,
-      children: '시리즈',
+      to: `/channel/${encodeURIComponent(p.chnlUri)}/webnovel`,
+      children: '웹소설',
     },
     {
-      // to: `/channel/${encodeURIComponent(p.nic)}/about`,
-      to: `/channel/buksan/about`,
+      to: `/channel/${encodeURIComponent(p.chnlUri)}/about`,
       children: '소개',
     },
   ];
@@ -60,12 +76,12 @@ export default function ChannelTemplate(p) {
       <Header />
       <Nav>{p.nic}</Nav>
       <Main>
-        <Thumbnail imageUrl={channelData.data.channel.chnlImgPath} />
+        <Thumbnail imageUrl={data.data.channel.chnlImgPath} />
         <CountInfo>
-          구독자 {channelData.data.channel.suberCnt}명 · 포스트{' '}
-          {channelData.data.channel.chnlPostCnt}개
+          구독자 {data.data.channel.suberCnt}명 · 포스트{' '}
+          {data.data.channel.chnlPostCnt}개
         </CountInfo>
-        <ChannelTitle>{channelData.data.channel.chnlTtl}</ChannelTitle>
+        <ChannelTitle>{data.data.channel.chnlTtl}</ChannelTitle>
         {/* 
         // TODO: 구독하기 버튼 처리
         <div>

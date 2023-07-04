@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
 import channelPostsData from '../../../tempData/channel/channelPosts.json';
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -97,7 +101,7 @@ const WebtoonCount = styled.span`
   margin-left: 8px;
   color: rgba(0,0,0,.47);
   font-size: 12px;
-  
+
 `;
 
 const WebtoonViewCountIcon = styled.img`
@@ -105,11 +109,62 @@ const WebtoonViewCountIcon = styled.img`
   margin-right: 2px;
 `
 
+// Pagination style
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const PaginationButton = styled.div`
+  min-width: 30px;
+  height: 30px;
+  padding: 4px;
+  margin: 0 2px;
+  font-weight: 500;
+  font-size: 14px;
+  //width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:  ${({ isSelected }) => (isSelected ? '1px solid #ccc' : '')}; 
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: white;
+`;
+
 export default function ChannelPosts() {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+
+  const totalCount = channelPostsData.data.channel.chnlPostCnt;
+  const size = 12;
+
+  useEffect(() => {
+    const calculatePageCount = () => {
+      setPageCount(Math.ceil(totalCount / size));
+    };
+
+    calculatePageCount();
+  }, [totalCount, size]);
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pageCount - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
     <ChannelTemplate>
-        <SectionHeader>
-        <span>67개의 포스트</span>
+      <SectionHeader>
+        <span>{channelPostsData.data.channel.chnlPostCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
       </SectionHeader>
       <WebtoonListContainer style={{ padding: '50px', margin: '20px 0' }}>
@@ -131,8 +186,8 @@ export default function ChannelPosts() {
                 ♡
                 {post.postLikCnt}
               </WebtoonCount>
-               <WebtoonCount>
-                21시간 전 
+              <WebtoonCount>
+                21시간 전
               </WebtoonCount>
 
 
@@ -140,6 +195,7 @@ export default function ChannelPosts() {
           </WebtoonListItem>
         ))}
       </WebtoonListContainer>
+      // 임시로 currentPage를 보여주기 위한 코드  {currentPage} 현재페이지
       {/* <PostListContainer style={{ padding: '50px', margin: '20px 0' }}>
         {channelPostsData.data.channelPosts.map((post, index) => (
           <PostListItem key={index}>
@@ -151,6 +207,24 @@ export default function ChannelPosts() {
           </PostListItem>
         ))}
       </PostListContainer> */}
+
+      <PaginationContainer>
+        <PaginationButton onClick={handlePrevPage}>
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </PaginationButton>
+        {Array.from({ length: pageCount }).map((_, index) => (
+          <PaginationButton
+            key={index}
+            isSelected={index === currentPage}
+            onClick={() => setCurrentPage(index)}
+          >
+            {index + 1}
+          </PaginationButton>
+        ))}
+        <PaginationButton onClick={handleNextPage}>
+          <FontAwesomeIcon icon={faChevronRight} />
+        </PaginationButton>
+      </PaginationContainer>
     </ChannelTemplate>
   );
 }

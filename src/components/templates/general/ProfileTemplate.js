@@ -40,7 +40,7 @@ export default function ProfileTemplate(p) {
       <Header />
       <ProfileSubHeader children={p.nic} />
       <Main>
-        <UserProfile {...p.data.user} />
+        <UserProfile profileUser={p.data.user} />
         {/* 채널이 없을 때는 MainNavSC가 필요 없다. */}
         <MainNavSC>
           <NavMenu isStart={true} navLinks={mainNavLinks} />

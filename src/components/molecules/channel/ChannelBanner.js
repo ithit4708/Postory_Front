@@ -10,22 +10,26 @@ const ChannelBannerSC = styled.div`
   align-items: center;
   gap: 20px;
 
+  & * {
+    cursor: pointer;
+  }
+
   .info {
     flex: 1;
   }
 `;
 
-export default function ChannelBanner({ channel }) {
+export default function ChannelBanner({ onClick, channel }) {
   const suberCnt = Number(channel.suberCnt).toLocaleString();
 
   return (
     <ChannelBannerSC>
-      <ChannelImg src={channel.chnlImgPath} />
-      <div className="info">
+      <ChannelImg src={channel.chnlImgPath} onClick={onClick} />
+      <div className="info" onClick={onClick}>
         <ChannelTitleSC className="title">{channel.chnlTtl}</ChannelTitleSC>
         <ChannelInfoSC className="suberCnt">구독자 {suberCnt} 명</ChannelInfoSC>
       </div>
-      <SubscribeBtn isSubsed={false} />
+      <SubscribeBtn isSubsed={channel.isSubsed} chnlId={channel.chnlId} />
     </ChannelBannerSC>
   );
 }

@@ -25,8 +25,10 @@ const CenterSC = styled.div`
   }
 `;
 
-export default function UserProfile(profileUser) {
+export default function UserProfile({ profileUser }) {
   const { isLoggedIn, user } = useUserStore();
+
+  console.log('profileUser: ', profileUser);
 
   return (
     <CenterSC>
@@ -35,11 +37,11 @@ export default function UserProfile(profileUser) {
         <h5>{profileUser.nic}</h5>
         <p>{profileUser?.userIntro}</p>
 
-        <BtnLinkSC to="#">
-          {isLoggedIn && profileUser.userId === user.userId
-            ? '프로필 수정'
-            : '메시지 전송'}
-        </BtnLinkSC>
+        {isLoggedIn && profileUser.nic === user.nic ? (
+          <BtnLinkSC to="/account/settings/profile">프로필 수정</BtnLinkSC>
+        ) : (
+          ''
+        )}
       </div>
     </CenterSC>
   );

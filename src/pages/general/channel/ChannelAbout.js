@@ -1,5 +1,5 @@
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
-import ㅎ from '../../../tempData/channel/channelAbout.json';
+import channelAboutData from '../../../tempData/channel/channelAbout.json';
 
 export default function ChannelAbout() {
   return (

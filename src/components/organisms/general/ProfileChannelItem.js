@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import ChannelBanner from '../../molecules/channel/ChannelBanner';
 import ChannelInfoSC from '../../atoms/Channel/ChannelInfoSC';
+import { useNavigate } from 'react-router';
 
 const ProfileChannelItemSC = styled.div`
   & > ${ChannelInfoSC} {
@@ -13,10 +14,16 @@ const ProfileChannelItemSC = styled.div`
 `;
 
 export default function ProfileChannelItem({ channel }) {
+  const navigate = useNavigate();
+
+  const goChannel = () => {
+    navigate(`/channel/${channel.chnlUri}`);
+  };
+
   return (
     <ProfileChannelItemSC>
-      <ChannelBanner channel={channel} />
-      <ChannelInfoSC>{channel.chnlIntro}</ChannelInfoSC>
+      <ChannelBanner channel={channel} onClick={goChannel} />
+      <ChannelInfoSC onClick={goChannel}>{channel.chnlIntro}</ChannelInfoSC>
     </ProfileChannelItemSC>
   );
 }

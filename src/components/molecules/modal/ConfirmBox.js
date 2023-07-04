@@ -9,7 +9,7 @@ import OverlaySC from '../../atoms/Dropdown/OverlaySC';
 export default function ConfirmBox(p) {
   return ReactDOM.createPortal(
     <>
-      <OverlaySC onClick={p.close} />
+      <OverlaySC onClick={p.onCancel} />
       <ModalBoxSC>
         <div className="header">
           <h5>{p.title}</h5>
@@ -19,8 +19,8 @@ export default function ConfirmBox(p) {
         </div>
         <p>{p.message}</p>
         <div className="footer">
-          <CancelBtnSC onClick={p.onCancel}>Cancel</CancelBtnSC>
-          <ConfirmBtnSC onClick={p.onConfirm}>Confirm</ConfirmBtnSC>
+          <CancelBtnSC onClick={p.onCancel}>아니오</CancelBtnSC>
+          <ConfirmBtnSC onClick={p.onConfirm}>예</ConfirmBtnSC>
         </div>
       </ModalBoxSC>
     </>,

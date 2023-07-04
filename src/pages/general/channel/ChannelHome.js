@@ -148,9 +148,6 @@ export default function ChannelHome() {
           </NoContent>
         </>
       )}
-
-
     </ChannelTemplate>
-
   );
 }

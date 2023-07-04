@@ -1,6 +1,4 @@
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
-import data from '../../../tempData/channel/channel.json';
-// import data from '../../../tempData/channel/channelPosts.json';
 import styled from 'styled-components';
 import useUserStore from '../../../stores/useUserStore';
 import { useParams } from 'react-router-dom';

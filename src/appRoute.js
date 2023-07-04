@@ -86,7 +86,6 @@ export const homeLinks = [
   { to: urls.home, children: '추천' },
   { to: urls.webtoon, children: '웹툰' },
   { to: urls.webnovel, children: '웹소설' },
-  { to: urls.home, children: '잘생긴 정호 메뉴'},
 ];
 
 export const subsLinks = [

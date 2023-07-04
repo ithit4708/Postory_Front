@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
-import data from '../../../tempData/channel/channelPosts.json';
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';

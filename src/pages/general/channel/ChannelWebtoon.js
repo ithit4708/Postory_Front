@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
-import channelPostsData from '../../../tempData/channel/channelPosts.json';
+import data from '../../../tempData/channel/channelPosts.json';
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -25,30 +25,6 @@ const SectionHeaderFilter = styled.div`
   font-weight: 500;
 `;
 
-
-// const PostListContainer = styled.div`
-// `;
-
-// const PostListItem = styled.div`
-//   display: flex;
-//   margin: 10px;
-//   background-color: #ffffff;
-//   padding: 10px;
-//   justify-content: space-between;
-//   border-bottom: 1px solid rgba(0,0,0,.05);
-//   font-weightL 500;
-// `;
-
-// const Thumbnail = styled.div`
-//   width: 144px;
-//   height: 108px;
-//   background-color: #ffffff;
-//   border-radius: 8px;
-//   margin-right: 10px;
-//   display: inline-block;
-//   background-image: url(${props => props.imageUrl});
-//   background-size: cover;
-// `;
 
 const WebtoonListContainer = styled.div`
   display: flex;
@@ -104,7 +80,6 @@ const WebtoonCount = styled.span`
   margin-left: 8px;
   color: rgba(0,0,0,.47);
   font-size: 12px;
-
 `;
 
 const WebtoonViewCountIcon = styled.img`
@@ -137,7 +112,7 @@ const PaginationButton = styled.div`
   background-color: white;
 `;
 
-export default function ChannelPosts() {
+export default function ChannelWebtoon() {
   const { user } = useUserStore();
   const { chnlUri } = useParams();
   const location = useLocation();
@@ -145,8 +120,7 @@ export default function ChannelPosts() {
   const pageString = queryParams.get('page');  // This will be a string
   const page = pageString !== null ? Number(pageString) - 1 : 0;
   const [currentPage, setCurrentPage] = useState(page);
-  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}/posts?page=${currentPage+1}`,
-  );
+  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}/posts?page=${currentPage+1}`);
   const [pageCount, setPageCount] = useState(0);
   const [totalCount, setTotalCount] = useState(null);
   const { data, isLoading, error } = useApiGet(
@@ -156,9 +130,7 @@ export default function ChannelPosts() {
 
   const size = 12;
 
-  console.dir(data);
   useEffect(() => {
-    // ...if data has loaded, then compute the totalCount
     if (data) {
       setTotalCount(data.data.channel.chnlPostCnt || 0);
     }
@@ -200,7 +172,7 @@ export default function ChannelPosts() {
 
 
   return (
-    <ChannelTemplate>
+    <ChannelTemplate chnlUri={data.data.channel.chnlUri} >
       <SectionHeader>
         <span>{data.data.channel.chnlPostCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
@@ -233,18 +205,6 @@ export default function ChannelPosts() {
           </WebtoonListItem>
         ))}
       </WebtoonListContainer>
-      // 임시로 currentPage를 보여주기 위한 코드  {currentPage} 현재페이지
-      {/* <PostListContainer style={{ padding: '50px', margin: '20px 0' }}>
-        {data.data.channelPosts.map((post, index) => (
-          <PostListItem key={index}>
-            <div>
-              <h3>{post.postTtl}</h3>
-              <p>포스트 내용이 들어갈 예정입니다.포스트 내용이 들어갈 예정입니다.포스트 내용이 들어갈 예정입니다.</p>
-            </div>
-            <Thumbnail imageUrl={post.postThumnPath} />
-          </PostListItem>
-        ))}
-      </PostListContainer> */}
 
       <PaginationContainer>
         <PaginationButton onClick={handlePrevPage}>

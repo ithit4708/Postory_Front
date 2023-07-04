@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import ProfileTemplate from '../../../components/templates/general/ProfileTemplate';
 import { useApiGet } from '../../../hooks/useApi';
 import NoContent from '../../../components/molecules/error/NoContent';
-import ProfilePostItem from '../../../components/organisms/general/PostItem';
+import PostItem from '../../../components/organisms/general/PostItem';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import useUserStore from '../../../stores/useUserStore';
 
@@ -22,9 +22,7 @@ export default function ProfilePost() {
     data && (
       <ProfileTemplate nic={data.user.nic} data={data}>
         {data.posts.length !== 0 ? (
-          data.posts.map((post) => (
-            <ProfilePostItem key={post.postId} post={post} />
-          ))
+          data.posts.map((post) => <PostItem key={post.postId} post={post} />)
         ) : (
           <>
             <NoContent>

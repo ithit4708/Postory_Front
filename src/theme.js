@@ -36,6 +36,7 @@ export const theme = {
     gSiteWidth: 1026,
     gHeaderHeight: 60,
     gNavHeight: 56,
+    gNarrowSiteWidth: 700,
   },
 };
 

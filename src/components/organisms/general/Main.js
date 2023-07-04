@@ -9,13 +9,16 @@ const MainSC = styled.main`
   .mainContentBox {
     margin: 0 auto;
     padding: 20px 0;
-    width: ${(p) => p.theme.globalPx.gSiteWidth}px;
+    width: ${(p) =>
+      p.narrow
+        ? p.theme.globalPx.gNarrowSiteWidth
+        : p.theme.globalPx.gSiteWidth}px;
   }
 `;
 
 export default function Main(p) {
   return (
-    <MainSC>
+    <MainSC narrow={p.narrow}>
       <div className="mainContentBox">{p.children}</div>
     </MainSC>
   );

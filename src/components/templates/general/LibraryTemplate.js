@@ -11,7 +11,7 @@ export default function LibraryTemplate(p) {
       <Nav>
         <NavMenu navLinks={libraryLinks} />
       </Nav>
-      <Main>{p.children}</Main>
+      <Main narrow={true}>{p.children}</Main>
     </>
   );
 }

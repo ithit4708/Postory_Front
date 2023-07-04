@@ -10,8 +10,7 @@ export default function ProfileChannel() {
   const { user } = useUserStore();
   const { nic } = useParams();
   const { data, isLoading, error } = useApiGet(
-    `/profile/${encodeURIComponent(nic)}`,
-    [nic]
+    `/profile/${encodeURIComponent(nic)}`
   );
 
   if (isLoading) return;

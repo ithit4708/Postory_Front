@@ -5,6 +5,7 @@ import { useApiPost, useApiDelete } from '../../../hooks/useApi';
 import useModal from '../modal/useModal';
 import ConfirmBox from '../modal/ConfirmBox';
 import { useEffect } from 'react';
+import useChannelList from '../../../stores/useChannelList';
 
 export default function SubscribeBtn({ isSubsed, chnlId }) {
   const [isSubscribed, setIsSubscribed] = useState(isSubsed);
@@ -21,6 +22,8 @@ export default function SubscribeBtn({ isSubsed, chnlId }) {
     setError: setUnsubsErr,
     deleteData: unsubscribe,
   } = useApiDelete(`/subscriptions/cancle?chnlId=${chnlId}`);
+  const { removeChannel } = useChannelList();
+  const currentPath = window.location.pathname;
 
   useEffect(() => {
     if (subsRes) {
@@ -30,9 +33,12 @@ export default function SubscribeBtn({ isSubsed, chnlId }) {
 
   useEffect(() => {
     if (unsubsRes) {
+      if (!currentPath.includes('/profile')) {
+        removeChannel(chnlId);
+      }
       setIsSubscribed(false);
     }
-  }, [unsubsRes]);
+  }, [unsubsRes, currentPath]);
 
   const handleSubscribe = () => {
     console.log('구독 실행');
@@ -43,7 +49,6 @@ export default function SubscribeBtn({ isSubsed, chnlId }) {
   };
 
   const handleUnsubscribe = () => {
-    console.log('구독 취소 실행');
     openModal();
   };
 
@@ -67,8 +72,9 @@ export default function SubscribeBtn({ isSubsed, chnlId }) {
           <UnsubsBtn onClick={handleUnsubscribe}>구독 중</UnsubsBtn>
           {isOpen && (
             <ConfirmBox
-              title="구독 취소"
+              title="확인"
               message="정말 구독을 취소하시겠습니까?"
+              confirmName="구독 취소"
               onConfirm={handleConfirm}
               onCancel={handleCancel}
             />

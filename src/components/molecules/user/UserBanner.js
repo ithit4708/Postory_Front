@@ -22,19 +22,19 @@ const UserBannerSC = styled.div`
   }
 `;
 
-export default function UserBanner({ userImgPath, nic, ...props }) {
+export default function UserBanner({ post }) {
   return (
     <UserBannerSC>
-      <Link to={`/profile/${nic}`}>
-        <UserImg src={userImgPath} />
+      <Link to={`/profile/${post.nic}`}>
+        <UserImg src={post.userImgPath} />
       </Link>
       <div className="nextImg">
-        <Link to={`/profile/${nic}`}>
-          <UserBannerNicSC>세민</UserBannerNicSC>
+        <Link to={`/profile/${post.nic}`}>
+          <UserBannerNicSC>{post.nic}</UserBannerNicSC>
         </Link>
-        <PostMetaData />
+        <PostMetaData post={post} />
       </div>
-      <ScrapPostBtn />
+      <ScrapPostBtn isScrapped={post.isScraped} postId={post.postId} />
     </UserBannerSC>
   );
 }

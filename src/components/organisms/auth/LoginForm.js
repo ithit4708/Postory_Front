@@ -99,11 +99,17 @@ export default function LoginForm() {
         {isPosting ? '로그인 중...' : '로그인'}
       </ConfirmBtnSC>
       {invalidMsg && (
-        <AlertBox title={'알림'} close={handleClose} message={invalidMsg} />
+        <AlertBox
+          title="알림"
+          btnName="확인"
+          close={handleClose}
+          message={invalidMsg}
+        />
       )}
       {error && (
         <AlertBox
-          title={'알림'}
+          title="알림"
+          btnName="확인"
           close={handleClose}
           message={error && error.errMsg}
         />

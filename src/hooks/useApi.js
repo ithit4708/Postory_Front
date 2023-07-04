@@ -131,5 +131,5 @@ export function useApiDelete(url) {
     }
   };
 
-  return { deleteData, error, res, setError };
+  return { isDeleting, deleteData, error, res, setError };
 }

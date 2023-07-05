@@ -53,7 +53,6 @@ const PaginationButton = styled.div`
 `;
 
 export default function ChannelWebnovel() {
-  // TODO: Webnovel 쪽 데이터 api 연동 필요!!! (지금은 webtoon쪽 코드 복사한 데이터임)
   const { user } = useUserStore();
   const { chnlUri } = useParams();
   const location = useLocation();
@@ -61,7 +60,8 @@ export default function ChannelWebnovel() {
   const pageString = queryParams.get('page');  // This will be a string
   const page = pageString !== null ? Number(pageString) - 1 : 0;
   const [currentPage, setCurrentPage] = useState(page);
-  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}/posts?page=${currentPage+1}`,
+  const postType = "webnovel";
+  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}/posts/${postType}?page=${currentPage+1}`
   );
   const [pageCount, setPageCount] = useState(0);
   const [totalCount, setTotalCount] = useState(null);
@@ -74,7 +74,7 @@ export default function ChannelWebnovel() {
 
   useEffect(() => {
     if (data) {
-      setTotalCount(data.data.channel.chnlPostCnt || 0);
+      setTotalCount(data.data.channel.chnlWebnovelCnt || 0);
     }
   }, [data]);
 
@@ -87,7 +87,7 @@ export default function ChannelWebnovel() {
   }, [totalCount, size]);
 
   useEffect(() => {
-    setUrl(`/channel/${encodeURIComponent(chnlUri)}/posts?page=${currentPage+1}`);
+    setUrl(`/channel/${encodeURIComponent(chnlUri)}/posts/${postType}?page=${currentPage+1}`);
   }, [currentPage, chnlUri]);
 
 
@@ -116,11 +116,11 @@ export default function ChannelWebnovel() {
   return (
     <ChannelTemplate chnlUri={data.data.channel.chnlUri} >
       <SectionHeader>
-        <span>{data.data.channel.chnlPostCnt}개의 포스트</span>
+        <span>{data.data.channel.chnlWebnovelCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
       </SectionHeader>
-      {data.data.channelPosts.length !== 0 ? (
-        data.data.channelPosts.map((post) => <PostItem key={post.postId} post={post} />)
+      {data.data.webnovels.length !== 0 ? (
+        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} />)
       ) : (
         <>
           <NoContent>

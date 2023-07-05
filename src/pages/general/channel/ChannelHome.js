@@ -102,7 +102,8 @@ export default function ChannelHome() {
         <span>{">"}</span>
       </SectionHeader>
       <WebtoonListContainer>
-        {data.data.channelPosts.map((post, index) => (
+
+        {data.data.webtoons.map((post, index) => (
           <WebtoonListItem key={index}>
             <WebtoonThumbnail imageUrl={post.postThumnPath} />
             <div>
@@ -132,12 +133,12 @@ export default function ChannelHome() {
 
 
       <SectionHeader>
-        <span>시리즈</span>
+        <span>웹소설</span>
         <span>{">"}</span>
       </SectionHeader>
 
-      {data.data.channelPosts.length !== 0 ? (
-        data.data.channelPosts.map((post) => <PostItem key={post.postId} post={post} />)
+      {data.data.webnovels.length !== 0 ? (
+        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} />)
       ) : (
         <>
           <NoContent>

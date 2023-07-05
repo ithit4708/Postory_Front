@@ -21,8 +21,8 @@ import ProfileSettings from './pages/general/accSettings/ProfileSetting';
 import BlackedChannel from './pages/general/accSettings/BlackedChannel';
 import ChannelCreate from './pages/general/ChannelCreate';
 import ChannelHome from './pages/general/channel/ChannelHome';
-import ChannelPosts from './pages/general/channel/ChannelPosts';
-import ChannelSeries from './pages/general/channel/ChannelSeries';
+import ChannelWebtoon from './pages/general/channel/ChannelWebtoon';
+import ChannelWebnovel from './pages/general/channel/ChannelWebnovel';
 import ChannelAbout from './pages/general/channel/ChannelAbout';
 
 const urls = {
@@ -58,15 +58,10 @@ const urls = {
 
   //channel
   channelCreate: '/channel/create',
-  // TODO: chnlUri 변수 수정
-  // channel: '/channel/:chnlUri',
-  // channelPosts: '/channel/:chnlUri/posts',
-  // channelSeries: '/channel/:chnlUri/series',
-  // channelAbout: '/channel/:chnlUri/about',
-  channel: '/channel/buksan',
-  channelPosts: '/channel/buksan/posts',
-  channelSeries: '/channel/buksan/series',
-  channelAbout: '/channel/buksan/about',
+  channel: '/channel/:chnlUri',
+  channelWebtoon: '/channel/:chnlUri/webtoon',
+  channelWebnovel: '/channel/:chnlUri/webnovel',
+  channelAbout: '/channel/:chnlUri/about',
 
   search: '/search',
   searchSeries: '/search/series',
@@ -120,8 +115,8 @@ export const accSetLinks = [
 
 export const channelLinks = [
   { to: urls.channel, children: '홈' },
-  { to: urls.channelPosts, children: '포스트' },
-  { to: urls.channelSeries, children: '시리즈' },
+  { to: urls.channelWebtoon, children: '웹툰' },
+  { to: urls.channelWebnovel, children: '웹소설' },
   { to: urls.channelAbout, children: '소개' },
 ];
 
@@ -170,7 +165,7 @@ export const pageRoutes = [
   //channel
   { id: 26, path: urls.channelCreate, element: <ChannelCreate /> },
   { id: 27, path: urls.channel, element: <ChannelHome /> },
-  { id: 28, path: urls.channelPosts, element: <ChannelPosts /> },
-  { id: 29, path: urls.channelSeries, element: <ChannelSeries /> },
+  { id: 28, path: urls.channelWebtoon, element: <ChannelWebtoon /> },
+  { id: 29, path: urls.channelWebnovel, element: <ChannelWebnovel /> },
   { id: 30, path: urls.channelAbout, element: <ChannelAbout /> },
 ];

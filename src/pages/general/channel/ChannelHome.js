@@ -1,11 +1,12 @@
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
 import styled from 'styled-components';
 import useUserStore from '../../../stores/useUserStore';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useApiGet } from '../../../hooks/useApi';
 import PostItem from '../../../components/organisms/general/PostItem';
 import NoContent from '../../../components/molecules/error/NoContent';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
+import Nav from '../../../components/organisms/general/Nav';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -99,7 +100,7 @@ export default function ChannelHome() {
     <ChannelTemplate chnlUri={data.data.channel.chnlUri} >
       <SectionHeader>
         <span>웹툰</span>
-        <span>{">"}</span>
+       <NavLink to={`/channel/${data.data.channel.chnlUri}/webtoon`} >{">"}</NavLink>
       </SectionHeader>
       <WebtoonListContainer>
         {data.data.webtoons.map((post, index) => (
@@ -133,7 +134,7 @@ export default function ChannelHome() {
 
       <SectionHeader>
         <span>웹소설</span>
-        <span>{">"}</span>
+        <NavLink to={`/channel/${data.data.channel.chnlUri}/webnovel`} >{">"}</NavLink>
       </SectionHeader>
 
       {data.data.webnovels.length !== 0 ? (

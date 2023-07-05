@@ -7,6 +7,7 @@ import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import useUserStore from '../../../stores/useUserStore';
 import { useLocation, useParams } from 'react-router-dom';
 import { useApiGet } from '../../../hooks/useApi';
+import { post } from 'axios';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -119,7 +120,8 @@ export default function ChannelWebtoon() {
   const pageString = queryParams.get('page');  // This will be a string
   const page = pageString !== null ? Number(pageString) - 1 : 0;
   const [currentPage, setCurrentPage] = useState(page);
-  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}/posts?page=${currentPage+1}`);
+  const postType = "webtoon";
+  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}/posts/${postType}?page=${currentPage+1}`);
   const [pageCount, setPageCount] = useState(0);
   const [totalCount, setTotalCount] = useState(null);
   const { data, isLoading, error } = useApiGet(
@@ -131,7 +133,7 @@ export default function ChannelWebtoon() {
 
   useEffect(() => {
     if (data) {
-      setTotalCount(data.data.channel.chnlPostCnt || 0);
+      setTotalCount(data.data.channel.chnlWebtoonCnt || 0);
     }
   }, [data]);
 
@@ -144,7 +146,7 @@ export default function ChannelWebtoon() {
   }, [totalCount, size]);
 
   useEffect(() => {
-    setUrl(`/channel/${encodeURIComponent(chnlUri)}/posts?page=${currentPage+1}`);
+    setUrl(`/channel/${encodeURIComponent(chnlUri)}/posts/${postType}?page=${currentPage+1}`);
   }, [currentPage, chnlUri]);
 
 
@@ -173,11 +175,11 @@ export default function ChannelWebtoon() {
   return (
     <ChannelTemplate chnlUri={data.data.channel.chnlUri} >
       <SectionHeader>
-        <span>{data.data.channel.chnlPostCnt}개의 포스트</span>
+        <span>{data.data.channel.chnlWebtoonCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
       </SectionHeader>
       <WebtoonListContainer style={{ padding: '50px', margin: '20px 0' }}>
-        {data.data.channelPosts.map((post, index) => (
+        {data.data.webtoons.map((post, index) => (
           <WebtoonListItem key={index}>
             <WebtoonThumbnail imageUrl={post.postThumnPath} />
             <div>

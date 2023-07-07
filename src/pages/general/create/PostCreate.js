@@ -114,7 +114,7 @@ export default function PostCreate() {
       const files = input.files;
       // multer에 맞는 형식으로 데이터 만들어준다.
       Array.prototype.forEach.call(files, function(file) {
-        formData.append('multipartFiles',file);
+        imageData.append('multipartFiles',file);
       });
 
       // 백엔드 라우터에 이미지를 보낸다.

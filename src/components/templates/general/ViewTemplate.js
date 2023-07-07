@@ -2,8 +2,7 @@ import Nav from '../../organisms/general/Nav';
 import Header from '../../organisms/general/Header';
 import Main from '../../organisms/general/Main';
 
-export default function CreateTemplate(p) {
-
+export default function ViewTemplate(p) {
   return (
     <>
       <Header />

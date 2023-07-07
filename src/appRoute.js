@@ -25,6 +25,7 @@ import ChannelWebtoon from './pages/general/channel/ChannelWebtoon';
 import ChannelWebnovel from './pages/general/channel/ChannelWebnovel';
 import ChannelAbout from './pages/general/channel/ChannelAbout';
 import PostCreate from './pages/general/create/PostCreate';
+import PostView from './pages/general/view/PostView';
 
 const urls = {
   login: '/login',
@@ -75,6 +76,9 @@ const urls = {
 
   // crate
   postCreate: `/post/create`,
+
+  // view
+  postView: '/post/view/:postId',
 };
 
 // Links
@@ -175,4 +179,7 @@ export const pageRoutes = [
 
   // create
   { id: 31, path: urls.postCreate, element: <PostCreate /> },
+
+  // view
+  { id: 32, path: urls.postView, element: <PostView /> },
 ];

@@ -10,8 +10,8 @@ import ImageResize from 'quill-image-resize';
 import ViewTemplate from '../../../components/templates/general/ViewTemplate';
 // 임시 데이터
 // TODO: writer 값 실제 api data 값 대처
-import data from '../../../postData.json';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
+import { useNavigate } from 'react-router';
 
 
 Quill.register('modules/imageResize', ImageResize);
@@ -65,50 +65,69 @@ const PostEditButtonContainer = styled.div`
   justify-content: end;
 `
 
+const ChannelInfo = styled.div`
+  font-size: 40px;
+  font-weight: 600;
+`
+
+const PostSbTtl = styled.div`
+  color: dimgray;
+  font-size: 18px;
+`
+
 
 export default function PostView() {
   // const { user } = useUserStore();
   const { chnlUri, postId } = useParams();
-  // const { data, isLoading, error } = useApiGet(
-  //   `/channel/${encodeURIComponent(chnlUri)}`,
-  //   [chnlUri]
-  // );
-  //
-  // if (isLoading) return;
-  // if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
-  //
-  // if (!data) {
-  //   return null;
-  // }
+  const { data, isLoading, error } = useApiGet(
+    `/post/${postId}`,
+    [chnlUri, postId]
+  );
+  const navigate = useNavigate();
 
+  if (isLoading) return;
+  if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
 
-  const myPostId = encodeURIComponent(postId);
+  if (!data) {
+    return null;
+  }
 
-
+  const goProfile = (nic) =>{
+    navigate(`/profile/${nic}`);
+  }
+  const goChannel = (chnlUri) => {
+    navigate(`/channel/${chnlUri}`);
+  }
 
 
   return (
     <ViewTemplate>
+      <ChannelInfo onClick={() => goChannel(data.channel.chnlUri)}>
+        {data.channel.chnlTtl} 채널
+      </ChannelInfo>
       <div>
         <PostViewHeader>
-          <h2>{data.postTtl}</h2>
+          <h1>{data.post.postTtl}</h1>
+          <PostSbTtl>
+            {data.post.postSbTtl}
+          </PostSbTtl>
           <PostViewHeaderBottom>
             <div>
-              <RoundThumnail imageUrl={data.writer.userImgPath}></RoundThumnail>
+              <RoundThumnail imageUrl={data.writer.userImgPath} onClick={() => goProfile(data.writer.nic)}></RoundThumnail>
             </div>
             <div>
               <span>{data.writer.nic}</span>
               <PostInfo>
-                {data.postPblcDtm} / 조회 {data.postInqrCnt}
+                {data.post.postPblcDtm} / 조회 {data.post.postInqrCnt}
               </PostInfo>
             </div>
           </PostViewHeaderBottom>
 
         <PostEditButtonContainer>
-          <BtnLinkSC to={`/post/create?postId=${postId}`}>포스트 수정하기</BtnLinkSC>
+          <BtnLinkSC to={`/${chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
         </PostEditButtonContainer>
         </PostViewHeader>
-        <PostViewBody dangerouslySetInnerHTML={{__html: data.postContent}}>
+        <PostViewBody dangerouslySetInnerHTML={{__html: data.post.postContent}}>
         </PostViewBody>
 
       </div>

@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 import useUserStore from '../../../stores/useUserStore';
 import { useEffect, useState } from 'react';
 import BtnLinkSC from '../../atoms/Link/BtnLinkSC';
+import SubscribeBtn from '../../molecules/channel/SubscribeBtn';
+import SubscribeBlackBtn from '../../molecules/channel/SubscribeBlackBtn';
 
 const Thumbnail = styled.div`
   width: 80px;
@@ -45,12 +47,17 @@ export default function ChannelTemplate(p) {
   }, [chnlUri]);
 
   const { user } = useUserStore();
+  const {data: subsData, isLoading: isSubsLoading, error: subsError} = useApiGet(`/channel/${encodeURIComponent(chnlUri)}/subs/${encodeURIComponent(user.nic)}`,[chnlUri])
+
   if (isLoading) return;
   if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
 
   if (!data) {
     return null;
   }
+
+  const isOwner = user.nic === data.data.channelUser.nic;
+
 
   const mainNavLinks = [
     {
@@ -75,7 +82,6 @@ export default function ChannelTemplate(p) {
   return (
     <>
       <Header />
-      <Nav>{p.nic}</Nav>
       <Main>
         <Thumbnail imageUrl={data.data.channel.chnlImgPath} />
         <CountInfo>
@@ -85,9 +91,12 @@ export default function ChannelTemplate(p) {
         <ChannelTitle>{data.data.channel.chnlTtl}</ChannelTitle>
 
         <div style={{ display: 'flex', justifyContent: 'end'}}>
-          {/*// TODO: 구독하기 버튼 처리*/}
-          <BtnLinkSC to="/post/create">구독하기</BtnLinkSC>
-          <BtnLinkSC to="/post/create">포스트 발행하기</BtnLinkSC>
+          {isOwner ?
+            <BtnLinkSC to={`/${chnlUri}/post/create`}>포스트 발행하기</BtnLinkSC>:
+          // <BtnLinkSC to={`/${chnlUri}/post/create`}>구독하기</BtnLinkSC>
+           <SubscribeBlackBtn isSubsed={subsData.isSubscribed} chnlId={data.data.channel.chnlId}></SubscribeBlackBtn>
+          }
+
         </div>
         <Nav>
           <NavMenu navLinks={mainNavLinks} />

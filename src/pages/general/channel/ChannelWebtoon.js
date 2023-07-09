@@ -8,6 +8,7 @@ import useUserStore from '../../../stores/useUserStore';
 import { useLocation, useParams } from 'react-router-dom';
 import { useApiGet } from '../../../hooks/useApi';
 import { post } from 'axios';
+import { useNavigate } from 'react-router';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -114,6 +115,7 @@ const PaginationButton = styled.div`
 
 export default function ChannelWebtoon() {
   const { user } = useUserStore();
+  const navigate = useNavigate();
   const { chnlUri } = useParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -149,6 +151,12 @@ export default function ChannelWebtoon() {
     setUrl(`/channel/${encodeURIComponent(chnlUri)}/posts/${postType}?page=${currentPage+1}`);
   }, [currentPage, chnlUri]);
 
+  const goPost = (postId) => {
+    console.log("postId",postId);
+    navigate(`/${chnlUri}/post/${postId}`);
+    //조회수 올라가는 함수 필요
+  };
+
 
   const handlePrevPage = () => {
     if (currentPage > 0) {
@@ -181,7 +189,7 @@ export default function ChannelWebtoon() {
       <WebtoonListContainer style={{ padding: '50px', margin: '20px 0' }}>
         {data.data.webtoons.map((post, index) => (
           <WebtoonListItem key={index}>
-            <WebtoonThumbnail imageUrl={post.postThumnPath} />
+            <WebtoonThumbnail imageUrl={post.postThumnPath} onClick={() => goPost(post.postId)} />
             <div>
               { post.serTtl != null ? <WebtoonSeriesTitle>{post.serTtl}</WebtoonSeriesTitle> : null}
               <WebtoonTitle>{post.postTtl}</WebtoonTitle>

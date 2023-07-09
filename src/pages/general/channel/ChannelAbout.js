@@ -8,6 +8,7 @@ import MetaDataSC from '../../../components/atoms/User/MetaDataSC';
 import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai';
 import { countDate } from '../../../components/molecules/user/dateConversion';
 import { faCalendarAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router';
 
 const ContentContainer = styled.div`
   padding: 20px 0;
@@ -91,11 +92,17 @@ export default function ChannelAbout() {
     [chnlUri]
   );
 
+  const navigate = useNavigate();
+
   if (isLoading) return;
   if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
 
   if (!data) {
     return null;
+  }
+
+  const goProfile = (nic) => {
+    navigate(`/profile/${nic}`);
   }
   return (
     <ChannelTemplate>
@@ -107,18 +114,6 @@ export default function ChannelAbout() {
             <p>{data.data.channel.chnlIntro}</p>
 
             <ChannelBottomContainer>
-              {/*<MetaDataSC>*/}
-              {/*  <AiOutlineEye size={16} />*/}
-              {/*  {data.data.channel.suberCnt}*/}
-              {/*</MetaDataSC>*/}
-              {/*<MetaDataSC>*/}
-              {/*  <FontAwesomeIcon icon={faClone} />*/}
-              {/*</MetaDataSC>*/}
-              {/*<MetaDataSC>*/}
-              {/*  <AiOutlineHeart size={14} />*/}
-              {/*  {data.data.channel.chnlLikCnt}*/}
-              {/*</MetaDataSC>*/}
-              {/*<MetaDataSC>{countDate(data.data.channel.chnlOpenDtm)}</MetaDataSC>*/}
               <li><FontAwesomeIcon icon={faUser}/> 구독자 {data.data.channel.suberCnt}명</li>
               <li> <FontAwesomeIcon icon={faClone} /> 포스트 {data.data.channel.chnlPostCnt}개</li>
               <li> <AiOutlineHeart size={14} /> 좋아요 {data.data.channel.chnlLikCnt}개</li>
@@ -130,7 +125,7 @@ export default function ChannelAbout() {
 
         <UserSection>
           {/* TODO: user.userImgPath 값넣어서 위에줄 주석풀고 아랫줄 삭제  */}
-           <RoundThumnail imageUrl={data.data.user.userImgPath}></RoundThumnail>
+           <RoundThumnail imageUrl={data.data.user.userImgPath} onClick ={() => goProfile(data.data.user.nic)}></RoundThumnail>
 
           <div>
             <SectionTitle>{data.data.user.nic}</SectionTitle>

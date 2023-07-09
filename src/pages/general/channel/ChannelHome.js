@@ -6,6 +6,7 @@ import { useApiGet } from '../../../hooks/useApi';
 import PostItem from '../../../components/organisms/general/PostItem';
 import NoContent from '../../../components/molecules/error/NoContent';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
+import { useNavigate } from 'react-router';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -86,6 +87,7 @@ export default function ChannelHome() {
     `/channel/${encodeURIComponent(chnlUri)}`,
     [chnlUri]
   );
+  const navigate = useNavigate();
 
   if (isLoading) return;
   if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
@@ -93,6 +95,11 @@ export default function ChannelHome() {
   if (!data) {
     return null;
   }
+  const goPost = (postId) => {
+    console.log("postId",postId);
+    navigate(`/${chnlUri}/post/${postId}`);
+    //조회수 올라가는 함수 필요
+  };
 
 
   return (
@@ -104,7 +111,7 @@ export default function ChannelHome() {
       <WebtoonListContainer>
         {data.data.webtoons.map((post, index) => (
           <WebtoonListItem key={index}>
-            <WebtoonThumbnail imageUrl={post.postThumnPath} />
+            <WebtoonThumbnail imageUrl={post.postThumnPath} onClick={() => goPost(post.postId)} />
             <div>
               { post.serTtl != null ? <WebtoonSeriesTitle>{post.serTtl}</WebtoonSeriesTitle> : null}
               <WebtoonTitle>{post.postTtl}</WebtoonTitle>
@@ -135,7 +142,7 @@ export default function ChannelHome() {
       </SectionHeader>
 
       {data.data.webnovels.length !== 0 ? (
-        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} />)
+        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} chnlUri={chnlUri} />)
       ) : (
         <>
           <NoContent>

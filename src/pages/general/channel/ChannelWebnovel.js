@@ -120,7 +120,7 @@ export default function ChannelWebnovel() {
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
       </SectionHeader>
       {data.data.webnovels.length !== 0 ? (
-        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} />)
+        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} chnlUri={chnlUri} />)
       ) : (
         <>
           <NoContent>

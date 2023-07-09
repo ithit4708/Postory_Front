@@ -12,6 +12,7 @@ import ViewTemplate from '../../../components/templates/general/ViewTemplate';
 // TODO: writer 값 실제 api data 값 대처
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
+import LikeBtn from '../../../components/molecules/post/LikeBtn';
 
 
 Quill.register('modules/imageResize', ImageResize);
@@ -77,12 +78,18 @@ const PostSbTtl = styled.div`
 
 
 export default function PostView() {
-  // const { user } = useUserStore();
+  const { user } = useUserStore();
   const { chnlUri, postId } = useParams();
   const { data, isLoading, error } = useApiGet(
     `/post/${postId}`,
     [chnlUri, postId]
   );
+  console.log(user);
+
+  // const {data: likeData, isLoading: likeIsLoading, error: likeErr} = useApiGet(
+  //   `/post/${postId}/like/${user.nic}`,[]
+  // );
+
   const navigate = useNavigate();
 
   if (isLoading) return;
@@ -91,6 +98,9 @@ export default function PostView() {
   if (!data) {
     return null;
   }
+
+  const isOwner = user.nic === data.writer.nic;
+
 
   const goProfile = (nic) =>{
     navigate(`/profile/${nic}`);
@@ -124,6 +134,9 @@ export default function PostView() {
           </PostViewHeaderBottom>
 
         <PostEditButtonContainer>
+          {/*{ isOwner ?*/}
+          {/*<LikeBtn liked={likeData.isLiked} postId={postId}></LikeBtn>: ''*/}
+          {/*}*/}
           <BtnLinkSC to={`/${chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
         </PostEditButtonContainer>
         </PostViewHeader>

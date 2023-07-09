@@ -124,7 +124,6 @@ export default function ChannelAbout() {
         </ChannelSection>
 
         <UserSection>
-          {/* TODO: user.userImgPath 값넣어서 위에줄 주석풀고 아랫줄 삭제  */}
            <RoundThumnail imageUrl={data.data.user.userImgPath} onClick ={() => goProfile(data.data.user.nic)}></RoundThumnail>
 
           <div>

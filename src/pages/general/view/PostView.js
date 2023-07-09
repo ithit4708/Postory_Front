@@ -7,6 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import ViewTemplate from '../../../components/templates/general/ViewTemplate';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
+import LikeBtn from '../../../components/molecules/post/LikeBtn';
 
 
 
@@ -78,6 +79,12 @@ export default function PostView() {
     `/post/${postId}`,
     [chnlUri, postId]
   );
+  console.log(user);
+
+  // const {data: likeData, isLoading: likeIsLoading, error: likeErr} = useApiGet(
+  //   `/post/${postId}/like/${user.nic}`,[]
+  // );
+
   const navigate = useNavigate();
 
   if (isLoading) return;
@@ -122,6 +129,9 @@ export default function PostView() {
           </PostViewHeaderBottom>
 
         <PostEditButtonContainer>
+          {/*{ isOwner ?*/}
+          {/*<LikeBtn liked={likeData.isLiked} postId={postId}></LikeBtn>: ''*/}
+          {/*}*/}
           <BtnLinkSC to={`/${chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
         </PostEditButtonContainer>
         </PostViewHeader>

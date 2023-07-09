@@ -59,7 +59,7 @@ const urls = {
   setBlacklist: '/account/settings/blacklist',
 
   //channel
-  channelCreate: '/channel/create',
+  channelCreate: '/:chnlUri/channel/create',
   channel: '/channel/:chnlUri',
   channelWebtoon: '/channel/:chnlUri/webtoon',
   channelWebnovel: '/channel/:chnlUri/webnovel',
@@ -74,11 +74,11 @@ const urls = {
   profilePost: `/profile/:nic/post`,
   profileSeries: `/profile/:nic/series`,
 
-  // crate
-  postCreate: `/post/create`,
+  // create
+  postCreate: `/:chnlUri/post/create`,
 
   // view
-  postView: '/post/view/:postId',
+  postView: '/:chnlUri/post/:postId',
 };
 
 // Links

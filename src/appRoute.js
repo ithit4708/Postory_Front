@@ -78,7 +78,6 @@ const urls = {
   postCreate: `/:chnlUri/post/create`,
 
   // view
-
   postView: '/post/:postId',
 };
 

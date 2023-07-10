@@ -8,7 +8,6 @@ import 'react-quill/dist/quill.snow.css';
 import TextInputSC from '../../../components/atoms/Input/TextInputSC';
 import ImageResize from 'quill-image-resize';
 import PostRadioButton from '../../../components/molecules/post/PostRadioButton';
-
 import PostImg from '../../../components/atoms/Post/PostImgSC';
 import { useNavigate } from 'react-router';
 
@@ -59,27 +58,11 @@ export default function PostCreate() {
   const [postType, setPostType] = useState('');
   const [postId, setPostId] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
-
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
   const quillRef = useRef();
   const imageData = new FormData();
   const thumnData = new FormData();
-
-  const {
-    res: postEditRes,
-    error: postEditErr,
-    setError: setPostEditErr,
-    postData: postEdit,
-  } = useApiPost(`post/${postId}/edit`, {
-    postType: postType,
-    postTtl: title,
-    postSbTtl: subTitle,
-    postContent: content,
-    postThumnPath: thumbnailImageUrl,
-    imageUrls: imageUrls,
-  });
-
 
   const {
     res: postRes,
@@ -92,6 +75,20 @@ export default function PostCreate() {
     postSbTtl: subTitle,
     postContent: content,
     postThumnPath: thumbnailImageUrl,
+    imageUrls: imageUrls,
+  });
+  const {
+    res: postEditRes,
+    error: postEditErr,
+    setError: setPostEditErr,
+    postData: postEdit,
+  } = useApiPost(`post/${postId}/edit`, {
+    postType: postType,
+    postTtl: title,
+    postSbTtl: subTitle,
+    postContent: content,
+    postThumnPath: thumbnailImageUrl,
+    imageUrls: imageUrls,
   });
 
   const {
@@ -109,7 +106,6 @@ export default function PostCreate() {
 
 
   const { data, isLoading, error } = useConditionalApiGet(`/post/${postId}`, postId);
-
   const imageHandler = () => {
     console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
     //
@@ -119,14 +115,13 @@ export default function PostCreate() {
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
-
-    // // input에 변화가 생긴다면 = 이미지를 선택
     input.addEventListener('change', async () => {
       console.log('온체인지');
       const files = input.files;
       // multer에 맞는 형식으로 데이터 만들어준다.
       Array.prototype.forEach.call(files, function(file) {
         imageData.append('multipartFiles',file);
+        console.log('multipartFiles', file);
       });
 
       await upload(imageData);
@@ -135,7 +130,6 @@ export default function PostCreate() {
 
   // 이미지 업로드 input의 onChange
   const saveImgFile = async () => {
-
     if(imgRef.current.files.length > 0) {
       const file = imgRef.current.files[0];
       const reader = new FileReader();
@@ -143,6 +137,7 @@ export default function PostCreate() {
       reader.onloadend = () => {
         setImgFile(reader.result);
         console.log(imgFile);
+
       };
       console.log("file",file);
       thumnData.append("file", file);
@@ -152,7 +147,6 @@ export default function PostCreate() {
       console.warn('No file selected');
     }
   };
-
 
   const modules = useMemo(() => {
     return {
@@ -186,7 +180,6 @@ export default function PostCreate() {
     setPostId(queryParams.get('postId'));
     console.log(postId);
   }, [])
-
 
 
   useEffect(() =>{
@@ -299,7 +292,6 @@ export default function PostCreate() {
 
     navigate(`/channel/${chnlUri}`);
 
-
   };
 
   const options = [
@@ -364,8 +356,6 @@ export default function PostCreate() {
             onChange={handleSubTitleChange}
             onKeyDown={handleSubTitleChange}
           />
-
-
 
           <div style={{ height: '500px', margin: '20px 0 50px 0' }}>
             <ReactQuill ref={quillRef} value={content} onChange={handleEditorChange} style={{ height: '500px' }} modules={modules} formats={formats}/>

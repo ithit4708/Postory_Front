@@ -8,11 +8,10 @@ import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize';
 import ViewTemplate from '../../../components/templates/general/ViewTemplate';
-// 임시 데이터
-// TODO: writer 값 실제 api data 값 대처
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
 import LikeBtn from '../../../components/molecules/post/LikeBtn';
+
 
 
 Quill.register('modules/imageResize', ImageResize);
@@ -124,11 +123,13 @@ export default function PostView() {
           <PostViewHeaderBottom>
             <div>
               <RoundThumnail imageUrl={data.writer.userImgPath} onClick={() => goProfile(data.writer.nic)}></RoundThumnail>
+
             </div>
             <div>
               <span>{data.writer.nic}</span>
               <PostInfo>
                 {data.post.postPblcDtm} / 조회 {data.post.postInqrCnt}
+
               </PostInfo>
             </div>
           </PostViewHeaderBottom>

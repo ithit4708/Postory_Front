@@ -114,13 +114,13 @@ export default function ChannelWebnovel() {
 
 
   return (
-    <ChannelTemplate chnlUri={data.data.channel.chnlUri} >
+    <ChannelTemplate>
       <SectionHeader>
         <span>{data.data.channel.chnlWebnovelCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
       </SectionHeader>
       {data.data.webnovels.length !== 0 ? (
-        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} />)
+        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post}/>)
       ) : (
         <>
           <NoContent>

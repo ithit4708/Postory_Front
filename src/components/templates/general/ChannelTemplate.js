@@ -7,6 +7,10 @@ import { useApiGet } from '../../../hooks/useApi';
 import { useParams } from 'react-router-dom';
 import useUserStore from '../../../stores/useUserStore';
 import { useEffect, useState } from 'react';
+import BtnLinkSC from '../../atoms/Link/BtnLinkSC';
+import SubscribeBtn from '../../molecules/channel/SubscribeBtn';
+import SubscribeBlackBtn from '../../molecules/channel/SubscribeBlackBtn';
+
 
 const Thumbnail = styled.div`
   width: 80px;
@@ -44,6 +48,8 @@ export default function ChannelTemplate(p) {
   }, [chnlUri]);
 
   const { user } = useUserStore();
+  const {data: subsData, isLoading: isSubsLoading, error: subsError} = useApiGet(`/channel/${encodeURIComponent(chnlUri)}/subs/${encodeURIComponent(user.nic)}`,[chnlUri])
+
   if (isLoading) return;
   if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
 
@@ -51,22 +57,25 @@ export default function ChannelTemplate(p) {
     return null;
   }
 
+  const isOwner = user.nic === data.data.channelUser.nic;
+
+
   const mainNavLinks = [
     {
-      to: `/channel/${encodeURIComponent(p.chnlUri)}`,
+      to: `/channel/${encodeURIComponent(chnlUri)}`,
       children: '홈',
       end: true,
     },
     {
-      to: `/channel/${encodeURIComponent(p.chnlUri)}/webtoon`,
+      to: `/channel/${encodeURIComponent(chnlUri)}/webtoon`,
       children: '웹툰',
     },
     {
-      to: `/channel/${encodeURIComponent(p.chnlUri)}/webnovel`,
+      to: `/channel/${encodeURIComponent(chnlUri)}/webnovel`,
       children: '웹소설',
     },
     {
-      to: `/channel/${encodeURIComponent(p.chnlUri)}/about`,
+      to: `/channel/${encodeURIComponent(chnlUri)}/about`,
       children: '소개',
     },
   ];
@@ -74,7 +83,6 @@ export default function ChannelTemplate(p) {
   return (
     <>
       <Header />
-      <Nav>{p.nic}</Nav>
       <Main>
         <Thumbnail imageUrl={data.data.channel.chnlImgPath} />
         <CountInfo>
@@ -82,11 +90,14 @@ export default function ChannelTemplate(p) {
           {data.data.channel.chnlPostCnt}개
         </CountInfo>
         <ChannelTitle>{data.data.channel.chnlTtl}</ChannelTitle>
-        {/* 
-        // TODO: 구독하기 버튼 처리
-        <div>
-          구독하기 버튼
-        </div> */}
+
+        <div style={{ display: 'flex', justifyContent: 'end'}}>
+          {isOwner ?
+            <BtnLinkSC to={`/${chnlUri}/post/create`}>포스트 발행하기</BtnLinkSC>:
+          // <BtnLinkSC to={`/${chnlUri}/post/create`}>구독하기</BtnLinkSC>
+           <SubscribeBlackBtn isSubsed={subsData.isSubscribed} chnlId={data.data.channel.chnlId}></SubscribeBlackBtn>
+          }
+        </div>
         <Nav>
           <NavMenu navLinks={mainNavLinks} />
         </Nav>

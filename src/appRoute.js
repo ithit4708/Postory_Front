@@ -24,6 +24,8 @@ import ChannelHome from './pages/general/channel/ChannelHome';
 import ChannelWebtoon from './pages/general/channel/ChannelWebtoon';
 import ChannelWebnovel from './pages/general/channel/ChannelWebnovel';
 import ChannelAbout from './pages/general/channel/ChannelAbout';
+import PostCreate from './pages/general/create/PostCreate';
+import PostView from './pages/general/view/PostView';
 
 const urls = {
   login: '/login',
@@ -57,7 +59,7 @@ const urls = {
   setBlacklist: '/account/settings/blacklist',
 
   //channel
-  channelCreate: '/channel/create',
+  channelCreate: '/:chnlUri/channel/create',
   channel: '/channel/:chnlUri',
   channelWebtoon: '/channel/:chnlUri/webtoon',
   channelWebnovel: '/channel/:chnlUri/webnovel',
@@ -71,6 +73,12 @@ const urls = {
   profile: `/profile/:nic`,
   profilePost: `/profile/:nic/post`,
   profileSeries: `/profile/:nic/series`,
+
+  // create
+  postCreate: `/:chnlUri/post/create`,
+
+  // view
+  postView: '/post/:postId',
 };
 
 // Links
@@ -168,4 +176,10 @@ export const pageRoutes = [
   { id: 28, path: urls.channelWebtoon, element: <ChannelWebtoon /> },
   { id: 29, path: urls.channelWebnovel, element: <ChannelWebnovel /> },
   { id: 30, path: urls.channelAbout, element: <ChannelAbout /> },
+
+  // create
+  { id: 31, path: urls.postCreate, element: <PostCreate /> },
+
+  // view
+  { id: 32, path: urls.postView, element: <PostView /> },
 ];

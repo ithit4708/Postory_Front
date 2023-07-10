@@ -304,7 +304,6 @@ export default function PostCreate() {
     navigate(`/channel/${chnlUri}`);
 
 
-
   };
 
   const options = [
@@ -369,9 +368,6 @@ export default function PostCreate() {
             onChange={handleSubTitleChange}
             onKeyDown={handleSubTitleChange}
           />
-
-          {/*<div style={{ position: 'relative'}}>*/}
-          {/*</div>*/}
 
           <div style={{ height: '500px', margin: '20px 0 50px 0' }}>
             <ReactQuill ref={quillRef} value={content} onChange={handleEditorChange} style={{ height: '500px' }} modules={modules} formats={formats}/>

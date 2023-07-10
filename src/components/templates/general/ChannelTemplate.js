@@ -11,6 +11,7 @@ import BtnLinkSC from '../../atoms/Link/BtnLinkSC';
 import SubscribeBtn from '../../molecules/channel/SubscribeBtn';
 import SubscribeBlackBtn from '../../molecules/channel/SubscribeBlackBtn';
 
+
 const Thumbnail = styled.div`
   width: 80px;
   height: 80px;
@@ -96,7 +97,6 @@ export default function ChannelTemplate(p) {
           // <BtnLinkSC to={`/${chnlUri}/post/create`}>구독하기</BtnLinkSC>
            <SubscribeBlackBtn isSubsed={subsData.isSubscribed} chnlId={data.data.channel.chnlId}></SubscribeBlackBtn>
           }
-
         </div>
         <Nav>
           <NavMenu navLinks={mainNavLinks} />

@@ -2,19 +2,14 @@ import styled from 'styled-components';
 import useUserStore from '../../../stores/useUserStore';
 import { useParams } from 'react-router-dom';
 import { useApiGet } from '../../../hooks/useApi';
-import CreateTemplate from '../../../components/templates/general/CreateTemplate';
 import React, { useState } from 'react';
-import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import ImageResize from 'quill-image-resize';
 import ViewTemplate from '../../../components/templates/general/ViewTemplate';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
-import LikeBtn from '../../../components/molecules/post/LikeBtn';
 
 
 
-Quill.register('modules/imageResize', ImageResize);
 export const SubmitButton = styled.button`
   display: block;
   width: fit-content;
@@ -83,12 +78,6 @@ export default function PostView() {
     `/post/${postId}`,
     [chnlUri, postId]
   );
-  console.log(user);
-
-  // const {data: likeData, isLoading: likeIsLoading, error: likeErr} = useApiGet(
-  //   `/post/${postId}/like/${user.nic}`,[]
-  // );
-
   const navigate = useNavigate();
 
   if (isLoading) return;
@@ -123,21 +112,16 @@ export default function PostView() {
           <PostViewHeaderBottom>
             <div>
               <RoundThumnail imageUrl={data.writer.userImgPath} onClick={() => goProfile(data.writer.nic)}></RoundThumnail>
-
             </div>
             <div>
               <span>{data.writer.nic}</span>
               <PostInfo>
                 {data.post.postPblcDtm} / 조회 {data.post.postInqrCnt}
-
               </PostInfo>
             </div>
           </PostViewHeaderBottom>
 
         <PostEditButtonContainer>
-          {/*{ isOwner ?*/}
-          {/*<LikeBtn liked={likeData.isLiked} postId={postId}></LikeBtn>: ''*/}
-          {/*}*/}
           <BtnLinkSC to={`/${chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
         </PostEditButtonContainer>
         </PostViewHeader>

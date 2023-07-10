@@ -58,8 +58,8 @@ export default function PostCreate() {
   const [thumbnailImageUrl, setThumbnailImageUrl] = useState('');
   const [postType, setPostType] = useState('');
   const [postId, setPostId] = useState(null);
-  // const imageUrls = ["정호"];
   const [imageUrls, setImageUrls] = useState([]);
+
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
   const quillRef = useRef();
@@ -79,6 +79,7 @@ export default function PostCreate() {
     postThumnPath: thumbnailImageUrl,
     imageUrls: imageUrls,
   });
+
 
   const {
     res: postRes,

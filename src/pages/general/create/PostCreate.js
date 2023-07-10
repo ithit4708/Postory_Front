@@ -10,8 +10,8 @@ import ImageResize from 'quill-image-resize';
 import PostRadioButton from '../../../components/molecules/post/PostRadioButton';
 import PostImg from '../../../components/atoms/Post/PostImgSC';
 import { useNavigate } from 'react-router';
+import useUserStore from '../../../stores/useUserStore';
 
-Quill.register('modules/imageResize', ImageResize);
 export const SubmitButton = styled.button`
   display: block;
   width: fit-content;
@@ -47,6 +47,8 @@ export const ImageContainerSC = styled.div`
 
 
 export default function PostCreate() {
+  Quill.register('modules/imageResize', ImageResize);
+  const { user } = useUserStore();
   const { chnlUri } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -107,26 +109,22 @@ export default function PostCreate() {
 
   const { data, isLoading, error } = useConditionalApiGet(`/post/${postId}`, postId);
   const imageHandler = () => {
-    console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
-    //
-    // 1. 이미지를 저장할 input type=file DOM을 만든다.
     const input = document.createElement('input');
-    // // 속성 써주기
+
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
     input.addEventListener('change', async () => {
-      console.log('온체인지');
       const files = input.files;
       // multer에 맞는 형식으로 데이터 만들어준다.
       Array.prototype.forEach.call(files, function(file) {
         imageData.append('multipartFiles',file);
-        console.log('multipartFiles', file);
       });
 
       await upload(imageData);
     });
   };
+
 
   // 이미지 업로드 input의 onChange
   const saveImgFile = async () => {
@@ -176,7 +174,6 @@ export default function PostCreate() {
     'size'
   ]
   useEffect(() =>{
-    console.log(queryParams.get('postId'))
     setPostId(queryParams.get('postId'));
     console.log(postId);
   }, [])
@@ -190,32 +187,15 @@ export default function PostCreate() {
 
   useEffect(() => {
     if (uploadRes !== null) {
-      console.dir(uploadRes);
-      // 그리고 다른 작업들...
-      console.log(process.env.REACT_APP_PUBLIC_URL)
 
       const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-      //     // 1. 에디터 root의 innerHTML을 수정해주기
-      //     // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
-      //     // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
-      uploadRes.data.urls.forEach((imgUrl) => {
-          // editor.root.innerHTML =
-          //   editor.root.innerHTML + `<img src=${
-          //   process.env.REACT_APP_PUBLIC_URL+imgUrl} '/><br/>`;
-          // 현재 있는 내용들 뒤에 써줘야한다.
 
-          // 2. 현재 에디터 커서 위치값을 가져온다.
-        console.log("editor");
-        console.dir(editor);
+      uploadRes.data.urls.forEach((imgUrl) => {
 
           let range = editor.getSelection();
           editor.insertEmbed(range.index, 'image', process.env.REACT_APP_PUBLIC_URL+imgUrl);
-          //     // 가져온 위치에 이미지를 삽입한다
-          // imageUrls.push(process.env.REACT_APP_PUBLIC_URL+imgUrl);
+
           setImageUrls((prevImageUrls) => [...prevImageUrls, process.env.REACT_APP_PUBLIC_URL+imgUrl]);
-
-          console.dir(imageUrls);
-
         }
       )
 
@@ -251,24 +231,15 @@ export default function PostCreate() {
 
 
     const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-    console.log("quill", editor);
     const delta = editor.getContents();  // 현재 문서의 내용을 가져오기
-    console.log("delta", delta);
     setContent(JSON.stringify(delta)); // Quill 에디터의 내용을 Delta 형식의 JSON 문자열로 설정
-    console.log("postContent", content);
 
 
-    // ops 배열을 순회하며 이미지 연산자를 찾습니다.
     const imagePathes = delta.ops
       .filter(op => typeof op.insert === 'object' && op.insert.image)
       .map(op => op.insert.image);
 
-    // 이미지 URL 출력
-    console.log(imagePathes);
-    // 선택한 postType 값과 기타 필요한 데이터를 API로 전송합니다.
-    console.dir(imagePathes);
     setImageUrls(imagePathes);
-    console.log("submitImage", imageUrls);
     const postData = {
       chnlUri: chnlUri,
       postType: postType,
@@ -280,7 +251,6 @@ export default function PostCreate() {
     };
     // API 호출 등의 로직을 추가합니다.
 
-    console.log('전송할 데이터:', postData);
     if (postId !== null){
       // 포스트 수정을 위한 postApi
       await postEdit(postData);
@@ -356,7 +326,6 @@ export default function PostCreate() {
             onChange={handleSubTitleChange}
             onKeyDown={handleSubTitleChange}
           />
-
           <div style={{ height: '500px', margin: '20px 0 50px 0' }}>
             <ReactQuill ref={quillRef} value={content} onChange={handleEditorChange} style={{ height: '500px' }} modules={modules} formats={formats}/>
           </div>

@@ -6,22 +6,22 @@ import Main from '../../organisms/general/Main';
 export default function SearchTemplate(p) {
   const navLinks = [
     {
-      to: `/search?keyword=${encodeURIComponent(p.keyword)}`,
+      to: `/search/channel?keyword=${encodeURIComponent(p.keyword)}`,
       children: '검색 결과',
       isTitle: true,
     },
     {
-      to: `/search?keyword=${encodeURIComponent(p.keyword)}`,
-      children: '포스트',
+      to: `/search/channel?keyword=${encodeURIComponent(p.keyword)}`,
+      children: '채널',
+    },
+    {
+      to: `/search/webtoon?keyword=${encodeURIComponent(p.keyword)}`,
+      children: '웹툰',
       end: true,
     },
     {
-      to: `/search/series?keyword=${encodeURIComponent(p.keyword)}`,
-      children: '시리즈',
-    },
-    {
-      to: `/search/channel?keyword=${encodeURIComponent(p.keyword)}`,
-      children: '채널',
+      to: `/search/webnovel?keyword=${encodeURIComponent(p.keyword)}`,
+      children: '웹소설',
     },
   ];
 

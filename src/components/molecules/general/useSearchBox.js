@@ -12,7 +12,7 @@ export const useSearchBox = (resultUrl) => {
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
       // Enter 키를 눌렀을 때 실행할 동작
-      navigate(`${resultUrl}?keyword=${encodeURIComponent(value)}`);
+      navigate(`${resultUrl}?keyword=${encodeURIComponent(value)}&option=all`);
     }
   };
 

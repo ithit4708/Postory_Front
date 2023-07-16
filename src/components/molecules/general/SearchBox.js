@@ -34,7 +34,7 @@ const SearchInnerSC = styled.div`
 `;
 
 export default function SearchBox() {
-  const { value, onChange, onKeyDown, onClick } = useSearchBox('/search');
+  const { value, onChange, onKeyDown, onClick } = useSearchBox('/search/webtoon');
 
   return (
     <SearchBoxSC>

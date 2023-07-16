@@ -7,6 +7,7 @@ import PostItem from '../../../components/organisms/general/PostItem';
 import NoContent from '../../../components/molecules/error/NoContent';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
+import { countDate } from '../../../components/molecules/user/dateConversion';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -128,7 +129,7 @@ export default function ChannelHome() {
                 {post.postLikCnt}
               </WebtoonCount>
                <WebtoonCount>
-                21시간 전
+                 {countDate(post.postPblcDtm)}
               </WebtoonCount>
             </WebtoonSubInfo>
           </WebtoonListItem>

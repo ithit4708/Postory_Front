@@ -132,6 +132,8 @@ export default function ChannelWebnovel() {
         </>
       )}
 
+      {data.data.channel.chnlWebnovelCnt !== 0 ?
+        (
       <PaginationContainer>
         <PaginationButton onClick={handlePrevPage}>
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -149,6 +151,8 @@ export default function ChannelWebnovel() {
           <FontAwesomeIcon icon={faChevronRight} />
         </PaginationButton>
       </PaginationContainer>
+        ) : ''}
+
     </ChannelTemplate>
   );
 }

@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import Home from './pages/general/home/Home';
-import SearchPost from './pages/general/search/SearchPost';
-import SearchSeries from './pages/general/search/SearchSeries';
+import SearchWebtoon from './pages/general/search/SearchWebtoon';
+import SearchSeries from './pages/general/search/SearchWebnovel';
 import SearchChannel from './pages/general/search/SearchChannel';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
@@ -26,6 +26,7 @@ import ChannelWebnovel from './pages/general/channel/ChannelWebnovel';
 import ChannelAbout from './pages/general/channel/ChannelAbout';
 import PostCreate from './pages/general/create/PostCreate';
 import PostView from './pages/general/view/PostView';
+import SearchWebnovel from './pages/general/search/SearchWebnovel';
 
 const urls = {
   login: '/login',
@@ -59,14 +60,14 @@ const urls = {
   setBlacklist: '/account/settings/blacklist',
 
   //channel
-  channelCreate: '/:chnlUri/channel/create',
+  channelCreate: '/channel/create',
   channel: '/channel/:chnlUri',
   channelWebtoon: '/channel/:chnlUri/webtoon',
   channelWebnovel: '/channel/:chnlUri/webnovel',
   channelAbout: '/channel/:chnlUri/about',
 
-  search: '/search',
-  searchSeries: '/search/series',
+  searchWebtoon: '/search/webtoon',
+  searchWebnovel: '/search/webnovel',
   searchChannel: '/search/channel',
 
   //profile
@@ -91,7 +92,7 @@ export const headerLinks = [
 
 // navLinks
 export const homeLinks = [
-  { to: urls.home, children: '추천' },
+  { to: urls.home, children: '채널' },
   { to: urls.webtoon, children: '웹툰' },
   { to: urls.webnovel, children: '웹소설' },
 ];
@@ -161,8 +162,8 @@ export const pageRoutes = [
   { id: 19, path: urls.setBlacklist, element: <BlackedChannel /> },
 
   //search
-  { id: 20, path: urls.search, element: <SearchPost /> },
-  { id: 21, path: urls.searchSeries, element: <SearchSeries /> },
+  { id: 20, path: urls.searchWebtoon, element: <SearchWebtoon /> },
+  { id: 21, path: urls.searchWebnovel, element: <SearchWebnovel /> },
   { id: 22, path: urls.searchChannel, element: <SearchChannel /> },
 
   //profile

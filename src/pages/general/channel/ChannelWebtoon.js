@@ -9,6 +9,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useApiGet } from '../../../hooks/useApi';
 import { post } from 'axios';
 import { useNavigate } from 'react-router';
+import { countDate } from '../../../components/molecules/user/dateConversion';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -206,7 +207,7 @@ export default function ChannelWebtoon() {
                 {post.postLikCnt}
               </WebtoonCount>
               <WebtoonCount>
-                21시간 전
+                {countDate(post.postPblcDtm)}
               </WebtoonCount>
 
 
@@ -215,6 +216,7 @@ export default function ChannelWebtoon() {
         ))}
       </WebtoonListContainer>
 
+      {data.data.channel.chnlWebtoonCnt != 0 ?
       <PaginationContainer>
         <PaginationButton onClick={handlePrevPage}>
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -232,6 +234,8 @@ export default function ChannelWebtoon() {
           <FontAwesomeIcon icon={faChevronRight} />
         </PaginationButton>
       </PaginationContainer>
+        : ''
+      }
     </ChannelTemplate>
   );
 }

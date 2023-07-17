@@ -132,7 +132,10 @@ export default function PostView() {
           {/*{ isOwner ?*/}
           {/*<LikeBtn liked={likeData.isLiked} postId={postId}></LikeBtn>: ''*/}
           {/*}*/}
-          <BtnLinkSC to={`/${data.channel.chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
+          {isOwner ?
+            (<BtnLinkSC to={`/${data.channel.chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
+            ) : ''
+          }
         </PostEditButtonContainer>
         </PostViewHeader>
         <PostViewBody dangerouslySetInnerHTML={{__html: data.post.postContent}}>

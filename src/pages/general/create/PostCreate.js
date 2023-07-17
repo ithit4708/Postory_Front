@@ -181,7 +181,8 @@ export default function PostCreate() {
 
   useEffect(() =>{
     if (uploadThumRes !== null){
-      setThumbnailImageUrl(process.env.REACT_APP_PUBLIC_URL+uploadThumRes.data.url);
+      // setThumbnailImageUrl(process.env.REACT_APP_PUBLIC_URL+uploadThumRes.data.url);
+      setThumbnailImageUrl(uploadThumRes.data.url);
     }
   }, [uploadThumRes])
 
@@ -193,9 +194,11 @@ export default function PostCreate() {
       uploadRes.data.urls.forEach((imgUrl) => {
 
           let range = editor.getSelection();
-          editor.insertEmbed(range.index, 'image', process.env.REACT_APP_PUBLIC_URL+imgUrl);
+          // editor.insertEmbed(range.index, 'image', process.env.REACT_APP_PUBLIC_URL+imgUrl);
+        editor.insertEmbed(range.index, 'image', imgUrl);
 
-          setImageUrls((prevImageUrls) => [...prevImageUrls, process.env.REACT_APP_PUBLIC_URL+imgUrl]);
+          // setImageUrls((prevImageUrls) => [...prevImageUrls, process.env.REACT_APP_PUBLIC_URL+imgUrl]);
+        setImageUrls((prevImageUrls) => [...prevImageUrls, imgUrl]);
         }
       )
 

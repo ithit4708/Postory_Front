@@ -10,7 +10,7 @@ const SearchBoxSC = styled.div`
 
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
 `;
 
 const SearchInnerSC = styled.div`
@@ -33,8 +33,9 @@ const SearchInnerSC = styled.div`
   }
 `;
 
-export default function SearchBox() {
-  const { value, onChange, onKeyDown, onClick } = useSearchBox('/search/webtoon');
+export default function HomeSearchBox({type}) {
+  console.log(type);
+  const { value, onChange, onKeyDown, onClick } = useSearchBox(`/search/${type}`);
 
   return (
     <SearchBoxSC>

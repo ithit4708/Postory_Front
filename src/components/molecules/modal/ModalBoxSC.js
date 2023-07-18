@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const ModalBoxSC = styled.div`
   z-index: 60;
-  position: absolute;
+  position: fixed;
   top: 40px;
   left: 50%;
   transform: translateX(-50%);

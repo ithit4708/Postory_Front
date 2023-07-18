@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const useChannelList = create((set) => ({
+const useSubChannelList = create((set) => ({
   channels: [],
 
   // 로그인 유저의 모든 채널 세팅
@@ -18,7 +18,7 @@ const useChannelList = create((set) => ({
   updateChannel: (updatedChannel) => {
     set((state) => {
       const updatedChannels = state.channels.map((channel) =>
-        channel.id === updatedChannel.id ? updatedChannel : channel
+        channel.chnlId === updatedChannel.chnlId ? updatedChannel : channel
       );
       return { ...state, channels: updatedChannels };
     });
@@ -33,4 +33,4 @@ const useChannelList = create((set) => ({
   },
 }));
 
-export default useChannelList;
+export default useSubChannelList;

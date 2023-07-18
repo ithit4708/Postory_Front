@@ -5,7 +5,7 @@ import { useApiPost, useApiDelete } from '../../../hooks/useApi';
 import useModal from '../modal/useModal';
 import ConfirmBox from '../modal/ConfirmBox';
 import { useEffect } from 'react';
-import useChannelList from '../../../stores/useChannelList';
+import useSubChannelList from '../../../stores/useSubChannelList';
 
 export default function SubscribeBtn({ isSubsed, chnlId }) {
   const [isSubscribed, setIsSubscribed] = useState(isSubsed);
@@ -22,7 +22,7 @@ export default function SubscribeBtn({ isSubsed, chnlId }) {
     setError: setUnsubsErr,
     deleteData: unsubscribe,
   } = useApiDelete(`/subscriptions/cancle?chnlId=${chnlId}`);
-  const { removeChannel } = useChannelList();
+  const { removeChannel } = useSubChannelList();
   const currentPath = window.location.pathname;
 
   useEffect(() => {

@@ -11,7 +11,7 @@ export default function AccountSettingsTemplate(p) {
       <Nav>
         <NavMenu navLinks={accSetLinks} />
       </Nav>
-      <Main>{p.subscriptions}</Main>
+      <Main narrow={true}>{p.children}</Main>
     </>
   );
 }

@@ -13,11 +13,11 @@ const PostItemSC = styled.div`
 `;
 
 //썸네일 없으도 기본 이미지 보이게 했음
-export default function PostItem({ post }) {
+export default function PostItem({ post, onAfterScrap, onAfterUnscrap }) {
   const navigate = useNavigate();
   const goPost = () => {
     navigate(`/post/${post.postId}`);
-    //조회수 올라가는 함수 필요
+    //조회수 올라가는 함수 구현 필요
   };
 
   return (

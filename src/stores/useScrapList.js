@@ -18,7 +18,7 @@ const useScrapList = create((set) => ({
   updatePost: (updatedPost) => {
     set((state) => {
       const updatedPosts = state.posts.map((post) =>
-        post.id === updatedPost.id ? updatedPost : post
+        post.postId === updatedPost.postId ? updatedPost : post
       );
       return { ...state, posts: updatedPosts };
     });

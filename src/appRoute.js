@@ -17,7 +17,7 @@ import SubsChannel from './pages/general/subs/SubsChannel';
 import ScrapPost from './pages/general/myLibrary/ScrapPost';
 import LikePost from './pages/general/myLibrary/LikePost';
 import AccountSettings from './pages/general/accSettings/AccountSetting';
-import ProfileSettings from './pages/general/accSettings/ProfileSetting';
+import ProfileSettings from './pages/general/accSettings/ProfileSettings';
 import BlackedChannel from './pages/general/accSettings/BlackedChannel';
 import ChannelCreate from './pages/general/ChannelCreate';
 import ChannelHome from './pages/general/channel/ChannelHome';

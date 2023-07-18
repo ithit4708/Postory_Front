@@ -17,7 +17,6 @@ export default function ProfilePost() {
   if (isLoading) return;
   if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
 
-  console.log('프로필 유저: ');
   return (
     data && (
       <ProfileTemplate nic={data.user.nic} data={data}>

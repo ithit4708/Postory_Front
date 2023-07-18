@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CenterPSC from '../../atoms/Paragraph/TextCenterP';
+import CenterPSC from '../../atoms/TextTag/TextCenterP';
 const NoDataSC = styled.div`
   padding: 50px 0;
 

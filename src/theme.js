@@ -49,3 +49,5 @@ theme.color.bodyfont = theme.color.blackA50;
 theme.color.overlay = theme.color.blackA50;
 theme.color.ddItemHoverbg = theme.color.gray3;
 theme.color.ddItemHover = theme.color.blackA80;
+theme.fontSize.validGuide = theme.fontSize.userBannerNic;
+theme.fontSize.pageTitle = theme.fontSize.title;

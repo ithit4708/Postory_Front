@@ -8,6 +8,7 @@ const ConfirmBtnSC = styled.button`
   background-color: ${(p) => p.theme.color.blue2};
   border: 1px solid ${(p) => p.theme.color.blue2};
   opacity: ${(p) => (p.disabled ? 0.3 : 1)};
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
 
   &:hover {
     color: white;

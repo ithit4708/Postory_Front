@@ -33,7 +33,7 @@ export default function SubscribeBtn({ isSubsed, chnlId }) {
 
   useEffect(() => {
     if (unsubsRes) {
-      if (!currentPath.includes('/profile')) {
+      if (currentPath.includes('/subscriptions/channel')) {
         removeChannel(chnlId);
       }
       setIsSubscribed(false);

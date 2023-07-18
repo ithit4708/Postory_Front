@@ -22,7 +22,7 @@ const UserBannerSC = styled.div`
   }
 `;
 
-export default function UserBanner({ post }) {
+export default function UserBanner({ post, onAfterScrap, onAfterUnscrap }) {
   return (
     <UserBannerSC>
       <Link to={`/profile/${post.nic}`}>
@@ -34,7 +34,7 @@ export default function UserBanner({ post }) {
         </Link>
         <PostMetaData post={post} />
       </div>
-      <ScrapPostBtn isScrapped={post.isScraped} postId={post.postId} />
+      <ScrapPostBtn isScraped={post.isScraped} postId={post.postId} />
     </UserBannerSC>
   );
 }

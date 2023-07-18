@@ -13,5 +13,5 @@ export default function useForm(initialState) {
     });
   };
 
-  return { form, handleChange };
+  return { form, setForm, handleChange };
 }

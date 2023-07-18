@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const TextInputSC = styled.input`
+const TextAreaSC = styled.textarea`
   padding: 10px 12px;
   font-size: 16px;
   border-radius: 4px;
-  height: 40px;
+  height: 88px;
   border: 1px solid ${(p) => p.theme.color.gray1};
   width: 100%;
   outline: none;
@@ -16,4 +16,4 @@ const TextInputSC = styled.input`
   }
 `;
 
-export default TextInputSC;
+export default TextAreaSC;

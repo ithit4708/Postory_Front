@@ -1,8 +1,9 @@
-import useUserStore from '../../../../stores/useUserStore';
 import DropdownMenuSC from '../../dropdown/DropdownMenuSC';
 import DdLinkItemSC from '../../../atoms/Dropdown/DdLinkItemSC';
 import UserImg from '../../../atoms/User/UserImg';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../../../hooks/useAuth';
+import DdLinkChannelItemSC from '../../../atoms/Dropdown/DdLinkChannelItemSC';
 
 const userMenuLinks = [
   { to: '/', children: '홈' },
@@ -13,7 +14,8 @@ const userMenuLinks = [
 ];
 
 export default function UserMenu(p) {
-  const { user } = useUserStore();
+  const { user, channels } = useAuth();
+
   const navigate = useNavigate();
 
   const onClickLogout = (e) => {
@@ -32,6 +34,20 @@ export default function UserMenu(p) {
           </DdLinkItemSC>
         </li>
       </DropdownMenuSC>
+      {channels && channels.length !== 0 && (
+        <DropdownMenuSC>
+          <p style={{ padding: '5px 8px 0', fontSize: '15px' }}>내 채널</p>
+          {channels.map((channel) => (
+            <li key={channel.chnlId}>
+              <DdLinkChannelItemSC
+                to={`/channel/${channel.chnlUri}`}
+                children={channel.chnlTtl}
+                onClick={p.onClose}
+              />
+            </li>
+          ))}
+        </DropdownMenuSC>
+      )}
       <DropdownMenuSC>
         {userMenuLinks.map((link, idx) => (
           <li key={idx}>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useApiPost } from '../../../hooks/useApi';
-import SignupInput from '../../molecules/auth/LabeledInput';
+import SignupInput from '../../molecules/auth/SignupInput';
 import useForm from './useForm';
 import LabeldCheckBox from '../../atoms/Input/LabeldCheckBox';
 import ConfirmBtnSC from '../../atoms/Button/ConfirmBtnSC';

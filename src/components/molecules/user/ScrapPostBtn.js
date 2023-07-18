@@ -7,7 +7,7 @@ import useModal from '../modal/useModal';
 import AlertBox from '../modal/AlertBox';
 import useScrapList from '../../../stores/useScrapList';
 
-export default function ScrapPostBtn({ isScrapped: isScraped, postId }) {
+export default function ScrapPostBtn({ isScraped, postId }) {
   const [isScrapped, setIsScrapped] = useState(isScraped);
   const { isOpen, openModal, closeModal } = useModal();
   const {
@@ -15,13 +15,13 @@ export default function ScrapPostBtn({ isScrapped: isScraped, postId }) {
     error: scrapErr,
     setError: setScrapErr,
     postData: scrap,
-  } = useApiPost(`/scrap`, { postId: postId });
+  } = useApiPost(`/library/scrap`, { postId: postId });
   const {
     res: unscrapRes,
     error: unscrapErr,
     setError: setUnscrapErr,
     deleteData: unscrap,
-  } = useApiDelete(`/scrap/cancle?postId=${postId}`);
+  } = useApiDelete(`/library/scrap/cancle?postId=${postId}`);
   const currentPath = window.location.pathname;
   const { removePost } = useScrapList();
 
@@ -34,7 +34,6 @@ export default function ScrapPostBtn({ isScrapped: isScraped, postId }) {
   useEffect(() => {
     if (unscrapRes) {
       setIsScrapped(false);
-      openModal();
     }
   }, [unscrapRes, currentPath]);
 
@@ -47,12 +46,15 @@ export default function ScrapPostBtn({ isScrapped: isScraped, postId }) {
 
   const handleUnscrap = () => {
     console.log('언스크랩 실행');
+    openModal();
     unscrap();
   };
 
   // 버튼이 클릭되었을 때 호출될 콜백 함수
   const handleClose = () => {
-    removePost(postId);
+    if (currentPath.includes('/library/scrap')) {
+      removePost(postId);
+    }
     closeModal();
   };
 

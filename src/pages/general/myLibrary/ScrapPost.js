@@ -6,8 +6,8 @@ import NoContent from '../../../components/molecules/error/NoContent';
 import useScrapList from '../../../stores/useScrapList';
 
 export default function ScrapPost() {
-  const { isLoading, data, error } = useApiGet(`/scrap/`);
-  const { posts, setPosts } = useScrapList();
+  const { isLoading, data, error } = useApiGet(`/library/scrap/`);
+  const { posts, setPosts, removePost } = useScrapList();
 
   useEffect(() => {
     if (data) {
@@ -22,11 +22,11 @@ export default function ScrapPost() {
     <LibraryTemplate>
       <p>{`총 ${posts.length}개의 포스트`}</p>
       {posts.length !== 0 ? (
-        posts.map((post) => <PostItem key={post.postId} post={post} />)
+        posts.map((post) => (
+          <PostItem key={post.postId} post={post} onAfterUnscrap={removePost} />
+        ))
       ) : (
-        <>
-          <NoContent>스크랩한 포스트가 없습니다.</NoContent>
-        </>
+        <NoContent>스크랩한 포스트가 없습니다.</NoContent>
       )}
     </LibraryTemplate>
   );

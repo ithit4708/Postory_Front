@@ -133,3 +133,83 @@ export function useApiDelete(url) {
 
   return { isDeleting, deleteData, error, res, setError };
 }
+
+export function useApiFormPost(url) {
+  const [isPosting, setIsPosting] = useState(false);
+  const [res, setRes] = useState(null);
+  const [error, setError] = useState(null);
+
+  const postData = async (reqData) => {
+    setIsPosting(true);
+    setError(null);
+    setRes(null);
+
+    try {
+      const res = await api.post(url, reqData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('post 성공');
+      console.log(res);
+      setRes(res);
+    } catch (err) {
+      console.log('post 실패');
+      console.log(err);
+      if (err.code === 'ERR_NETWORK') {
+        setError({
+          status: err.code,
+          errMsg: err.message,
+        });
+      } else
+        setError({
+          status: err.code,
+          errMsg: err.response.data.errMsg,
+        });
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
+  return { isPosting, postData, error, res, setError };
+}
+
+export function useApiFormPut(url) {
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [res, setRes] = useState(null);
+  const [error, setError] = useState(null);
+
+  const putData = async (reqData) => {
+    setIsUpdating(true);
+    setError(null);
+    setRes(null);
+
+    try {
+      const res = await api.put(url, reqData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('post 성공');
+      console.log(res);
+      setRes(res);
+    } catch (err) {
+      console.log('post 실패');
+      console.log(err);
+      if (err.code === 'ERR_NETWORK') {
+        setError({
+          status: err.code,
+          errMsg: err.message,
+        });
+      } else
+        setError({
+          status: err.code,
+          errMsg: err.response.data.errMsg,
+        });
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  return { isUpdating, putData, error, res, setRes, setError };
+}

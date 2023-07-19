@@ -60,7 +60,7 @@ const urls = {
   setBlacklist: '/account/settings/blacklist',
 
   //channel
-  channelCreate: '/channel/create',
+  channelCreate: '/:chnlUri/channel/create',
   channel: '/channel/:chnlUri',
   channelWebtoon: '/channel/:chnlUri/webtoon',
   channelWebnovel: '/channel/:chnlUri/webnovel',
@@ -79,7 +79,7 @@ const urls = {
   postCreate: `/:chnlUri/post/create`,
 
   // view
-  postView: '/post/:postId',
+  postView: '/:chnlUri/post/:postId',
 };
 
 // Links

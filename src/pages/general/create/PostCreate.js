@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useUserStore from '../../../stores/useUserStore';
 import { useLocation, useParams } from 'react-router-dom';
 import { useApiGet, useApiPost, useConditionalApiGet } from '../../../hooks/useApi';
 import CreateTemplate from '../../../components/templates/general/CreateTemplate';
@@ -11,8 +12,8 @@ import PostRadioButton from '../../../components/molecules/post/PostRadioButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faUser } from '@fortawesome/free-solid-svg-icons';
 import PostImg from '../../../components/atoms/Post/PostImgSC';
+import { useNavigate } from 'react-router';
 
-Quill.register('modules/imageResize', ImageResize);
 export const SubmitButton = styled.button`
   display: block;
   width: fit-content;
@@ -64,7 +65,6 @@ export default function PostCreate() {
   const quillRef = useRef();
   const imageData = new FormData();
   const thumnData = new FormData();
-
   const {
     res: postRes,
     error: postErr,
@@ -77,6 +77,7 @@ export default function PostCreate() {
     postContent: content,
     postThumnPath: thumbnailImageUrl,
     imageUrls: imageUrls,
+
   });
   const {
     res: postEditRes,
@@ -105,9 +106,8 @@ export default function PostCreate() {
     setError: Err,
     postData: uploadThumn,
   } = useApiPost(`file/uploadThumn`, {thumnData: thumnData});
-
-
   const { data, isLoading, error } = useConditionalApiGet(`/post/${postId}`, postId);
+
   const imageHandler = () => {
     const input = document.createElement('input');
 
@@ -119,6 +119,7 @@ export default function PostCreate() {
       // multer에 맞는 형식으로 데이터 만들어준다.
       Array.prototype.forEach.call(files, function(file) {
         imageData.append('multipartFiles',file);
+        console.log('multipartFiles', file);
       });
 
       await upload(imageData);
@@ -189,7 +190,6 @@ export default function PostCreate() {
 
   useEffect(() => {
     if (uploadRes !== null) {
-
       const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
 
       uploadRes.data.urls.forEach((imgUrl) => {
@@ -244,6 +244,7 @@ export default function PostCreate() {
       .map(op => op.insert.image);
 
     setImageUrls(imagePathes);
+
     const postData = {
       chnlUri: chnlUri,
       postType: postType,

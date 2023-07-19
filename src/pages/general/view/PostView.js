@@ -7,7 +7,6 @@ import 'react-quill/dist/quill.snow.css';
 import ViewTemplate from '../../../components/templates/general/ViewTemplate';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
-import LikeBtn from '../../../components/molecules/post/LikeBtn';
 
 export const SubmitButton = styled.button`
   display: block;
@@ -77,12 +76,6 @@ export default function PostView() {
     `/post/${postId}`,
     [chnlUri, postId]
   );
-  console.log(user);
-
-  // const {data: likeData, isLoading: likeIsLoading, error: likeErr} = useApiGet(
-  //   `/post/${postId}/like/${user.nic}`,[]
-  // );
-
   const navigate = useNavigate();
 
   if (isLoading) return;
@@ -117,13 +110,11 @@ export default function PostView() {
           <PostViewHeaderBottom>
             <div>
               <RoundThumnail imageUrl={data.writer.userImgPath} onClick={() => goProfile(data.writer.nic)}></RoundThumnail>
-
             </div>
             <div>
               <span>{data.writer.nic}</span>
               <PostInfo>
                 {data.post.postPblcDtm} / 조회 {data.post.postInqrCnt}
-
               </PostInfo>
             </div>
           </PostViewHeaderBottom>

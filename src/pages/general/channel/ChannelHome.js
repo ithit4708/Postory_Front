@@ -136,7 +136,6 @@ export default function ChannelHome() {
         ))}
       </WebtoonListContainer>
 
-
       <SectionHeader>
         <span>웹소설</span>
         <NavLink to={`/channel/${data.data.channel.chnlUri}/webnovel`} >{">"}</NavLink>

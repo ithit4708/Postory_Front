@@ -26,7 +26,6 @@ const SectionHeaderFilter = styled.div`
   font-weight: 500;
 `;
 
-
 const WebtoonListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -248,8 +247,6 @@ export default function SearchWebtoon() {
           </>
         )
       }
-
-
     </SearchTemplate>
   );
 }

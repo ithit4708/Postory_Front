@@ -60,7 +60,7 @@ const urls = {
   setBlacklist: '/account/settings/blacklist',
 
   //channel
-  channelCreate: '/:chnlUri/channel/create',
+  channelCreate: '/channel/create',
   channel: '/channel/:chnlUri',
   channelWebtoon: '/channel/:chnlUri/webtoon',
   channelWebnovel: '/channel/:chnlUri/webnovel',

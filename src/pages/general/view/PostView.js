@@ -9,8 +9,6 @@ import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
 import LikeBtn from '../../../components/molecules/post/LikeBtn';
 
-
-
 export const SubmitButton = styled.button`
   display: block;
   width: fit-content;
@@ -39,7 +37,7 @@ const RoundThumnail = styled.div`
 const PostViewHeader = styled.div`
   padding: 40px 0 24px 0;
   border-bottom: 1px solid rgba(0,0,0,.05);
-  
+
 `
 
 const PostViewHeaderBottom = styled.div`
@@ -53,7 +51,7 @@ const PostInfo = styled.div`
 `
 
 const PostViewBody = styled.div`
-  
+
 `
 
 const PostEditButtonContainer = styled.div`
@@ -128,19 +126,18 @@ export default function PostView() {
             </div>
           </PostViewHeaderBottom>
 
-        <PostEditButtonContainer>
-          {/*{ isOwner ?*/}
-          {/*<LikeBtn liked={likeData.isLiked} postId={postId}></LikeBtn>: ''*/}
-          {/*}*/}
-          {isOwner ?
-            (<BtnLinkSC to={`/${data.channel.chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
-            ) : ''
-          }
-        </PostEditButtonContainer>
+          <PostEditButtonContainer>
+            {/*{ isOwner ?*/}
+            {/*<LikeBtn liked={likeData.isLiked} postId={postId}></LikeBtn>: ''*/}
+            {/*}*/}
+            {isOwner ?
+              (<BtnLinkSC to={`/${data.channel.chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
+              ) : ''
+            }
+          </PostEditButtonContainer>
         </PostViewHeader>
         <PostViewBody dangerouslySetInnerHTML={{__html: data.post.postContent}}>
         </PostViewBody>
-
       </div>
     </ViewTemplate>
   );

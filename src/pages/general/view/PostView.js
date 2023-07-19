@@ -7,6 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import ViewTemplate from '../../../components/templates/general/ViewTemplate';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
+import LikeBtn from '../../../components/molecules/post/LikeBtn';
 
 export const SubmitButton = styled.button`
   display: block;
@@ -76,6 +77,12 @@ export default function PostView() {
     `/post/${postId}`,
     [chnlUri, postId]
   );
+  console.log(user);
+
+  // const {data: likeData, isLoading: likeIsLoading, error: likeErr} = useApiGet(
+  //   `/post/${postId}/like/${user.nic}`,[]
+  // );
+
   const navigate = useNavigate();
 
   if (isLoading) return;

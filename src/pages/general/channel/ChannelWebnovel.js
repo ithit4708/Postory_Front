@@ -46,7 +46,7 @@ const PaginationButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border:  ${({ isSelected }) => (isSelected ? '1px solid #ccc' : '')}; 
+  border:  ${({ isSelected }) => (isSelected ? '1px solid #ccc' : '')};
   border-radius: 4px;
   cursor: pointer;
   background-color: white;
@@ -134,25 +134,24 @@ export default function ChannelWebnovel() {
 
       {data.data.channel.chnlWebnovelCnt !== 0 ?
         (
-      <PaginationContainer>
-        <PaginationButton onClick={handlePrevPage}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </PaginationButton>
-        {Array.from({ length: pageCount }).map((_, index) => (
-          <PaginationButton
-            key={index}
-            isSelected={index === currentPage}
-            onClick={() => setCurrentPage(index)}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}>
-          <FontAwesomeIcon icon={faChevronRight} />
-        </PaginationButton>
-      </PaginationContainer>
+          <PaginationContainer>
+            <PaginationButton onClick={handlePrevPage}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </PaginationButton>
+            {Array.from({ length: pageCount }).map((_, index) => (
+              <PaginationButton
+                key={index}
+                isSelected={index === currentPage}
+                onClick={() => setCurrentPage(index)}
+              >
+                {index + 1}
+              </PaginationButton>
+            ))}
+            <PaginationButton onClick={handleNextPage}>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </PaginationButton>
+          </PaginationContainer>
         ) : ''}
-
     </ChannelTemplate>
   );
 }

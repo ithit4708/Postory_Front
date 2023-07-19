@@ -98,6 +98,7 @@ export default function ChannelTemplate(p) {
            <SubscribeBlackBtn isSubsed={subsData.isSubscribed} chnlId={data.data.channel.chnlId}></SubscribeBlackBtn>
           }
         </div>
+
         <Nav>
           <NavMenu navLinks={mainNavLinks} />
         </Nav>

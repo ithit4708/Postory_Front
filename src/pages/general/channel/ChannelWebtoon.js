@@ -134,9 +134,7 @@ export default function ChannelWebtoon() {
 
   const size = 12;
 
-  console.dir(data);
   useEffect(() => {
-    // ...if data has loaded, then compute the totalCount
     if (data) {
       setTotalCount(data.data.channel.chnlPostCnt || 0);
     }
@@ -190,7 +188,7 @@ export default function ChannelWebtoon() {
 
 
   return (
-    <ChannelTemplate>
+    <ChannelTemplate chnlUri={data.data.channel.chnlUri} >
       <SectionHeader>
         <span>{data.data.channel.chnlWebtoonCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>

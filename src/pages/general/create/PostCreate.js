@@ -38,7 +38,6 @@ export const PostImgInputSC = styled.input`
   margin-left: 10px; // 이미지와 버튼 사이에 간격을 주기 위함
 `;
 
-
 export const ImageContainerSC = styled.div`
   display: flex;
   align-items: center;
@@ -147,6 +146,7 @@ export default function PostCreate() {
   };
 
   const modules = useMemo(() => {
+
     return {
       toolbar: {
         container: [
@@ -210,6 +210,8 @@ export default function PostCreate() {
       console.dir(postRes);
     }
   })
+
+
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -307,7 +309,6 @@ export default function PostCreate() {
             selectedOption={postType}
             handleOptionChange={handleOptionChange}
           />
-
           <div style={{ margin: '20px'}}></div>
           <TextInputSC
             type="text"

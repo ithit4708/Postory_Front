@@ -79,8 +79,8 @@ const urls = {
   postCreate: `/:chnlUri/post/create`,
 
   // view
-  postView: '/:chnlUri/post/:postId',
 
+  postView: '/post/:postId',
 };
 
 // Links

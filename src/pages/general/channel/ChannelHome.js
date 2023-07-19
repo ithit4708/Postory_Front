@@ -141,7 +141,7 @@ export default function ChannelHome() {
         <NavLink to={`/channel/${data.data.channel.chnlUri}/webnovel`} >{">"}</NavLink>
       </SectionHeader>
       {data.data.webnovels.length !== 0 ? (
-        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} chnlUri={chnlUri} />)
+        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} />)
       ) : (
         <>
           <NoContent>

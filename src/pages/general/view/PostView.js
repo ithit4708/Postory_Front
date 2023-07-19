@@ -117,11 +117,13 @@ export default function PostView() {
           <PostViewHeaderBottom>
             <div>
               <RoundThumnail imageUrl={data.writer.userImgPath} onClick={() => goProfile(data.writer.nic)}></RoundThumnail>
+
             </div>
             <div>
               <span>{data.writer.nic}</span>
               <PostInfo>
                 {data.post.postPblcDtm} / 조회 {data.post.postInqrCnt}
+
               </PostInfo>
             </div>
           </PostViewHeaderBottom>

@@ -118,7 +118,6 @@ export default function PostCreate() {
       // multer에 맞는 형식으로 데이터 만들어준다.
       Array.prototype.forEach.call(files, function(file) {
         imageData.append('multipartFiles',file);
-        console.log('multipartFiles', file);
       });
 
       await upload(imageData);

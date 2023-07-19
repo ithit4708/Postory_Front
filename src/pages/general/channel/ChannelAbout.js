@@ -1,31 +1,139 @@
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
-import channelAboutData from '../../../tempData/channel/channelAbout.json';
+import styled from 'styled-components';
+import { Link, useParams } from 'react-router-dom';
+import { useApiGet } from '../../../hooks/useApi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClone } from '@fortawesome/free-regular-svg-icons'
+import MetaDataSC from '../../../components/atoms/User/MetaDataSC';
+import { AiOutlineEye, AiOutlineHeart } from 'react-icons/ai';
+import { countDate } from '../../../components/molecules/user/dateConversion';
+import { faCalendarAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router';
+
+const ContentContainer = styled.div`
+  padding: 20px 0;
+`;
+
+const AboutSectionContainer = styled.div`
+  padding: 32px 0;
+`;
+
+const ChannelSection = styled(AboutSectionContainer)`
+  display: flex;
+  border-bottom: 1px solid rgba(0,0,0,.05);
+`;
+
+const UserSection = styled(AboutSectionContainer)`
+  display: flex;
+
+`;
+
+const RecThumnail = styled.div`
+  width: 60px;
+  height: 60px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-right: 10px;
+  display: inline-block;
+  background-image: url(${props => props.imageUrl});
+  background-size: cover;
+  border: 1px solid rgba(0,0,0,.05);
+  margin-right: 28px;
+`;
+
+const SectionTitle = styled.h3`
+  font-size: 20px;
+`
+
+const ChannelBottomContainer = styled.div`
+  display: flex;
+  list-style: none;
+  color: rgba(0,0,0,.47);
+  margin: 20px 0 0;
+  li {
+    margin: 10px;  // Adds 10px of space on all sides of the list items
+  }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4bb3fd1 (style: update style in ChannelAbout)
+`
+
+const RoundThumnail = styled.div`
+  width: 60px;
+  height: 60px;
+  background-color: #ffffff;
+  border-radius: 60px;
+  margin-right: 10px;
+  display: inline-block;
+  background-image: url(${props => props.imageUrl});
+  background-size: cover;
+  border: 1px solid rgba(0,0,0,.05);
+  margin-right: 28px;
+`;
+const UserBannerSC = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 20px;
+  padding-top: 20px;
+
+  .nextImg {
+    flex: 1;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+  }
+`;
 
 export default function ChannelAbout() {
+  const { chnlUri } = useParams();
+  const { data, isLoading, error } = useApiGet(
+    `/channel/${encodeURIComponent(chnlUri)}/about`,
+    [chnlUri]
+  );
+
+  const navigate = useNavigate();
+
+  if (isLoading) return;
+  if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
+
+  if (!data) {
+    return null;
+  }
+
+  const goProfile = (nic) => {
+    navigate(`/profile/${nic}`);
+  }
   return (
     <ChannelTemplate>
-      <div>채널 소개</div>
-      <div style={{ padding: '50px', margin: '20px 0', backgroundColor: 'yellow' }}>
-        <h3>채널 영역</h3>
-        <hr></hr>
-        <h2>{channelAboutData.data.channel.chnlTtl}</h2>
-        <h5>{channelAboutData.data.channel.chnlIntro}</h5>
-        <h5>{channelAboutData.data.channel.crtNic}</h5>
-        
-        <div>{channelAboutData.data.channel.chnlOpenDtm}</div>
+      <ContentContainer>
+        <ChannelSection>
+          <RecThumnail imageUrl={data.data.channel.chnlImgPath}></RecThumnail>
+          <div>
+            <SectionTitle>{data.data.channel.chnlTtl}</SectionTitle>
+            <p>{data.data.channel.chnlIntro}</p>
 
+            <ChannelBottomContainer>
+              <li><FontAwesomeIcon icon={faUser}/> 구독자 {data.data.channel.suberCnt}명</li>
+              <li> <FontAwesomeIcon icon={faClone} /> 포스트 {data.data.channel.chnlPostCnt}개</li>
+              <li> <AiOutlineHeart size={14} /> 좋아요 {data.data.channel.chnlLikCnt}개</li>
+              <li> <FontAwesomeIcon icon={faCalendarAlt}/>개설일 {countDate(data.data.channel.chnlOpenDtm)}</li>
+            </ChannelBottomContainer>
+          </div>
 
-      </div>
-    
-      <div style={{ padding: '50px', margin: '20px 0', backgroundColor: 'yellow' }}>
-        <h3>유저 영역</h3>
-        <hr></hr>
-        <h2>{channelAboutData.data.user.nic}</h2>
-        <h2>{channelAboutData.data.user.eid}</h2>
-        <h4>{channelAboutData.data.user.userIntro}</h4>
+        </ChannelSection>
 
-      </div>
-
+        <UserSection>
+           <RoundThumnail imageUrl={data.data.user.userImgPath} onClick ={() => goProfile(data.data.user.nic)}></RoundThumnail>
+          <div>
+            <SectionTitle>{data.data.user.nic}</SectionTitle>
+            <p>{data.data.user.userIntro}</p>
+          </div>
+        </UserSection>
+      </ContentContainer>
     </ChannelTemplate>
   );
 }

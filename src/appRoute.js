@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import Home from './pages/general/home/Home';
-import SearchPost from './pages/general/search/SearchPost';
-import SearchSeries from './pages/general/search/SearchSeries';
+import SearchWebtoon from './pages/general/search/SearchWebtoon';
+import SearchSeries from './pages/general/search/SearchWebnovel';
 import SearchChannel from './pages/general/search/SearchChannel';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
@@ -21,9 +21,12 @@ import ProfileSettings from './pages/general/accSettings/ProfileSettings';
 import BlackedChannel from './pages/general/accSettings/BlackedChannel';
 import ChannelCreate from './pages/general/ChannelCreate';
 import ChannelHome from './pages/general/channel/ChannelHome';
-import ChannelPosts from './pages/general/channel/ChannelPosts';
-import ChannelSeries from './pages/general/channel/ChannelSeries';
+import ChannelWebtoon from './pages/general/channel/ChannelWebtoon';
+import ChannelWebnovel from './pages/general/channel/ChannelWebnovel';
 import ChannelAbout from './pages/general/channel/ChannelAbout';
+import PostCreate from './pages/general/create/PostCreate';
+import PostView from './pages/general/view/PostView';
+import SearchWebnovel from './pages/general/search/SearchWebnovel';
 
 const urls = {
   login: '/login',
@@ -58,24 +61,25 @@ const urls = {
 
   //channel
   channelCreate: '/channel/create',
-  // TODO: chnlUri 변수 수정
-  // channel: '/channel/:chnlUri',
-  // channelPosts: '/channel/:chnlUri/posts',
-  // channelSeries: '/channel/:chnlUri/series',
-  // channelAbout: '/channel/:chnlUri/about',
-  channel: '/channel/buksan',
-  channelPosts: '/channel/buksan/posts',
-  channelSeries: '/channel/buksan/series',
-  channelAbout: '/channel/buksan/about',
+  channel: '/channel/:chnlUri',
+  channelWebtoon: '/channel/:chnlUri/webtoon',
+  channelWebnovel: '/channel/:chnlUri/webnovel',
+  channelAbout: '/channel/:chnlUri/about',
 
-  search: '/search',
-  searchSeries: '/search/series',
+  searchWebtoon: '/search/webtoon',
+  searchWebnovel: '/search/webnovel',
   searchChannel: '/search/channel',
 
   //profile
   profile: `/profile/:nic`,
   profilePost: `/profile/:nic/post`,
   profileSeries: `/profile/:nic/series`,
+
+  // create
+  postCreate: `/:chnlUri/post/create`,
+
+  // view
+  postView: '/post/:postId',
 };
 
 // Links
@@ -88,7 +92,7 @@ export const headerLinks = [
 
 // navLinks
 export const homeLinks = [
-  { to: urls.home, children: '추천' },
+  { to: urls.home, children: '채널' },
   { to: urls.webtoon, children: '웹툰' },
   { to: urls.webnovel, children: '웹소설' },
 ];
@@ -120,8 +124,8 @@ export const accSetLinks = [
 
 export const channelLinks = [
   { to: urls.channel, children: '홈' },
-  { to: urls.channelPosts, children: '포스트' },
-  { to: urls.channelSeries, children: '시리즈' },
+  { to: urls.channelWebtoon, children: '웹툰' },
+  { to: urls.channelWebnovel, children: '웹소설' },
   { to: urls.channelAbout, children: '소개' },
 ];
 
@@ -158,8 +162,8 @@ export const pageRoutes = [
   { id: 19, path: urls.setBlacklist, element: <BlackedChannel /> },
 
   //search
-  { id: 20, path: urls.search, element: <SearchPost /> },
-  { id: 21, path: urls.searchSeries, element: <SearchSeries /> },
+  { id: 20, path: urls.searchWebtoon, element: <SearchWebtoon /> },
+  { id: 21, path: urls.searchWebnovel, element: <SearchWebnovel /> },
   { id: 22, path: urls.searchChannel, element: <SearchChannel /> },
 
   //profile
@@ -170,7 +174,13 @@ export const pageRoutes = [
   //channel
   { id: 26, path: urls.channelCreate, element: <ChannelCreate /> },
   { id: 27, path: urls.channel, element: <ChannelHome /> },
-  { id: 28, path: urls.channelPosts, element: <ChannelPosts /> },
-  { id: 29, path: urls.channelSeries, element: <ChannelSeries /> },
+  { id: 28, path: urls.channelWebtoon, element: <ChannelWebtoon /> },
+  { id: 29, path: urls.channelWebnovel, element: <ChannelWebnovel /> },
   { id: 30, path: urls.channelAbout, element: <ChannelAbout /> },
+
+  // create
+  { id: 31, path: urls.postCreate, element: <PostCreate /> },
+
+  // view
+  { id: 32, path: urls.postView, element: <PostView /> },
 ];

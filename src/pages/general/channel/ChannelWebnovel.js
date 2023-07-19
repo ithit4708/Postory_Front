@@ -1,16 +1,16 @@
-import { useLocation, useParams, useSearchParams } from 'react-router-dom';
-import SearchTemplate from '../../../components/templates/general/SearchTemplate';
+import styled from 'styled-components';
+import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import useUserStore from '../../../stores/useUserStore';
+import { useLocation, useParams } from 'react-router-dom';
 import { useApiGet } from '../../../hooks/useApi';
-import { useNavigate } from 'react-router';
-import HomeSearchBox from '../../../components/molecules/general/HomeSearchBox';
-import ProfileChannelItem from '../../../components/organisms/general/ProfileChannelItem';
+import PostItem from '../../../components/organisms/general/PostItem';
 import NoContent from '../../../components/molecules/error/NoContent';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
-import useUserStore from '../../../stores/useUserStore';
-import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+
 const SectionHeader = styled.div`
   padding: 0 0 10px;
   color: #121212;
@@ -20,7 +20,6 @@ const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
 
 const SectionHeaderFilter = styled.div`
   color: rgba(0,0,0,.47);
@@ -52,29 +51,30 @@ const PaginationButton = styled.div`
   cursor: pointer;
   background-color: white;
 `;
-export default function SearchChannel() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const keyword = searchParams.get('keyword');
-  const page = 0;
-  const option = 'all';
+
+export default function ChannelWebnovel() {
+  const { user } = useUserStore();
+  const { chnlUri } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const pageString = queryParams.get('page');  // This will be a string
+  const page = pageString !== null ? Number(pageString) - 1 : 0;
+  const [currentPage, setCurrentPage] = useState(page);
+  const postType = "webnovel";
+  const [url, setUrl] = useState(`/channel/${encodeURIComponent(chnlUri)}/posts/${postType}?page=${currentPage+1}`
+  );
   const [pageCount, setPageCount] = useState(0);
   const [totalCount, setTotalCount] = useState(null);
-  const [currentPage, setCurrentPage] = useState(page);
-  const [url, setUrl] = useState(`/search/channel?keyword=${encodeURIComponent(keyword)}&option=${option}`)
-  const size = 12;
   const { data, isLoading, error } = useApiGet(
     url,
-    [keyword]
+    [url]
   );
 
-
-
-
+  const size = 12;
 
   useEffect(() => {
     if (data) {
-      setTotalCount(data.searchCnt || 0);
+      setTotalCount(data.data.channel.chnlWebnovelCnt || 0);
     }
   }, [data]);
 
@@ -87,14 +87,8 @@ export default function SearchChannel() {
   }, [totalCount, size]);
 
   useEffect(() => {
-    setUrl(`/search/channel?keyword=${encodeURIComponent(keyword)}&option=${option}&page=${currentPage+1}`);
-  }, [currentPage, keyword]);
-
-  const goPost = (postId) => {
-    console.log("postId",postId);
-    navigate(`/post/${postId}`);
-    //조회수 올라가는 함수 필요
-  };
+    setUrl(`/channel/${encodeURIComponent(chnlUri)}/posts/${postType}?page=${currentPage+1}`);
+  }, [currentPage, chnlUri]);
 
 
   const handlePrevPage = () => {
@@ -115,19 +109,31 @@ export default function SearchChannel() {
   if (!data) {
     return null;
   }
+
+
+
+
   return (
-    <SearchTemplate keyword={keyword}>
-      <HomeSearchBox type={"channel"}></HomeSearchBox>
-      <div>채널 {keyword} 검색 결과</div>
+    <ChannelTemplate>
       <SectionHeader>
-        <span>{data.searchCnt}개의 채널</span>
+        <span>{data.data.channel.chnlWebnovelCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
       </SectionHeader>
-      {data.channels.length !== 0 ? (
+      {data.data.webnovels.length !== 0 ? (
+        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post}/>)
+      ) : (
         <>
-        {data.channels.map((channel) => (
-          <ProfileChannelItem key={channel.chnlId} channel={channel} />
-          ))}
+          <NoContent>
+            아직 발행한 포스트가 없습니다.
+            {data.data.channelUser.eid === user.eid && (
+              <BtnLinkSC to="/post/create">포스트 발행하기</BtnLinkSC>
+            )}
+          </NoContent>
+        </>
+      )}
+
+      {data.data.channel.chnlWebnovelCnt !== 0 ?
+        (
           <PaginationContainer>
             <PaginationButton onClick={handlePrevPage}>
               <FontAwesomeIcon icon={faChevronLeft} />
@@ -145,16 +151,7 @@ export default function SearchChannel() {
               <FontAwesomeIcon icon={faChevronRight} />
             </PaginationButton>
           </PaginationContainer>
-        </>
-      ) : (
-        <>
-          <NoContent>
-            채널이 없습니다.
-          </NoContent>
-        </>
-      )}
-
-    </SearchTemplate>
-
+        ) : ''}
+    </ChannelTemplate>
   );
 }

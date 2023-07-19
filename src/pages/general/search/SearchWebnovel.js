@@ -1,16 +1,15 @@
-import { useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import SearchTemplate from '../../../components/templates/general/SearchTemplate';
 import { useApiGet } from '../../../hooks/useApi';
-import { useNavigate } from 'react-router';
 import HomeSearchBox from '../../../components/molecules/general/HomeSearchBox';
-import ProfileChannelItem from '../../../components/organisms/general/ProfileChannelItem';
+import PostItem from '../../../components/organisms/general/PostItem';
 import NoContent from '../../../components/molecules/error/NoContent';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
-import useUserStore from '../../../stores/useUserStore';
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
 const SectionHeader = styled.div`
   padding: 0 0 10px;
   color: #121212;
@@ -20,7 +19,6 @@ const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
 
 const SectionHeaderFilter = styled.div`
   color: rgba(0,0,0,.47);
@@ -47,30 +45,29 @@ const PaginationButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border:  ${({ isSelected }) => (isSelected ? '1px solid #ccc' : '')};
+  border:  ${({ isSelected }) => (isSelected ? '1px solid #ccc' : '')}; 
   border-radius: 4px;
   cursor: pointer;
   background-color: white;
 `;
-export default function SearchChannel() {
-  const navigate = useNavigate();
+
+export default function SearchWebnovel() {
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get('keyword');
+  const navigate = useNavigate();
   const page = 0;
+  const postType = 'webnovel';
   const option = 'all';
-  const [pageCount, setPageCount] = useState(0);
   const [totalCount, setTotalCount] = useState(null);
   const [currentPage, setCurrentPage] = useState(page);
-  const [url, setUrl] = useState(`/search/channel?keyword=${encodeURIComponent(keyword)}&option=${option}`)
-  const size = 12;
+  const [url, setUrl] = useState(`/search/${postType}/posts?option=${option}&keyword=${encodeURIComponent(keyword)}&page=${currentPage+1}`);
+  const [pageCount, setPageCount] = useState(0);
   const { data, isLoading, error } = useApiGet(
     url,
-    [keyword]
+    [keyword, url]
   );
 
-
-
-
+  const size = 12;
 
   useEffect(() => {
     if (data) {
@@ -87,8 +84,9 @@ export default function SearchChannel() {
   }, [totalCount, size]);
 
   useEffect(() => {
-    setUrl(`/search/channel?keyword=${encodeURIComponent(keyword)}&option=${option}&page=${currentPage+1}`);
-  }, [currentPage, keyword]);
+    setUrl(`/search/${postType}/posts?option=${option}&keyword=${encodeURIComponent(keyword)}&page=${currentPage+1}
+`);
+  }, [currentPage,keyword]);
 
   const goPost = (postId) => {
     console.log("postId",postId);
@@ -115,19 +113,19 @@ export default function SearchChannel() {
   if (!data) {
     return null;
   }
+
   return (
     <SearchTemplate keyword={keyword}>
-      <HomeSearchBox type={"channel"}></HomeSearchBox>
-      <div>채널 {keyword} 검색 결과</div>
+      <HomeSearchBox type={"webnovel"}></HomeSearchBox>
+      <div>웹소설 {keyword} 검색 결과</div>
+
       <SectionHeader>
-        <span>{data.searchCnt}개의 채널</span>
+        <span>{data.searchCnt}개의 포스트</span>
         <SectionHeaderFilter>최신순 | 인기순</SectionHeaderFilter>
       </SectionHeader>
-      {data.channels.length !== 0 ? (
+      {data.searchCnt !== 0 ? (
         <>
-        {data.channels.map((channel) => (
-          <ProfileChannelItem key={channel.chnlId} channel={channel} />
-          ))}
+        {data.posts.map((post) => <PostItem key={post.postId} post={post}/>)}
           <PaginationContainer>
             <PaginationButton onClick={handlePrevPage}>
               <FontAwesomeIcon icon={faChevronLeft} />
@@ -145,16 +143,14 @@ export default function SearchChannel() {
               <FontAwesomeIcon icon={faChevronRight} />
             </PaginationButton>
           </PaginationContainer>
-        </>
-      ) : (
+          </>
+          ) : (
         <>
           <NoContent>
-            채널이 없습니다.
+            검색 결과가 없습니다.
           </NoContent>
         </>
       )}
-
     </SearchTemplate>
-
   );
 }

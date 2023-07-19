@@ -90,7 +90,6 @@ export default function ChannelTemplate(p) {
           {data.data.channel.chnlPostCnt}개
         </CountInfo>
         <ChannelTitle>{data.data.channel.chnlTtl}</ChannelTitle>
-
         <div style={{ display: 'flex', justifyContent: 'end'}}>
           {isOwner ?
             <BtnLinkSC to={`/${chnlUri}/post/create`}>포스트 발행하기</BtnLinkSC>:

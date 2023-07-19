@@ -104,7 +104,7 @@ export default function ChannelHome() {
 
 
   return (
-    <ChannelTemplate chnlUri={data.data.channel.chnlUri} >
+    <ChannelTemplate>
       <SectionHeader>
         <span>웹툰</span>
        <NavLink to={`/channel/${data.data.channel.chnlUri}/webtoon`} >{">"}</NavLink>

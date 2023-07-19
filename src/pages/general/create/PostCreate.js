@@ -7,10 +7,7 @@ import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import TextInputSC from '../../../components/atoms/Input/TextInputSC';
 import ImageResize from 'quill-image-resize';
-import PostRadioButton from '../../../components/molecules/post/PostRadioButton';
-import PostImg from '../../../components/atoms/Post/PostImgSC';
-import { useNavigate } from 'react-router';
-import useUserStore from '../../../stores/useUserStore';
+Quill.register('modules/imageResize', ImageResize);
 
 export const SubmitButton = styled.button`
   display: block;
@@ -220,7 +217,6 @@ export default function PostCreate() {
     setSubTitle(event.target.value);
   }
 
-
   const handleOptionChange = (event) => {
     setPostType(event.target.value);
   };
@@ -286,6 +282,7 @@ export default function PostCreate() {
   if (isLoading) return;
   if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
 
+
   return (
     <CreateTemplate>
       <div>
@@ -320,7 +317,6 @@ export default function PostCreate() {
             onKeyDown={handleTitleChange}
           />
           <div style={{ margin: '20px'}}></div>
-
 
           <TextInputSC
             type="text"

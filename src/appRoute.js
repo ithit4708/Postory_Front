@@ -80,6 +80,7 @@ const urls = {
 
   // view
   postView: '/post/:postId',
+
 };
 
 // Links

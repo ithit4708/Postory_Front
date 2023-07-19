@@ -108,7 +108,7 @@ export default function ChannelAbout() {
     navigate(`/profile/${nic}`);
   }
   return (
-    <ChannelTemplate chnlUri={data.data.channel.chnlUri}>
+    <ChannelTemplate>
       <ContentContainer>
         <ChannelSection>
           <RecThumnail imageUrl={data.data.channel.chnlImgPath}></RecThumnail>

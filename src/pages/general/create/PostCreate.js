@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import useUserStore from '../../../stores/useUserStore';
 import { useLocation, useParams } from 'react-router-dom';
 import { useApiGet, useApiPost, useConditionalApiGet } from '../../../hooks/useApi';
 import CreateTemplate from '../../../components/templates/general/CreateTemplate';
@@ -9,8 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import TextInputSC from '../../../components/atoms/Input/TextInputSC';
 import ImageResize from 'quill-image-resize';
 import PostRadioButton from '../../../components/molecules/post/PostRadioButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faUser } from '@fortawesome/free-solid-svg-icons';
+
 import PostImg from '../../../components/atoms/Post/PostImgSC';
 import { useNavigate } from 'react-router';
 
@@ -93,7 +91,6 @@ export default function PostCreate() {
     imageUrls: imageUrls,
   });
 
-
   const {
     res: uploadRes,
     error: uploadErr,
@@ -129,6 +126,7 @@ export default function PostCreate() {
 
   // 이미지 업로드 input의 onChange
   const saveImgFile = async () => {
+
     if(imgRef.current.files.length > 0) {
       const file = imgRef.current.files[0];
       const reader = new FileReader();
@@ -145,6 +143,7 @@ export default function PostCreate() {
       console.warn('No file selected');
     }
   };
+
 
   const modules = useMemo(() => {
 
@@ -178,6 +177,7 @@ export default function PostCreate() {
     setPostId(queryParams.get('postId'));
     console.log(postId);
   }, [])
+
 
 
   useEffect(() =>{
@@ -318,7 +318,6 @@ export default function PostCreate() {
             onChange={handleTitleChange}
             onKeyDown={handleTitleChange}
           />
-
           <div style={{ margin: '20px'}}></div>
 
           <TextInputSC
@@ -334,6 +333,7 @@ export default function PostCreate() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <SubmitButton type="submit">{postId !==null ? "수정" : "발행"}</SubmitButton>
+
           </div>
         </form>
       </div>

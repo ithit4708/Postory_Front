@@ -136,7 +136,6 @@ export default function PostCreate() {
       reader.onloadend = () => {
         setImgFile(reader.result);
         console.log(imgFile);
-
       };
       console.log("file",file);
       thumnData.append("file", file);
@@ -211,7 +210,6 @@ export default function PostCreate() {
       console.dir(postRes);
     }
   })
-
 
 
   const handleTitleChange = (event) => {
@@ -320,6 +318,7 @@ export default function PostCreate() {
             onChange={handleTitleChange}
             onKeyDown={handleTitleChange}
           />
+
           <div style={{ margin: '20px'}}></div>
 
           <TextInputSC
@@ -329,6 +328,7 @@ export default function PostCreate() {
             onChange={handleSubTitleChange}
             onKeyDown={handleSubTitleChange}
           />
+
           <div style={{ height: '500px', margin: '20px 0 50px 0' }}>
             <ReactQuill ref={quillRef} value={content} onChange={handleEditorChange} style={{ height: '500px' }} modules={modules} formats={formats}/>
           </div>

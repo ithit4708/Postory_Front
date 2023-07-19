@@ -153,7 +153,7 @@ export default function ChannelWebtoon() {
 
   const goPost = (postId) => {
     console.log("postId",postId);
-    navigate(`/${chnlUri}/post/${postId}`);
+    navigate(`/post/${postId}`);
     //조회수 올라가는 함수 필요
   };
 

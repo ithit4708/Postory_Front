@@ -101,7 +101,7 @@ export default function PostView() {
     navigate(`/profile/${nic}`);
   }
   const goChannel = (chnlUri) => {
-    navigate(`/channel/${chnlUri}`);
+    navigate(`/channel/${data.channel.chnlUri}`);
   }
 
 
@@ -132,7 +132,7 @@ export default function PostView() {
           {/*{ isOwner ?*/}
           {/*<LikeBtn liked={likeData.isLiked} postId={postId}></LikeBtn>: ''*/}
           {/*}*/}
-          <BtnLinkSC to={`/${chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
+          <BtnLinkSC to={`/${data.channel.chnlUri}/post/create?postId=${postId}`}>수정하기</BtnLinkSC>
         </PostEditButtonContainer>
         </PostViewHeader>
         <PostViewBody dangerouslySetInnerHTML={{__html: data.post.postContent}}>

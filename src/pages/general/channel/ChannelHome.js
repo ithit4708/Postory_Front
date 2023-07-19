@@ -97,7 +97,7 @@ export default function ChannelHome() {
   }
   const goPost = (postId) => {
     console.log("postId",postId);
-    navigate(`/${chnlUri}/post/${postId}`);
+    navigate(`/post/${postId}`);
     //조회수 올라가는 함수 필요
   };
 
@@ -141,13 +141,13 @@ export default function ChannelHome() {
         <NavLink to={`/channel/${data.data.channel.chnlUri}/webnovel`} >{">"}</NavLink>
       </SectionHeader>
       {data.data.webnovels.length !== 0 ? (
-        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} chnlUri={chnlUri} />)
+        data.data.webnovels.map((post) => <PostItem key={post.postId} post={post} />)
       ) : (
         <>
           <NoContent>
             아직 발행한 포스트가 없습니다.
             {data.data.channelUser.eid === user.eid && (
-              <BtnLinkSC to="/post/create">포스트 발행하기</BtnLinkSC>
+              <BtnLinkSC to={`/${chnlUri}/post/create`}>포스트 발행하기</BtnLinkSC>
             )}
           </NoContent>
         </>

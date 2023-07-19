@@ -136,7 +136,7 @@ export default function ChannelWebtoon() {
 
   useEffect(() => {
     if (data) {
-      setTotalCount(data.data.channel.chnlPostCnt || 0);
+      setTotalCount(data.data.channel.chnlWebtoonCnt || 0);
     }
   }, [data]);
 

@@ -214,3 +214,28 @@ export function useApiFormPut(url) {
 
   return { isUpdating, putData, error, res, setRes, setError };
 }
+export function useConditionalApiGet(url, postId) {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (postId !== null) {
+      (async () => {
+        setIsLoading(true);
+        try {
+          const res = await api.get(url);
+          console.log('get 성공', res);
+          setData(res.data);
+        } catch (err) {
+          console.log('get 실패', err);
+          setError(err);
+        } finally {
+          setIsLoading(false);
+        }
+      })();
+    }
+  }, [url, postId]);
+
+  return { data, isLoading, error };
+}

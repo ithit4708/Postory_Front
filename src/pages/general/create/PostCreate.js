@@ -1,13 +1,13 @@
 import ChannelTemplate from '../../../components/templates/general/ChannelTemplate';
 import styled from 'styled-components';
 import useUserStore from '../../../stores/useUserStore';
-import { useParams } from 'react-router-dom';
-import { useApiGet, useApiPost } from '../../../hooks/useApi';
+import { useLocation, useParams } from 'react-router-dom';
+import { useApiGet, useApiPost, useConditionalApiGet } from '../../../hooks/useApi';
 import PostItem from '../../../components/organisms/general/PostItem';
 import NoContent from '../../../components/molecules/error/NoContent';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import CreateTemplate from '../../../components/templates/general/CreateTemplate';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import TextInputSC from '../../../components/atoms/Input/TextInputSC';
@@ -16,6 +16,7 @@ import PostRadioButton from '../../../components/molecules/post/PostRadioButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faUser } from '@fortawesome/free-solid-svg-icons';
 import PostImg from '../../../components/atoms/Post/PostImgSC';
+import { useNavigate } from 'react-router';
 
 Quill.register('modules/imageResize', ImageResize);
 export const SubmitButton = styled.button`
@@ -53,30 +54,23 @@ export const ImageContainerSC = styled.div`
 
 
 export default function PostCreate() {
-  // const { user } = useUserStore();
-  // const { chnlUri } = useParams();
-  // const { data, isLoading, error } = useApiGet(
-  //   `/channel/${encodeURIComponent(chnlUri)}`,
-  //   [chnlUri]
-  // );
-  //
-  // if (isLoading) return;
-  // if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
-  //
-  // if (!data) {
-  //   return null;
-  // }
-
+  const { chnlUri } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [subTitle, setSubTitle] = useState('');
-  const [thumbnailImageUrl, setThumbnailImageUrl] = useState(null);
+  const [thumbnailImageUrl, setThumbnailImageUrl] = useState('');
   const [postType, setPostType] = useState('');
   const [postId, setPostId] = useState(null);
+  // const imageUrls = ["정호"];
+  const [imageUrls, setImageUrls] = useState([]);
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
   const quillRef = useRef();
   const imageData = new FormData();
+  const thumnData = new FormData();
   const {
     res: postRes,
     error: postErr,
@@ -88,6 +82,20 @@ export default function PostCreate() {
     postSbTtl: subTitle,
     postContent: content,
     postThumnPath: thumbnailImageUrl,
+    imageUrls: imageUrls,
+  });
+  const {
+    res: postEditRes,
+    error: postEditErr,
+    setError: setPostEditErr,
+    postData: postEdit,
+  } = useApiPost(`post/${postId}/edit`, {
+    postType: postType,
+    postTtl: title,
+    postSbTtl: subTitle,
+    postContent: content,
+    postThumnPath: thumbnailImageUrl,
+    imageUrls: imageUrls,
   });
 
   const {
@@ -95,7 +103,17 @@ export default function PostCreate() {
     error: uploadErr,
     setError: setUploadErr,
     postData: upload,
-  } = useApiPost(`file/uploadFiles?postId=${postId}`, new FormData());
+  } = useApiPost(`file/uploadFiles`, {imageData: imageData});
+  const {
+    res: uploadThumRes,
+    error: uploadThumnErr,
+    setError: Err,
+    postData: uploadThumn,
+  } = useApiPost(`file/uploadThumn`, {thumnData: thumnData});
+
+
+  const { data, isLoading, error } = useConditionalApiGet(`/post/${postId}`, postId);
+
 
   const imageHandler = () => {
     console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
@@ -106,8 +124,6 @@ export default function PostCreate() {
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
-    // // input이 클릭되면 파일 선택창이 나타난다.
-    //
     // // input에 변화가 생긴다면 = 이미지를 선택
     input.addEventListener('change', async () => {
       console.log('온체인지');
@@ -115,42 +131,15 @@ export default function PostCreate() {
       // multer에 맞는 형식으로 데이터 만들어준다.
       Array.prototype.forEach.call(files, function(file) {
         imageData.append('multipartFiles',file);
+        console.log('multipartFiles', file);
       });
 
-      // 백엔드 라우터에 이미지를 보낸다.
-      try {
-
-        // const result = await axios.post('http://localhost:4050/img', formData);
-
-        console.log('성공 시, 백엔드가 보내주는 데이터', uploadRes.data.url);
-        //     // 이 URL을 img 태그의 src에 넣은 요소를 현재 에디터의 커서에 넣어주면 에디터 내에서 이미지가 나타난다
-        //     // src가 base64가 아닌 짧은 URL이기 때문에 데이터베이스에 에디터의 전체 글 내용을 저장할 수있게된다
-        //     // 이미지는 꼭 로컬 백엔드 uploads 폴더가 아닌 다른 곳에 저장해 URL로 사용하면된다.
-        //
-        //     // 이미지 태그를 에디터에 써주기 - 여러 방법이 있다.
-        const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-        //     // 1. 에디터 root의 innerHTML을 수정해주기
-        //     // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
-        //     // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
-        uploadRes.data.data.urls.forEach((IMG_URL) => {
-            editor.root.innerHTML =
-              editor.root.innerHTML + `<img src=${process.env.PUBLIC_URL+IMG_URL} '/><br/>`;
-            // 현재 있는 내용들 뒤에 써줘야한다.
-            //
-            //     // 2. 현재 에디터 커서 위치값을 가져온다
-            const range = editor.getSelection();
-          editor.insertEmbed(range.index, 'image', IMG_URL);
-            //     // 가져온 위치에 이미지를 삽입한다
-          }
-        )
-      } catch (error) {
-        console.log('실패했어요ㅠ');
-      }
+      await upload(imageData);
     });
   };
 
   // 이미지 업로드 input의 onChange
-  const saveImgFile = () => {
+  const saveImgFile = async () => {
     if(imgRef.current.files.length > 0) {
       const file = imgRef.current.files[0];
       const reader = new FileReader();
@@ -158,23 +147,16 @@ export default function PostCreate() {
       reader.onloadend = () => {
         setImgFile(reader.result);
         console.log(imgFile);
+
       };
+      console.log("file",file);
+      thumnData.append("file", file);
+      console.log("thumnData", thumnData);
+      await uploadThumn(thumnData);
     } else {
       console.warn('No file selected');
     }
   };
-
-  // 업로드 된 이미지 미리보기
-  // const modules = {
-  //   toolbar: [
-  //     ['bold', 'italic', 'underline', 'strike'], // 텍스트 스타일
-  //     [{ list: 'ordered' }, { list: 'bullet' }], // 리스트
-  //     [{ indent: '-1' }, { indent: '+1' }], // 들여쓰기
-  //     [{ align: [] }], // 정렬
-  //     ['link', 'image'], // 링크, 이미지
-  //     ['clean'], // 포맷 지우기
-  //   ],
-  // };
 
   const modules = useMemo(() => {
     return {
@@ -203,6 +185,58 @@ export default function PostCreate() {
     'link', 'image',
     'size'
   ]
+  useEffect(() =>{
+    console.log(queryParams.get('postId'))
+    setPostId(queryParams.get('postId'));
+    console.log(postId);
+  }, [])
+
+
+  useEffect(() =>{
+    if (uploadThumRes !== null){
+      setThumbnailImageUrl(process.env.REACT_APP_PUBLIC_URL+uploadThumRes.data.url);
+    }
+  }, [uploadThumRes])
+
+  useEffect(() => {
+    if (uploadRes !== null) {
+      console.dir(uploadRes);
+      // 그리고 다른 작업들...
+      console.log(process.env.REACT_APP_PUBLIC_URL)
+
+      const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+      //     // 1. 에디터 root의 innerHTML을 수정해주기
+      //     // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
+      //     // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
+      uploadRes.data.urls.forEach((imgUrl) => {
+          // editor.root.innerHTML =
+          //   editor.root.innerHTML + `<img src=${
+          //   process.env.REACT_APP_PUBLIC_URL+imgUrl} '/><br/>`;
+          // 현재 있는 내용들 뒤에 써줘야한다.
+
+          // 2. 현재 에디터 커서 위치값을 가져온다.
+        console.log("editor");
+        console.dir(editor);
+
+          let range = editor.getSelection();
+          editor.insertEmbed(range.index, 'image', process.env.REACT_APP_PUBLIC_URL+imgUrl);
+          //     // 가져온 위치에 이미지를 삽입한다
+          // imageUrls.push(process.env.REACT_APP_PUBLIC_URL+imgUrl);
+          setImageUrls((prevImageUrls) => [...prevImageUrls, process.env.REACT_APP_PUBLIC_URL+imgUrl]);
+
+          console.dir(imageUrls);
+
+        }
+      )
+
+    }
+  }, [uploadRes]);
+
+  useEffect(() =>{
+    if(postRes != null){
+      console.dir(postRes);
+    }
+  })
 
 
 
@@ -223,30 +257,74 @@ export default function PostCreate() {
     setContent(value);
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+
+    const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+    console.log("quill", editor);
+    const delta = editor.getContents();  // 현재 문서의 내용을 가져오기
+    console.log("delta", delta);
+    setContent(JSON.stringify(delta)); // Quill 에디터의 내용을 Delta 형식의 JSON 문자열로 설정
+    console.log("postContent", content);
+
+
+    // ops 배열을 순회하며 이미지 연산자를 찾습니다.
+    const imagePathes = delta.ops
+      .filter(op => typeof op.insert === 'object' && op.insert.image)
+      .map(op => op.insert.image);
+
+    // 이미지 URL 출력
+    console.log(imagePathes);
     // 선택한 postType 값과 기타 필요한 데이터를 API로 전송합니다.
+    console.dir(imagePathes);
+    setImageUrls(imagePathes);
+    console.log("submitImage", imageUrls);
     const postData = {
+      chnlUri: chnlUri,
       postType: postType,
       postTtl: title,
       postSbTtl: subTitle,
       postContent: content,
       postThumnPath: thumbnailImageUrl,
+      imageUrls: imageUrls
     };
     // API 호출 등의 로직을 추가합니다.
 
     console.log('전송할 데이터:', postData);
-    post(postData);
+    if (postId !== null){
+      // 포스트 수정을 위한 postApi
+      await postEdit(postData);
 
-    setPostId(postRes.data.data.postId);
-    upload(imageData);
+    } else {
+      // 포스트 생성을 위한 postApi
+      await post(postData);
+    }
+
+    navigate(`/channel/${chnlUri}`);
+
+
+
   };
 
   const options = [
     { label: '웹툰', value: '웹툰' },
     { label: '웹소설', value: '웹소설' },
   ];
+
+  useEffect(() => {
+    if (data && data.post) {
+      setTitle(data.post.postTtl || '');
+      setContent(data.post.postContent || '');
+      setSubTitle(data.post.postSbTtl || '');
+      setThumbnailImageUrl(data.post.postThumnPath || '');
+      setPostType(data.post.postType || '');
+      setImageUrls([...data.post.imageUrls])
+    }
+  }, [data]);
+
+  if (isLoading) return;
+  if (error) return <span>{`[${error.code}] ${error.message}`}</span>;
 
   return (
     <CreateTemplate>
@@ -292,25 +370,14 @@ export default function PostCreate() {
             onKeyDown={handleSubTitleChange}
           />
 
-          <div style={{ position: 'relative'}}>
-
-            {/*  <FontAwesomeIcon icon={faImage} style={{position: 'absolute', top: '12px', left: '5px'}}/>*/}
-            {/*  <TextInputSC*/}
-            {/*    style={{ paddingLeft: '24px'}}*/}
-            {/*    type="text"*/}
-            {/*    placeholder="썸네일 이미지 url"*/}
-            {/*    value={thumbnailImageUrl}*/}
-            {/*    onChange={handleThumbnailImageUrlChange}*/}
-            {/*    onKeyDown={handleThumbnailImageUrlChange}*/}
-            {/*  />*/}
-          </div>
+          {/*<div style={{ position: 'relative'}}>*/}
+          {/*</div>*/}
 
           <div style={{ height: '500px', margin: '20px 0 50px 0' }}>
             <ReactQuill ref={quillRef} value={content} onChange={handleEditorChange} style={{ height: '500px' }} modules={modules} formats={formats}/>
           </div>
-
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <SubmitButton type="submit">게시</SubmitButton>
+            <SubmitButton type="submit">{postId !==null ? "수정" : "발행"}</SubmitButton>
           </div>
         </form>
       </div>

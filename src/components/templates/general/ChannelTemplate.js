@@ -11,8 +11,6 @@ import BtnLinkSC from '../../atoms/Link/BtnLinkSC';
 import SubscribeBtn from '../../molecules/channel/SubscribeBtn';
 import SubscribeBlackBtn from '../../molecules/channel/SubscribeBlackBtn';
 
-
-
 const Thumbnail = styled.div`
   width: 80px;
   height: 80px;

@@ -92,6 +92,7 @@ export default function PostCreate() {
     imageUrls: imageUrls,
   });
 
+
   const {
     res: uploadRes,
     error: uploadErr,
@@ -309,6 +310,7 @@ export default function PostCreate() {
             selectedOption={postType}
             handleOptionChange={handleOptionChange}
           />
+
           <div style={{ margin: '20px'}}></div>
           <TextInputSC
             type="text"

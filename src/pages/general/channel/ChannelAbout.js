@@ -53,7 +53,6 @@ const ChannelBottomContainer = styled.div`
   li {
     margin: 10px;  // Adds 10px of space on all sides of the list items
   }
-
 `
 
 const RoundThumnail = styled.div`
@@ -125,7 +124,6 @@ export default function ChannelAbout() {
 
         <UserSection>
            <RoundThumnail imageUrl={data.data.user.userImgPath} onClick ={() => goProfile(data.data.user.nic)}></RoundThumnail>
-
           <div>
             <SectionTitle>{data.data.user.nic}</SectionTitle>
             <p>{data.data.user.userIntro}</p>

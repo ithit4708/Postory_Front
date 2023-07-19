@@ -8,7 +8,6 @@ import 'react-quill/dist/quill.snow.css';
 import TextInputSC from '../../../components/atoms/Input/TextInputSC';
 import ImageResize from 'quill-image-resize';
 import PostRadioButton from '../../../components/molecules/post/PostRadioButton';
-
 import PostImg from '../../../components/atoms/Post/PostImgSC';
 import { useNavigate } from 'react-router';
 
@@ -58,7 +57,6 @@ export default function PostCreate() {
   const [postType, setPostType] = useState('');
   const [postId, setPostId] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
-
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
   const quillRef = useRef();
@@ -79,6 +77,19 @@ export default function PostCreate() {
 
   });
   const {
+    res: postRes,
+    error: postErr,
+    setError: setPostErr,
+    postData: post,
+  } = useApiPost(`post/create`, {
+    postType: postType,
+    postTtl: title,
+    postSbTtl: subTitle,
+    postContent: content,
+    postThumnPath: thumbnailImageUrl,
+    imageUrls: imageUrls,
+  });
+  const {
     res: postEditRes,
     error: postEditErr,
     setError: setPostEditErr,
@@ -91,7 +102,6 @@ export default function PostCreate() {
     postThumnPath: thumbnailImageUrl,
     imageUrls: imageUrls,
   });
-
 
   const {
     res: uploadRes,
@@ -106,7 +116,6 @@ export default function PostCreate() {
     postData: uploadThumn,
   } = useApiPost(`file/uploadThumn`, {thumnData: thumnData});
   const { data, isLoading, error } = useConditionalApiGet(`/post/${postId}`, postId);
-
   const imageHandler = () => {
     const input = document.createElement('input');
 
@@ -118,6 +127,7 @@ export default function PostCreate() {
       // multer에 맞는 형식으로 데이터 만들어준다.
       Array.prototype.forEach.call(files, function(file) {
         imageData.append('multipartFiles',file);
+        console.log('multipartFiles', file);
       });
 
       await upload(imageData);
@@ -127,7 +137,6 @@ export default function PostCreate() {
 
   // 이미지 업로드 input의 onChange
   const saveImgFile = async () => {
-
     if(imgRef.current.files.length > 0) {
       const file = imgRef.current.files[0];
       const reader = new FileReader();
@@ -135,6 +144,7 @@ export default function PostCreate() {
       reader.onloadend = () => {
         setImgFile(reader.result);
         console.log(imgFile);
+
       };
       console.log("file",file);
       thumnData.append("file", file);
@@ -144,7 +154,6 @@ export default function PostCreate() {
       console.warn('No file selected');
     }
   };
-
 
   const modules = useMemo(() => {
 
@@ -178,7 +187,6 @@ export default function PostCreate() {
     setPostId(queryParams.get('postId'));
     console.log(postId);
   }, [])
-
 
 
   useEffect(() =>{

@@ -7,8 +7,12 @@ import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import TextInputSC from '../../../components/atoms/Input/TextInputSC';
 import ImageResize from 'quill-image-resize';
-Quill.register('modules/imageResize', ImageResize);
+import PostRadioButton from '../../../components/molecules/post/PostRadioButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImage, faUser } from '@fortawesome/free-solid-svg-icons';
+import PostImg from '../../../components/atoms/Post/PostImgSC';
 
+Quill.register('modules/imageResize', ImageResize);
 export const SubmitButton = styled.button`
   display: block;
   width: fit-content;
@@ -34,13 +38,12 @@ export const PostImgInputSC = styled.input`
   margin-left: 10px; // 이미지와 버튼 사이에 간격을 주기 위함
 `;
 
+
 export const ImageContainerSC = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 `;
-
-
 
 
 export default function PostCreate() {
@@ -208,7 +211,6 @@ export default function PostCreate() {
     }
   })
 
-
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
@@ -260,7 +262,6 @@ export default function PostCreate() {
     }
 
     navigate(`/channel/${chnlUri}`);
-
   };
 
   const options = [
@@ -299,7 +300,6 @@ export default function PostCreate() {
             />
             <p style={{ marginLeft: '20px', marginBottom : '10px', fontSize : '16px', fontWeight : 'bold'  }}>썸네일을 선택해 주세요!</p>
           </ImageContainerSC>
-
           <div style={{ height: '20px' }}></div>
           <p style={{ marginBottom : '10px', fontSize : '16px', fontWeight : 'bold'  }}>포스트 타입</p>
           <PostRadioButton
@@ -330,7 +330,6 @@ export default function PostCreate() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <SubmitButton type="submit">{postId !==null ? "수정" : "발행"}</SubmitButton>
-
           </div>
         </form>
       </div>

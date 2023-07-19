@@ -3,7 +3,7 @@ import { useApiPost, useApiDelete } from '../../../hooks/useApi';
 import useModal from '../modal/useModal';
 import ConfirmBox from '../modal/ConfirmBox';
 import { useEffect } from 'react';
-import useChannelList from '../../../stores/useChannelList';
+import useSubChannelList from '../../../stores/useSubChannelList';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UnHeartBtn from './UnHeartBtn';
@@ -24,7 +24,7 @@ export default function LikeBtn({ liked, postId }) {
     setError: setUnlikeErr,
     deleteData: unlike,
   } = useApiDelete(`/library/like?postId=${postId}`);
-  const { removeChannel } = useChannelList();
+  const { removeChannel } = useSubChannelList();
   const currentPath = window.location.pathname;
 
   useEffect(() => {

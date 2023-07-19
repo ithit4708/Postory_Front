@@ -9,6 +9,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import NoContent from '../../../components/molecules/error/NoContent';
 import { countDate } from '../../../components/molecules/user/dateConversion';
+import { AiOutlineHeart } from 'react-icons/ai';
+import ScrapPostBtn from '../../../components/molecules/user/ScrapPostBtn';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -70,6 +72,7 @@ const WebtoonTitle = styled.h3`
 
 const WebtoonSubInfo = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const WebtoonWriter = styled.span`
@@ -190,7 +193,6 @@ export default function SearchWebtoon() {
           <>
             <WebtoonListContainer style={{ padding: '50px', margin: '20px 0' }}>
 
-
               {data.posts.map((post, index) => (
                 <WebtoonListItem key={index}>
                   <WebtoonThumbnail imageUrl={post.postThumnPath} onClick={() => goPost(post.postId)} />
@@ -199,21 +201,21 @@ export default function SearchWebtoon() {
                     <WebtoonTitle>{post.postTtl}</WebtoonTitle>
                   </div>
                   <WebtoonSubInfo>
-                    <WebtoonWriter>{post.userNic}</WebtoonWriter>
-                    <WebtoonCount>
-                      <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/>
-                      {post.postInqrCnt}
-                    </WebtoonCount>
-                    <WebtoonCount>
-                      {/* <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/> */}
-                      ♡
-                      {post.postLikCnt}
-                    </WebtoonCount>
-                    <WebtoonCount>
-                      {countDate(post.postPblcDtm)}
-                    </WebtoonCount>
-
-
+                    <div>
+                      <WebtoonWriter>{post.userNic}</WebtoonWriter>
+                      <WebtoonCount>
+                        <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/>
+                        {post.postInqrCnt}
+                      </WebtoonCount>
+                      <WebtoonCount>
+                        <AiOutlineHeart size={14}></AiOutlineHeart>
+                        {post.postLikCnt}
+                      </WebtoonCount>
+                      <WebtoonCount>
+                        {countDate(post.postPblcDtm)}
+                      </WebtoonCount>
+                    </div>
+                    <ScrapPostBtn postId={post.postId} isScraped={post.isScraped}></ScrapPostBtn>
                   </WebtoonSubInfo>
                 </WebtoonListItem>
               ))}

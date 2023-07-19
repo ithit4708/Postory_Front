@@ -8,6 +8,13 @@ import NoContent from '../../../components/molecules/error/NoContent';
 import BtnLinkSC from '../../../components/atoms/Link/BtnLinkSC';
 import { useNavigate } from 'react-router';
 import { countDate } from '../../../components/molecules/user/dateConversion';
+import SubsBtn from '../../../components/atoms/Channel/SubsBtn';
+import ScrapPostBtn from '../../../components/molecules/user/ScrapPostBtn';
+import UserBanner from '../../../components/molecules/user/UserBanner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faClone } from '@fortawesome/free-regular-svg-icons';
+import { AiOutlineHeart } from 'react-icons/ai';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -62,6 +69,7 @@ const WebtoonTitle = styled.h3`
 
 const WebtoonSubInfo = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const WebtoonWriter = styled.span`
@@ -73,7 +81,7 @@ const WebtoonCount = styled.span`
   margin-left: 8px;
   color: rgba(0,0,0,.47);
   font-size: 12px;
-  
+
 `;
 
 const WebtoonViewCountIcon = styled.img`
@@ -107,7 +115,7 @@ export default function ChannelHome() {
     <ChannelTemplate>
       <SectionHeader>
         <span>웹툰</span>
-       <NavLink to={`/channel/${data.data.channel.chnlUri}/webtoon`} >{">"}</NavLink>
+        <NavLink to={`/channel/${data.data.channel.chnlUri}/webtoon`} >{">"}</NavLink>
       </SectionHeader>
       <WebtoonListContainer>
         {data.data.webtoons.map((post, index) => (
@@ -118,19 +126,21 @@ export default function ChannelHome() {
               <WebtoonTitle>{post.postTtl}</WebtoonTitle>
             </div>
             <WebtoonSubInfo>
-              <WebtoonWriter>{data.data.channelUser.nic}</WebtoonWriter>
-              <WebtoonCount>
-                <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/>
-                {post.postInqrCnt}
-              </WebtoonCount>
-              <WebtoonCount>
-                {/* <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/> */}
-                ♡
-                {post.postLikCnt}
-              </WebtoonCount>
-               <WebtoonCount>
-                 {countDate(post.postPblcDtm)}
-              </WebtoonCount>
+              <div>
+                <WebtoonWriter>{data.data.channelUser.nic}</WebtoonWriter>
+                <WebtoonCount>
+                  <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/>
+                  {post.postInqrCnt}
+                </WebtoonCount>
+                <WebtoonCount>
+                  <AiOutlineHeart size={14}></AiOutlineHeart>
+                  {post.postLikCnt}
+                </WebtoonCount>
+                 <WebtoonCount>
+                   {countDate(post.postPblcDtm)}
+                </WebtoonCount>
+              </div>
+              <ScrapPostBtn postId={post.postId} isScraped={post.isScraped}></ScrapPostBtn>
             </WebtoonSubInfo>
           </WebtoonListItem>
         ))}

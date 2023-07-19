@@ -5,7 +5,7 @@ import { useApiPost, useApiDelete } from '../../../hooks/useApi';
 import useModal from '../modal/useModal';
 import ConfirmBox from '../modal/ConfirmBox';
 import { useEffect } from 'react';
-import useChannelList from '../../../stores/useChannelList';
+import useSubChannelList from '../../../stores/useSubChannelList';
 import SubsBlackBtn from '../../atoms/Channel/SubsBlackBtn';
 
 export default function SubscribeBlackBtn({ isSubsed, chnlId }) {
@@ -23,7 +23,7 @@ export default function SubscribeBlackBtn({ isSubsed, chnlId }) {
     setError: setUnsubsErr,
     deleteData: unsubscribe,
   } = useApiDelete(`/subscriptions/cancle?chnlId=${chnlId}`);
-  const { removeChannel } = useChannelList();
+  const { removeChannel } = useSubChannelList();
   const currentPath = window.location.pathname;
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function SubscribeBlackBtn({ isSubsed, chnlId }) {
           )}
         </>
       ) : (
-        <SubsBlackBtn onClick={handleSubscribe}>+ 구독123</SubsBlackBtn>
+        <SubsBlackBtn onClick={handleSubscribe}>+ 구독</SubsBlackBtn>
       )}
     </div>
   );

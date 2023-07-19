@@ -10,6 +10,8 @@ import { useApiGet } from '../../../hooks/useApi';
 import { post } from 'axios';
 import { useNavigate } from 'react-router';
 import { countDate } from '../../../components/molecules/user/dateConversion';
+import { AiOutlineHeart } from 'react-icons/ai';
+import ScrapPostBtn from '../../../components/molecules/user/ScrapPostBtn';
 
 const SectionHeader = styled.div`
   padding: 0 0 10px;
@@ -71,6 +73,7 @@ const WebtoonTitle = styled.h3`
 
 const WebtoonSubInfo = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const WebtoonWriter = styled.span`
@@ -202,21 +205,21 @@ export default function ChannelWebtoon() {
               <WebtoonTitle>{post.postTtl}</WebtoonTitle>
             </div>
             <WebtoonSubInfo>
-              <WebtoonWriter>{data.data.channelUser.nic}</WebtoonWriter>
-              <WebtoonCount>
-                <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/>
-                {post.postInqrCnt}
-              </WebtoonCount>
-              <WebtoonCount>
-                {/* <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/> */}
-                ♡
-                {post.postLikCnt}
-              </WebtoonCount>
-              <WebtoonCount>
-                {countDate(post.postPblcDtm)}
-              </WebtoonCount>
-
-
+              <div>
+                <WebtoonWriter>{data.data.channelUser.nic}</WebtoonWriter>
+                <WebtoonCount>
+                  <WebtoonViewCountIcon src="https://d33pksfia2a94m.cloudfront.net/assets/img/icon/ic_eye_black.svg"  width={13} height={16}/>
+                  {post.postInqrCnt}
+                </WebtoonCount>
+                <WebtoonCount>
+                  <AiOutlineHeart size={14}></AiOutlineHeart>
+                  {post.postLikCnt}
+                </WebtoonCount>
+                <WebtoonCount>
+                  {countDate(post.postPblcDtm)}
+                </WebtoonCount>
+              </div>
+              <ScrapPostBtn postId={post.postId} isScraped={post.isScraped}></ScrapPostBtn>
             </WebtoonSubInfo>
           </WebtoonListItem>
         ))}

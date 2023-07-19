@@ -53,6 +53,10 @@ const ChannelBottomContainer = styled.div`
   li {
     margin: 10px;  // Adds 10px of space on all sides of the list items
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4bb3fd1 (style: update style in ChannelAbout)
 `
 
 const RoundThumnail = styled.div`

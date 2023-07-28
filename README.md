@@ -96,7 +96,7 @@ develop branch 기준으로 진행해주세요.(main, dev_kjh는 완성본이 �
 
 1. git clone으로 코드를 받아주세요.
    ``` 
-   git clone git clone -b develop https://github.com/dancingKim/postory_back.git
+   git clone git clone -b develop https://github.com/dancingKim/Postory_Front.git
    ```
 
 2. 아직 도메인을 사진 않았습니다. 현재 AWS 계정 비밀번호를 아는 것 외에 프로그램을 로컬에서 실행시킬 수 있는 방법이 없습니다. 추후 도메인을 산 후에 업데이트 하겠습니다.
